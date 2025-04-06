@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Hassan - Projects</title>
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+</head>
+<body id="projects-page"> <!-- Unique ID for projects page -->
+
+    <!-- Shared Navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="experience.html" class="nav-link">Experience</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
+            <li><a href="future.html" class="nav-link">Future</a></li>
+        </ul>
+        <!-- Removed theme toggle button -->
+    </nav>
+
+    <!-- Canvas for 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Page-Specific Content -->
+    <main>
+        <section id="projects">
+            <h2>🔭 Projects</h2>
+
+             <div class="project-item card">
+                 <h4>🔥 Physics-Informed Neural Networks for Propulsion Simulation <span class="duration">May–Sep 2024</span></h4>
+                 <div class="tech-stack">Python, TensorFlow, PyTorch, PINNs, Fluid Dynamics</div>
+                 <p>I designed and trained a Physics-Informed Neural Network (PINN) using TensorFlow and PyTorch, embedding the Navier-Stokes equations directly into the model’s loss function to simulate turbulent flow and predict viscosity gradients.</p>
+                 <ul>
+                     <li>Focused on fluid behavior in low-thrust propulsion environments, including MHD flows.</li>
+                     <li>Tuned hyperparameters (e.g., batch size, learning rate) to improve stability and accuracy.</li>
+                     <li>Explored the use of PINNs for replacing partial simulation stages in CFD pipelines.</li>
+                 </ul>
+                 <p>This project represents a powerful step toward AI-assisted propulsion modeling, where physical law constraints improve data efficiency and generalization.</p>
+             </div>
+
+             <div class="project-item card">
+                 <h4>☄️ Data-Driven Thermal Protection System (TPS) Optimization <span class="duration">Nov 2024–Present</span></h4>
+                  <div class="tech-stack">Python, PyTorch, GNNs, Materials Project API, NASA Data</div>
+                 <p>This ongoing project integrates NASA TPS material data with the Materials Project API to explore ablation-resistant materials for re-entry vehicles.</p>
+                 <ul>
+                     <li>Built a dataset linking physical properties (thermal conductivity, heat capacity) to ablation performance.</li>
+                     <li>Used graph neural networks (GNNs) in PyTorch to find material-property patterns.</li>
+                     <li>Focused on applications for lunar and Martian descent vehicles, where thermal extremes are critical.</li>
+                 </ul>
+                 <p>This project merges materials science, machine learning, and space vehicle engineering—key domains in my vision for future interplanetary missions.</p>
+             </div>
+
+             <div class="project-item card">
+                <h4>🛰️ Autonomous Anomaly Detection for Sensor Networks <span class="duration">Jan–Apr 2024</span></h4>
+                 <div class="tech-stack">Python, PyTorch, Time-Series Analysis, Random Forest</div>
+                 <p>I developed an autonomous system for anomaly detection in spacecraft sensor arrays, targeting real-time failure prediction.</p>
+                 <ul>
+                     <li>Built a random forest model in PyTorch, trained on synthetic time-series sensor data.</li>
+                     <li>Tuned the model to detect performance drops or outliers, simulating spacecraft health-monitoring systems.</li>
+                     <li>Demonstrated potential reductions in simulated downtime and increased mission reliability.</li>
+                 </ul>
+             </div>
+        </section>
+    </main>
+
+    <!-- Shared Footer -->
+    <footer>
+        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
+        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+    </footer>
+
+    <!-- Consolidated JS -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Hassan - Philosophy</title>
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+</head>
+<body id="philosophy-page"> <!-- Unique ID for philosophy page -->
+
+    <!-- Shared Navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="experience.html" class="nav-link">Experience</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
+            <li><a href="future.html" class="nav-link">Future</a></li>
+        </ul>
+        <!-- Removed theme toggle button -->
+    </nav>
+
+    <!-- Canvas for 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Page-Specific Content -->
+    <main>
+        <section id="philosophy">
+            <h2>🧠 Philosophy & Writing</h2>
+            <p>In parallel with my scientific pursuits, I’m writing a book titled:</p>
+
+            <blockquote class="card">
+                <h3>The Unbound Mind: Reimagining Freedom in the Modern World</h3>
+                <p>This work is a philosophical memoir and manifesto, blending my personal experiences with deeper questions about modern life, identity, and human potential. It explores the invisible structures that constrain us—religion, tradition, media, and cultural expectations—and the courage it takes to escape them.</p>
+                <p><strong>Key themes:</strong></p>
+                <ul>
+                    <li>Nietzsche’s Übermensch: Not as a conqueror, but as a creative builder of new values.</li>
+                    <li>C.S. Lewis & Dostoevsky: Exploring friendship, suffering, and moral paradoxes in human life.</li>
+                    <li>Martyrdom vs. Suicide: Drawing from religious and geopolitical narratives to explore belief, pain, and purpose.</li>
+                    <li>Freedom & Rebellion: How living with passion, autonomy, and intention is the only antidote to nihilism.</li>
+                </ul>
+                 <p>My hope is that The Unbound Mind becomes a catalyst for others, especially young people, to reimagine their lives—not as paths inherited from others, but as worlds they can design for themselves.</p>
+                <cite style="display: block; text-align: right; margin-top: 1rem; font-weight: bold; color: var(--accent-color-secondary);">– Mohamed Hassan (In Progress)</cite>
+            </blockquote>
+        </section>
+
+        <section id="manifesto">
+            <h2>Mo Hassan – A Mind Unbound </h2>
+            <blockquote class="card" style="font-style: italic; border-left-color: var(--accent-color-secondary);">
+                “I am Mo Hassan—an unbound mind, a soul in pursuit of the infinite, and a relentless seeker of the truths that lie just beyond the horizon.”
+            </blockquote>
+            <p>From the moment I first gazed at the night sky, I knew I was not meant to live a life confined to the ordinary. I am Mo Hassan, a 21-year-old astrophysics student standing at the crossroads of science and philosophy, of the physical and metaphysical. My mind is unbound by inherited truths. My soul is drawn to what lies just beyond the veil of conformity, tradition, and dogma. I am not simply a student of the stars—I am a seeker of meaning in a world that has forgotten how to ask why.</p>
+
+            <h3>🧭 A Journey Through Science and Thought</h3>
+            <p>My life is a paradox—grounded in the laws of physics, yet perpetually questioning the unseen frameworks that shape human behavior. I chose science to understand the fabric of the universe, and philosophy to explore what it means to be human within it.</p>
+            <p>Reading Nietzsche, I didn’t just find ideas—I found a call to transcend. The Übermensch, to me, is not a distant ideal, but a lived rebellion: a refusal to be confined by old values and an insistence on creating new ones. My goal is to embody that principle in everything I do—whether I’m modeling fluid flow in propulsion systems or dissecting the cultural shackles of identity and belief.</p>
+
+            <h3>📖 The Unbound Mind – A Manifesto in the Making</h3>
+            <p>This book is a philosophical memoir, a manifesto, and a declaration of rebellion. It’s born out of my lived experience—growing up under the weight of religious and cultural expectations—and my journey toward reclaiming the right to live intentionally, freely, and authentically.</p>
+            <p>The book explores:</p>
+            <ul>
+                <li>🔗 The Shackles of Religion – Reinterpreting prophets like Mohamed, Jesus, and Buddha as early philosophers. I explore religion not as truth, but as metaphor—one that can uplift or oppress, depending on how it’s wielded.</li>
+                <li>🌐 Digital Conformity & Societal Norms – How the modern age breeds curated identities, shallow validation, and silent conformity—especially among youth seduced by convenience and comfort.</li>
+                <li>✊ Philosophy as Activism – Drawing from Kant and Sartre, I investigate moral agency in the face of injustice, and how ethical living demands resistance to systemic apathy.</li>
+                <li>🧠 Mental Health & Existential Reflection – I reflect on my own anxiety and neurodivergence, and how philosophical reflection became my guide toward personal growth, resilience, and clarity.</li>
+                <li>🔓 Freedom and Fluid Identity – In a world obsessed with labels and rigid roles, I argue for a fluid, ever-evolving self. True freedom, I believe, is not the absence of rules, but the ability to rewrite your own.</li>
+            </ul>
+            <p>My manifesto is not about convincing you what to believe—it’s about freeing you to believe in yourself.</p>
+
+            <h3>✍️ The Essay Series</h3>
+            <p>To build toward this book, I’ve launched a series of critical essays—each one diving deeper into themes of identity, rebellion, belief, and liberation. These essays are standalone yet interconnected, laying the foundation for The Unbound Mind.</p>
+            <ol style="list-style-type: none; padding-left: 0;">
+                <li>🔥 <strong>Essay 1: The Spark of Rebellion</strong><br>A personal narrative about questioning religious teachings and finding resonance in the words of Nietzsche, Dostoevsky, and Lewis.</li>
+                <li>✝️ <strong>Essay 2: Prophets or Philosophers?</strong><br>A reexamination of religious figures as philosophers—exploring how their teachings were responses to moral and social chaos, not divine absolutes.</li>
+                <li>📱 <strong>Essay 3: The Digital Age and the Evolution of Norms</strong><br>An analysis of how digital culture creates both liberation and new chains, shaping identity through curated personas and algorithmic conformity.</li>
+                <li>🧭 <strong>Essay 4: Moral Agency in Action</strong><br>How philosophical frameworks can inform modern activism, helping us confront injustice without compromising our values.</li>
+                <li>🧠 <strong>Essay 5: Mental Health and Existentialism</strong><br>Using Frankl, Sartre, and personal reflection to discuss how philosophy can be a survival tool for the mind.</li>
+                <li>🆓 <strong>Essay 6: Redefining Freedom and Identity</strong><br>An exploration of fluid identity and modern definitions of freedom—what it really means to “be yourself” in an age of surveillance and conformity.</li>
+                <li>🔮 <strong>Essay 7: A Manifesto for the New Enlightenment</strong><br>A bold call to usher in a new age of intellectual curiosity, moral autonomy, and collective introspection—without the need for old institutions.</li>
+            </ol>
+
+            <h3>⚡ My Rebellion: Not for Destruction, but for Creation</h3>
+            <blockquote class="card" style="font-style: italic; border-left-color: var(--accent-color-secondary);">
+                “I am a rebel—but not in the clichéd sense of defiance for its own sake. My rebellion is an act of creation.”
+            </blockquote>
+            <p>I reject the life handed to me—not because I hate tradition, but because I know there’s more. There is more to who we are, more to who we can become. I’m here to rewrite the blueprint—for myself, and for anyone else who dares to imagine life differently.</p>
+            <p>The true revolution begins in the mind. And my book, my essays, and my voice are all part of that revolution.</p>
+
+        </section>
+    </main>
+
+    <!-- Shared Footer -->
+    <footer>
+        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
+        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+    </footer>
+
+    <!-- Consolidated JS -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>

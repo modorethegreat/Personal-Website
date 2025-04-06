@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Hassan - About</title>
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <!-- Typed.js not necessarily needed here -->
+</head>
+<body id="about-page"> <!-- Unique ID for about page -->
+
+    <!-- Shared Navigation -->
+    <nav id="main-nav">
+         <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="experience.html" class="nav-link">Experience</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
+            <li><a href="future.html" class="nav-link">Future</a></li>
+        </ul>
+        <!-- Removed theme toggle button -->
+    </nav>
+
+    <!-- Canvas for 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Page-Specific Content -->
+    <main>
+        <section id="about">
+            <h2>🌌 About Me</h2>
+             <div class="about-grid"> <!-- You might need CSS for this grid -->
+                 <div class="bio card">
+                     <p>My name is <strong>Mohamed Hassan</strong>, and I’m a fourth-year student at the University of Waterloo, majoring in Physics and Astronomy with a minor in Applied Mathematics, concentrating on fluids and heat transfer. My academic journey began long before university—shaped by an early fascination with space and a relentless drive to understand the universe at its most fundamental level.</p>
+                     <p>Born in Atlanta, Georgia, and raised in Canada by a single mother, I grew up immersed in a mindset of resilience, independence, and quiet ambition. As a child, I often found myself staring at the night sky, wondering not just about what lies beyond, but how we might one day get there. That sense of wonder never faded—it evolved into a purpose: to design and optimize propulsion systems that will one day carry humanity deeper into space.</p>
+                 </div>
+
+                 <div class="card">
+                    <h3>✈️ TU Delft Exchange (Fall 2025)</h3>
+                    <p>I’ve been accepted to TU Delft for a semester-long academic exchange with the Faculty of Applied Physics, beginning Fall 2025. This milestone represents more than just an academic opportunity—it’s the next step in a life-long pursuit of space-bound innovation.</p>
+                    <p>I was first introduced to TU Delft during a seminar at Waterloo, where my professor cited Professor Piero Colonna’s work on non-ideal compressible fluid dynamics (NICFD) and supercritical CO₂ cycles—topics that closely align with my own interests in next-generation propulsion technologies. From that point on, I knew TU Delft was the place where theory meets innovation.</p>
+                    <p>While there, I plan to take courses in:</p>
+                    <ul>
+                        <li>Computational fluid and thermal simulations</li>
+                        <li>Quantum information</li>
+                        <li>Energy storage systems</li>
+                        <li>Nuclear physics</li>
+                        <li>Propulsion and turbomachinery</li>
+                    </ul>
+                    <p>These areas were carefully selected to address specific knowledge gaps I’ve mapped in my current skillset. My goal is to absorb TU Delft’s rich legacy in aerospace while also bringing my own background in AI-enhanced simulation, fluid dynamics, and thermodynamic modeling to the table.</p>
+                 </div>
+
+                 <div id="skills" class="card"> <!-- Keeping existing skills section -->
+                     <h3>🚀 Technical Skills & Research Focus</h3>
+                      <p>I specialize in the intersection of computational physics...</p>
+                      <h4>Core Skills:</h4>
+                      <ul>
+                          <li><strong>Programming:</strong> Python (TensorFlow, PyTorch, pandas, NumPy), SQL, MATLAB</li>
+                           <!-- ... (rest of skills from original file) ... -->
+                           <li>CFD/FEA: ANSYS Fluent, SolidWorks Simulation</li>
+                           <li>Data Analysis & Visualization: Pandas, NumPy, Matplotlib, Seaborn</li>
+                           <li>Machine Learning: Scikit-learn, TensorFlow, PyTorch (including PINNs, GNNs)</li>
+                           <li>Database Management: SQL</li>
+                           <li>Version Control: Git, GitHub</li>
+                           <li>Lab Equipment: Vacuum chambers, thermocouples, pressure transducers, viscometers, moisture analyzers</li>
+                      </ul>
+                      <h4>Relevant Courses:</h4>
+                      <ul>
+                           <li>Continuum Mechanics</li>
+                           <li>Thermodynamics & Statistical Mechanics</li>
+                           <li>Fluid Mechanics</li>
+                           <li>Heat Transfer</li>
+                           <li>Differential Equations</li>
+                           <li>Numerical Methods</li>
+                           <li>Quantum Mechanics</li>
+                           <li>Electromagnetism</li>
+                           <!-- ... (rest of courses from original file) ... -->
+                       </ul>
+                 </div>
+             </div>
+        </section>
+        <!-- Add more sections if needed for the about page -->
+    </main>
+
+    <!-- Shared Footer -->
+    <footer>
+        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
+        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+    </footer>
+
+    <!-- Consolidated JS -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>

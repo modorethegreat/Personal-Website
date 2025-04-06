@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Hassan - Experience</title>
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <!-- Typed.js not strictly needed here -->
+</head>
+<body id="experience-page"> <!-- Unique ID for experience page -->
+
+    <!-- Shared Navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="experience.html" class="nav-link">Experience</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
+            <li><a href="future.html" class="nav-link">Future</a></li>
+        </ul>
+        <!-- Removed theme toggle button -->
+    </nav>
+
+    <!-- Canvas for 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Page-Specific Content -->
+    <main>
+        <section id="experience">
+            <h2>🛰️ Technical Experience</h2>
+
+            <div class="job card">
+                <h4>🧪 Data Scientist <span class="duration">Winter 2023</span></h4>
+                <div class="company">Canadian Space Agency (CSA)</div>
+                <p>During my co-op at the Canadian Space Agency, I worked in a highly interdisciplinary team responsible for vacuum chamber simulation experiments supporting aerospace research. My role focused on real-time systems integration and data intelligence.</p>
+                <p><strong>Key contributions:</strong></p>
+                <ul>
+                    <li>Developed a Python/SQL dashboard to monitor multi-sensor data from thermocouples and pressure transducers in vacuum environments.</li>
+                    <li>Automated failure detection workflows and implemented real-time alert notifications, reducing downtime by over 25%.</li>
+                    <li>Visualized key environmental conditions (temperature, pressure, flow rates) using MATLAB and produced performance analytics for chamber experiments.</li>
+                </ul>
+                <p>This role refined my ability to bridge hardware and data, laying a foundation for future systems diagnostics in propulsion chambers and spacecraft testing.</p>
+            </div>
+
+            <div class="job card">
+               <h4>🚀 Propulsion Team Member <span class="duration">Since 2022</span></h4>
+                <div class="company">University of Waterloo Rocketry Team</div>
+                <p>Since 2022, I’ve been a dedicated member of the Propulsion Team on the Waterloo Rocketry Team, where I’ve worked on both solid and liquid-fueled engine systems.</p>
+                <p><strong>Key responsibilities:</strong></p>
+                <ul>
+                    <li>Simulated rocket nozzle performance using ANSYS Fluent, optimizing geometry to improve thrust and reduce mass by 5%.</li>
+                    <li>Designed mechanical components in SolidWorks, coordinated with structural and avionics teams, and helped draft detailed design reports and test protocols.</li>
+                    <li>Analyzed static fire test data using MATLAB, contributing to the iterative improvement of nozzle efficiency and stability.</li>
+                </ul>
+                 <p>This experience not only developed my skills in CFD, FEA, and cross-disciplinary teamwork—it also grounded me in the real-world constraints of aerospace design.</p>
+            </div>
+
+            <div class="job card">
+               <h4>🧬 R&D Scientist <span class="duration">Fall 2023</span></h4>
+               <div class="company">Gay Lea Foods</div>
+               <p>At Gay Lea Foods, I worked on the edge of data science and chemistry, applying my technical skills to predictive modeling and experimental design in food formulation.</p>
+               <p><strong>Key outcomes:</strong></p>
+                <ul>
+                    <li>Used TensorFlow and scikit-learn to build models predicting product texture and chemical stability.</li>
+                    <li>Automated assay data processing using pandas and NumPy, and ran MATLAB analysis to verify formulation performance against lab data.</li>
+                    <li>Designed validation experiments using viscometers, moisture analyzers, and pH meters to ensure 95%+ product quality accuracy.</li>
+                </ul>
+                <p>While not aerospace-related, this role deepened my command of data modeling, experimental design, and automated data pipelines, which translate directly into large-scale simulation workflows in engineering.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shared Footer -->
+    <footer>
+        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
+        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+    </footer>
+
+    <!-- Consolidated JS -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>

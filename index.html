@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Al-Mustafa Hassan - Home</title>
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Restore Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+</head>
+<body id="home-page"> <!-- Unique ID for homepage -->
+
+    <!-- Shared Navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="experience.html" class="nav-link">Experience</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
+            <li><a href="future.html" class="nav-link">Future</a></li>
+        </ul>
+        <!-- Removed theme toggle button -->
+    </nav>
+
+    <!-- Canvas for 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Page-Specific Content -->
+    <main>
+        <section id="home-content"> <!-- Special ID/styling for hero -->
+            <h1 id="main-headline">Mohamed Al-Mustafa Hassan</h1>
+            <p class="tagline">Physics & Astronomy Student | Aspiring Aerospace Engineer</p>
+            <!-- Element for Typed.js -->
+            <p><span id="typed-intro"></span></p>
+            <!-- You could add the rocket SVG here again if desired -->
+             <!-- <div id="rocket-container" style="margin-top: 30px; width: 60px; height: 120px;"> rocket SVG here </div> -->
+        </section>
+        <!-- You could add more sections below the hero on the homepage if needed -->
+    </main>
+
+    <!-- Shared Footer -->
+    <footer>
+        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
+        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+    </footer>
+
+    <!-- Consolidated JS -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>
