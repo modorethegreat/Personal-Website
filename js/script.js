@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // initThemeToggle(); // Removed call
     updateActiveNav();
     updateFooterYear();
-    initAudioToggle();
-    initHeroScroll();
 
     // Initialize 3D Background and Animations only if motion is preferred
     if (!motionQuery.matches) {
@@ -67,119 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function initAudioToggle() {
-        const audio = document.getElementById('ambient-audio');
-        const btn = document.getElementById('audio-toggle');
-        if (!audio || !btn) return;
-
-        let enabled = localStorage.getItem('audioEnabled') === 'true';
-        function updateBtn() {
-            btn.textContent = enabled ? '🔊' : '🔈';
-        }
-        updateBtn();
-        if (enabled) {
-            audio.play().catch(() => { enabled = false; updateBtn(); });
-        }
-        btn.addEventListener('click', () => {
-            enabled = !enabled;
-            localStorage.setItem('audioEnabled', enabled);
-            updateBtn();
-            if (enabled) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        });
-    }
-
-    function initHeroScroll() {
-        const hero = document.getElementById('home-content');
-        if (!hero) return;
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    document.body.classList.remove('show-3d');
-                } else {
-                    document.body.classList.add('show-3d');
-                }
-            });
-        }, { threshold: 0.1 });
-        observer.observe(hero);
-    }
-
-    // Overlay handling
-    let lastFocusedElement = null;
-    function openOverlay(link) {
-        const overlay = document.getElementById('content-overlay');
-        const body = document.getElementById('overlay-body');
-        if (!overlay || !body) return;
-        overlay.classList.remove('hidden');
-        document.body.classList.add('overlay-open');
-        lastFocusedElement = document.activeElement;
-        fetch(link).then(r => r.text()).then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const main = doc.querySelector('main') || doc.body;
-            body.innerHTML = '';
-            body.appendChild(main.cloneNode(true));
-            trapFocus(overlay);
-        });
-    }
-
-    function closeOverlay() {
-        const overlay = document.getElementById('content-overlay');
-        if (!overlay) return;
-        overlay.classList.add('hidden');
-        document.body.classList.remove('overlay-open');
-        overlay.removeEventListener('keydown', handleTrap);
-        if (lastFocusedElement) lastFocusedElement.focus();
-    }
-
-    function trapFocus(modal) {
-        const focusable = modal.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length -1];
-        function handle(e) {
-            if (e.key === 'Tab') {
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault(); last.focus();
-                } else if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault(); first.focus();
-                }
-            } else if (e.key === 'Escape') {
-                closeOverlay();
-            }
-        }
-        modal.addEventListener('keydown', handle);
-        modal.focus();
-        handleTrap = handle;
-    }
-    let handleTrap = null;
-    const closeBtn = document.getElementById('overlay-close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeOverlay);
-    }
-
-    function webglAvailable() {
-        try {
-            const canvas = document.createElement('canvas');
-            return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-        } catch (e) {
-            return false;
-        }
-    }
-
-    function showFallback() {
-        const fb = document.getElementById('fallback');
-        if (fb) fb.classList.remove('hidden');
-    }
-
     // --- Homepage Specific Scripts ---
     function initHomepageScripts() {
         console.log("Initializing homepage scripts...");
         initHomepageAnimations();
         initTyped();
+        initOrbitScroll();
     }
 
     function initHomepageAnimations() {
@@ -228,6 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('Typed.js library not loaded.');
         }
+    }
+
+    function initOrbitScroll() {
+        const orbit = document.querySelector('#orbit-container .orbit');
+        if (!orbit) return;
+        window.addEventListener('scroll', () => {
+            const rotation = window.scrollY * 0.1;
+            orbit.style.transform = `rotate(${rotation}deg)`;
+            if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+        });
     }
 
     // --- ScrollTrigger Animations (Run on relevant pages) ---
@@ -282,12 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         console.log("Canvas element found.");
-        if (!webglAvailable()) {
-            console.warn('WebGL not supported. Showing fallback.');
-            canvas.style.display = 'none';
-            showFallback();
-            return;
-        }
 
         // --- Core Components ---
         let scene, camera, renderer;
@@ -299,9 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let nebulaClouds = [];
         let dustParticles;
         // let planetLights = []; // Removed planet lights array
-        let planetGroup;
-        let markers = [];
-        let domMarkers = [];
 
         // --- Interaction Variables ---
         let mouseX = 0, mouseY = 0;
@@ -346,8 +240,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 createStarfields(3);
                 console.log(`Three.js: Starfields created (${starFields.length} layers).`);
 
-                createPlanetWithMarkers();
-                console.log("Three.js: Planet with markers created.");
+                // Removed planet creation logic
+                console.log("Three.js: Skipping planet creation.");
+
 
                 console.log("Three.js: Creating nebula...");
                 createNebula(10); // Increased nebula layers
@@ -422,58 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Three.js: Added ${starFields.length} starfield layers.`);
         }
 
-        function createPlanetWithMarkers() {
-            const marsTexture = textureLoader.load('textures/mars.png');
-            planetGroup = new THREE.Group();
-            const planetGeometry = new THREE.SphereGeometry(5, 64, 64);
-            const planetMaterial = new THREE.MeshStandardMaterial({ map: marsTexture });
-            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
-            planetGroup.add(planet);
-
-            const markerGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-            const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xffaa00 });
-
-            const sections = [
-                { lat: 20, lon: 0, link: 'about.html', label: 'About' },
-                { lat: -10, lon: 90, link: 'projects.html', label: 'Projects' },
-                { lat: 10, lon: -90, link: 'philosophy.html', label: 'Philosophy' },
-                { lat: -20, lon: 180, link: 'future.html', label: 'Future' }
-            ];
-
-            sections.forEach(s => {
-                const marker = new THREE.Mesh(markerGeometry, markerMaterial.clone());
-                marker.position.copy(latLonToVector(5.2, s.lat, s.lon));
-                marker.userData.link = s.link;
-                planetGroup.add(marker);
-                markers.push(marker);
-
-                const btn = document.createElement('button');
-                btn.className = 'marker-btn';
-                btn.textContent = s.label;
-                btn.setAttribute('data-link', s.link);
-                btn.addEventListener('click', () => openOverlay(s.link));
-                btn.addEventListener('keydown', e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openOverlay(s.link);
-                    }
-                });
-                document.body.appendChild(btn);
-                domMarkers.push({ element: btn, mesh: marker });
-            });
-
-            scene.add(planetGroup);
-        }
-
-        function latLonToVector(radius, lat, lon) {
-            const phi = (90 - lat) * (Math.PI / 180);
-            const theta = (lon + 180) * (Math.PI / 180);
-
-            const x = -radius * Math.sin(phi) * Math.cos(theta);
-            const y = radius * Math.cos(phi);
-            const z = radius * Math.sin(phi) * Math.sin(theta);
-            return new THREE.Vector3(x, y, z);
-        }
+        // Removed createPlanets function
 
         function createNebula(numClouds) {
              // ** Using local texture(s) from 'textures/' folder **
@@ -563,8 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollYPos = window.scrollY;
         }
 
-        // Removed canvas click navigation in favor of DOM buttons
-
         function onWindowResize() {
             if (!camera || !renderer) return; // Check if components are initialized
 
@@ -611,9 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     dustParticles.rotation.x += delta * dustParticles.userData.rotationSpeed * 0.5;
                 }
 
-                if (planetGroup) {
-                    planetGroup.rotation.y += delta * 0.2;
-                }
+                // Removed planet light following logic
+
 
                 // Camera Z position based on scroll (Parallax effect)
                 // Adjust multiplier and max Z based on new scene depth and starting Z
@@ -627,16 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Subtle Camera Tilt based on Mouse (Lerp)
                 camera.rotation.x += (targetRotX - camera.rotation.x) * 0.05; // Smooth lerp towards target
                 camera.rotation.y += (targetRotY - camera.rotation.y) * 0.05;
-
-                // Update DOM marker positions
-                domMarkers.forEach(obj => {
-                    const vector = obj.mesh.position.clone();
-                    vector.project(camera);
-                    const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
-                    const y = (-vector.y * 0.5 + 0.5) * window.innerHeight;
-                    obj.element.style.left = `${x}px`;
-                    obj.element.style.top = `${y}px`;
-                });
 
                 // Render the scene
                 if (renderer && scene && camera) {
