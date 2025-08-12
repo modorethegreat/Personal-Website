@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Initializing homepage scripts...");
         initHomepageAnimations();
         initTyped();
+        initOrbitScroll();
     }
 
     function initHomepageAnimations() {
@@ -118,6 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('Typed.js library not loaded.');
         }
+    }
+
+    function initOrbitScroll() {
+        const orbit = document.querySelector('#orbit-container .orbit');
+        if (!orbit) return;
+        window.addEventListener('scroll', () => {
+            const rotation = window.scrollY * 0.1;
+            orbit.style.transform = `rotate(${rotation}deg)`;
+            if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+        });
     }
 
     // --- ScrollTrigger Animations (Run on relevant pages) ---

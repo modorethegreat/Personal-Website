@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <!-- MathJax for equations -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
 </head>
 <body id="home-page"> <!-- Unique ID for homepage -->
 
@@ -39,6 +41,22 @@
             <p><span id="typed-intro"></span></p>
             <!-- You could add the rocket SVG here again if desired -->
              <!-- <div id="rocket-container" style="margin-top: 30px; width: 60px; height: 120px;"> rocket SVG here </div> -->
+        </section>
+
+        <section id="orbit-section">
+            <div id="orbit-container">
+                <img id="mars" src="textures/mars.png" alt="Mars">
+                <div class="orbit">
+                    <div id="rocket">🚀</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equations">
+            <h2>Cosmic Equations</h2>
+            <p class="equation">Einstein's Field Equation: \(R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}\)</p>
+            <p class="equation">Rocket Equation: \(\Delta v = v_e \ln \frac{m_0}{m_f}\)</p>
+            <p class="equation">Schrödinger Equation: \(i\hbar \frac{\partial}{\partial t} \Psi = \hat{H} \Psi\)</p>
         </section>
         <!-- You could add more sections below the hero on the homepage if needed -->
     </main>
