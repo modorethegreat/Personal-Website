@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed Hassan - Home</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Fixed path -->
+    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Restore Libraries -->
@@ -26,21 +26,11 @@
             <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
             <li><a href="future.html" class="nav-link">Future</a></li>
         </ul>
-        <button id="audio-toggle" aria-label="Toggle ambient audio">🔈</button>
-        <audio id="ambient-audio" loop src="https://cdn.pixabay.com/download/audio/2023/04/01/audio_6f3dd2d7a8.mp3?filename=ambient-space-111306.mp3"></audio>
+        <!-- Removed theme toggle button -->
     </nav>
 
     <!-- Canvas for 3D Background -->
     <canvas id="bg-canvas"></canvas>
-    <div id="fallback" class="fallback hidden">
-        <img src="textures/mars.png" alt="Mars" />
-        <ul class="fallback-links">
-            <li><a href="about.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="philosophy.html">Philosophy</a></li>
-            <li><a href="future.html">Future Plans</a></li>
-        </ul>
-    </div>
 
     <!-- Page-Specific Content -->
     <main>
@@ -49,9 +39,17 @@
             <p class="tagline">Physics & Astronomy Student | Aspiring Aerospace Physicist</p>
             <!-- Element for Typed.js -->
             <p><span id="typed-intro"></span></p>
-            <p class="scroll-cue">Scroll to explore</p>
             <!-- You could add the rocket SVG here again if desired -->
              <!-- <div id="rocket-container" style="margin-top: 30px; width: 60px; height: 120px;"> rocket SVG here </div> -->
+        </section>
+
+        <section id="orbit-section">
+            <div id="orbit-container">
+                <img id="mars" src="textures/mars.png" alt="Mars">
+                <div class="orbit">
+                    <div id="rocket">🚀</div>
+                </div>
+            </div>
         </section>
 
         <section id="equations">
@@ -68,11 +66,6 @@
         <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
         <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
     </footer>
-
-    <div id="content-overlay" class="overlay hidden" role="dialog" aria-modal="true" tabindex="-1">
-        <button id="overlay-close" class="overlay-close" aria-label="Close overlay">×</button>
-        <div id="overlay-body"></div>
-    </div>
 
     <!-- Consolidated JS -->
     <script src="js/script.js" defer></script>
