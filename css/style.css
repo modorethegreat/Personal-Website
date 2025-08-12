@@ -47,6 +47,11 @@ body {
     z-index: -1; /* Place behind all other content */
     display: block; /* Remove potential extra space */
     background-color: var(--bg-color-dark); /* Ensure canvas has base dark color */
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+body.show-3d #bg-canvas {
+    opacity: 1;
 }
 /* Removed body.light-mode #bg-canvas hiding rule */
 
@@ -133,6 +138,12 @@ section {
     margin-top: 0; /* Remove top margin for hero */
     opacity: 1; /* Make visible by default */
     transform: none;
+    transition: opacity 1s ease;
+}
+
+body.show-3d #home-content {
+    opacity: 0;
+    pointer-events: none;
 }
 
 #home-page #home-content h1 {
@@ -154,6 +165,95 @@ section {
     min-height: 40px; /* Prevent layout shift during typing */
 }
 /* Removed body.light-mode #home-page #home-content #typed-intro override */
+
+.scroll-cue {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--accent-color-secondary);
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Marker buttons positioned over canvas */
+.marker-btn {
+    position: absolute;
+    padding: 4px 8px;
+    background: rgba(0,0,0,0.7);
+    color: var(--text-color-dark);
+    border: 1px solid var(--accent-color-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+.marker-btn:focus {
+    outline: 2px solid var(--accent-color-secondary);
+}
+
+/* Overlay dialog */
+.overlay.hidden { display: none; }
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.overlay-content, #overlay-body {
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    background: var(--bg-color-dark);
+    padding: 20px;
+    border: 1px solid var(--accent-color-primary);
+    border-radius: 8px;
+    color: var(--text-color-dark);
+}
+.overlay-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-color-dark);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Audio toggle */
+#audio-toggle {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--accent-color-primary);
+    color: var(--text-color-dark);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Fallback */
+.fallback.hidden { display: none; }
+.fallback {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: var(--bg-color-dark);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:-1;
+    text-align:center;
+}
+.fallback img { max-width:80%; height:auto; }
+.fallback-links { list-style:none; padding:0; margin-top:1rem; display:flex; gap:1rem; }
+.fallback-links a { color: var(--accent-color-secondary); }
 
 /* General Section Headers & Content */
 h1, h2, h3 {
@@ -229,58 +329,6 @@ ul {
 .job ul, .project-item ul { list-style: disc; margin-left: 20px; margin-top: 0.5rem; }
 
 
-/* Orbiting Rocket Section */
-#orbit-section {
-    height: 200vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#orbit-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-}
-
-#orbit-container img#mars {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 150px;
-    height: 150px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-}
-
-#orbit-container .orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 220px;
-    height: 220px;
-    margin: -110px 0 0 -110px;
-    pointer-events: none;
-}
-
-#orbit-container .orbit::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px dashed rgba(255,255,255,0.3);
-    border-radius: 50%;
-}
-
-#orbit-container #rocket {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-}
 
 #equations {
     text-align: center;
