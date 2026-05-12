@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Hassan - Home</title>
+    <title>Mohamed Hassan | AI + Physics Portfolio</title>
     <link rel="stylesheet" href="css/ style.css">
-    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 </head>
 <body id="home-page">
-
-    <!-- Shared Navigation -->
     <nav id="main-nav">
         <ul>
             <li><a href="index.html" class="nav-link">Home</a></li>
@@ -25,28 +22,36 @@
         </ul>
     </nav>
 
-    <!-- Navier Field Canvas -->
-    <canvas id="navier"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
-    <script src="navier-vectorfield.js"></script>
-
-    <!-- Page-Specific Content -->
     <main>
         <section id="home-content">
+            <p class="eyebrow">AI × Physics × Space Systems</p>
             <h1 id="main-headline">Mohamed Hassan</h1>
-            <p class="tagline">Physics & Astronomy Student | Aspiring Aerospace Physicist</p>
+            <p class="tagline">Computational Physics Researcher building intelligent propulsion and simulation systems.</p>
             <p><span id="typed-intro"></span></p>
+            <div class="hero-actions">
+                <a href="projects.html" class="btn">View Projects</a>
+                <a href="experience.html" class="btn btn-secondary">See Experience</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Research Snapshot</h2>
+            <div class="stats-grid">
+                <article class="card stat-card"><h3>Focus Area</h3><p>Physics-informed ML for fluid and thermal systems.</p></article>
+                <article class="card stat-card"><h3>Domain</h3><p>Propulsion, aerospace simulation, autonomous diagnostics.</p></article>
+                <article class="card stat-card"><h3>Mindset</h3><p>First-principles rigor + data-driven acceleration.</p></article>
+            </div>
+            <canvas id="flow-viz" aria-label="Flow-field inspired visualization"></canvas>
         </section>
     </main>
 
-    <!-- Shared Footer -->
     <footer>
         <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
-        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+        <p>Designed as a scientific portfolio for research, impact, and long-term vision.</p>
     </footer>
 
-    <!-- Consolidated JS -->
     <script src="js/script.js" defer></script>
 </body>
 </html>

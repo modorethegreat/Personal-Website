@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed Hassan - Philosophy</title>
-    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
-    <!-- Libraries -->
+    <link rel="stylesheet" href="css/ style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
 </head>
-<body id="philosophy-page"> <!-- Unique ID for philosophy page -->
-
-    <!-- Shared Navigation -->
+<body id="philosophy-page">
     <nav id="main-nav">
         <ul>
             <li><a href="index.html" class="nav-link">Home</a></li>
@@ -22,35 +19,28 @@
             <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
             <li><a href="future.html" class="nav-link">Future</a></li>
         </ul>
-        <!-- Removed theme toggle button -->
     </nav>
-
-    <!-- Canvas for 3D Background -->
     <canvas id="bg-canvas"></canvas>
-
-    <!-- Page-Specific Content -->
     <main>
         <section id="philosophy">
-            <h2>🧠 Philosophy & Writing</h2>
-            <p>In parallel with my scientific pursuits, I’m writing a book titled:</p>
-
+            <h2>Scientific Philosophy</h2>
+            <div class="card">
+                <p>I treat research as a synthesis problem: combine first-principles physics, modern AI, and deliberate experimentation into systems that can survive real engineering constraints.</p>
+                <p>Inspired by scientific thinkers in both theoretical physics and machine learning, I focus on clear assumptions, reproducible methods, and interpretable models.</p>
+            </div>
+        </section>
+        <section id="manifesto">
+            <h2>Writing: <em>A Mind Unbound</em></h2>
             <blockquote class="card">
-                <p><em>"Mo Hassan – A Mind Unbound"</em></p>
-                
-                <cite style="display: block; text-align: right; margin-top: 1rem; font-weight: bold; color: var(--accent-color-secondary);">– Mohamed Hassan (In Progress)</cite>
+                <p><em>"The future belongs to those who can connect equations, code, and imagination into working systems."</em></p>
+                <cite>— Mohamed Hassan (working manuscript)</cite>
             </blockquote>
         </section>
-
-        <section id="manifesto">
-            <h2>Mo Hassan – A Mind Unbound </h2>
-            
-    <!-- Shared Footer -->
+    </main>
     <footer>
         <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
-        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
+        <p>Designed as a scientific portfolio for research, impact, and long-term vision.</p>
     </footer>
-
-    <!-- Consolidated JS -->
     <script src="js/script.js" defer></script>
 </body>
 </html>
