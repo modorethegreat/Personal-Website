@@ -1,267 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM Loaded. Initializing scripts...");
-
-  const bodyId = document.body.id;
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  // --- General Initializations (Run on every page) ---
-  // initThemeToggle(); // Removed call
+  const motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   updateActiveNav();
   updateFooterYear();
 
-  // Initialize 3D Background and Animations only if motion is preferred
-  if (!motionQuery.matches) {
-      console.log("Motion preference: OK. Initializing dynamic elements.");
-      console.log(">>> Calling initThreeBackground..."); // Add this line
-      initThreeBackground(); // Initialize 3D background
-      initScrollTriggers();  // Restore scroll triggers
-  } else {
-      console.log("Reduced motion preferred. Skipping 3D background and scroll animations.");
-      // Ensure canvas is hidden if JS runs but motion is reduced
-      const canvas = document.getElementById('bg-canvas');
-      if (canvas) {
-          canvas.style.display = 'none';
-          console.log("Canvas explicitly hidden due to reduced motion preference.");
-      }
+  if (!motionReduced) {
+    initThreeBackground();
+    initScrollTriggers();
+    initFlowViz();
   }
-
-  // --- Page-Specific Initializations ---
-  if (bodyId === 'home-page' && !motionQuery.matches) {
-      initHomepageScripts(); // Restore homepage scripts
-  }
-  // Add more page-specific initializers here if needed
-  // if (bodyId === 'some-other-page') { initOtherPageScripts(); }
-
-
-  // ========================================================
-  //             INITIALIZATION FUNCTIONS
-  // ========================================================
-
-  /* Removed initThemeToggle function */
+  if (document.body.id === 'home-page') initTyped();
 
   function updateActiveNav() {
-      const navLinks = document.querySelectorAll('#main-nav .nav-link');
-      if (navLinks.length === 0) return;
-
-      const currentPath = window.location.pathname.split('/').pop() || 'index.html'; // Default to index.html if path is '/'
-
-      navLinks.forEach(link => {
-          const linkPath = link.getAttribute('href').split('/').pop();
-          const isActive = (currentPath === linkPath);
-
-          if (isActive) {
-              link.classList.add('active');
-          } else {
-              link.classList.remove('active');
-          }
-      });
-      console.log("Active nav link updated for:", currentPath);
+    const current = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('#main-nav .nav-link').forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href').split('/').pop() === current);
+    });
   }
 
   function updateFooterYear() {
-      const yearSpan = document.getElementById('current-year');
-      if (yearSpan) {
-          yearSpan.textContent = new Date().getFullYear();
-      }
-  }
-
-  // --- Homepage Specific Scripts ---
-  function initHomepageScripts() {
-      console.log("Initializing homepage scripts...");
-      initHomepageAnimations();
-      initTyped();
-      initOrbitScroll();
-  }
-
-  function initHomepageAnimations() {
-      if (typeof gsap === 'undefined') {
-          console.error("GSAP not loaded. Cannot initialize homepage animations."); return;
-      }
-      console.log("Initializing homepage GSAP animations.");
-
-      const headline = document.getElementById('main-headline');
-      const taglines = document.querySelectorAll('.tagline');
-      const typedEl = document.getElementById('typed-intro');
-
-      // Ensure elements exist before animating
-      if (headline) gsap.from(headline, { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-      if (taglines.length > 0) gsap.from(taglines, { opacity: 0, y: 20, stagger: 0.2, duration: 0.8, delay: 0.5 });
-      if (typedEl) gsap.from(typedEl, { opacity: 0, duration: 0.5, delay: 1.0 });
+    const y = document.getElementById('current-year');
+    if (y) y.textContent = new Date().getFullYear();
   }
 
   function initTyped() {
-      const typedElement = document.getElementById('typed-intro');
-      if (typedElement && typeof Typed !== 'undefined') {
-          console.log("Initializing Typed.js");
-          typedElement.innerHTML = ''; // Clear previous content if any
-          try {
-              new Typed(typedElement, {
-                  strings: [
-                      'Exploring the cosmos through code.',
-                      'Building the future of propulsion.',
-                      'Bridging physics, AI, and engineering.',
-                      'Welcome to my journey.'
-                  ],
-                  typeSpeed: 50,
-                  backSpeed: 30,
-                  backDelay: 1500,
-                  startDelay: 1200, // Start after initial fade-in
-                  loop: true,
-                  showCursor: true,
-                  cursorChar: '_',
-                  smartBackspace: true
-              });
-          } catch (e) {
-              console.error("Error initializing Typed.js:", e);
-          }
-      } else if (!typedElement) {
-          console.log('Typed target element #typed-intro not found.');
-      } else {
-          console.error('Typed.js library not loaded.');
-      }
+    const el = document.getElementById('typed-intro');
+    if (!el || typeof Typed === 'undefined') return;
+    new Typed(el, {
+      strings: [
+        'Modeling turbulence with physics-informed learning.',
+        'Designing propulsion systems for interplanetary futures.',
+        'Bridging AI research and aerospace engineering.'
+      ], typeSpeed: 45, backSpeed: 24, backDelay: 1600, loop: true
+    });
   }
 
-  function initOrbitScroll() {
-      const orbit = document.querySelector('#orbit-container .orbit');
-      if (!orbit) return;
-      window.addEventListener('scroll', () => {
-          const rotation = window.scrollY * 0.1;
-          orbit.style.transform = `rotate(${rotation}deg)`;
-          if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
-              window.scrollTo({ top: 0, behavior: 'auto' });
-          }
-      });
-  }
-
-  // --- ScrollTrigger Animations (Run on relevant pages) ---
   function initScrollTriggers() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-          console.error("GSAP or ScrollTrigger not loaded. Cannot initialize scroll animations."); return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
-      console.log("Initializing ScrollTrigger animations.");
-
-      // Target all sections EXCEPT the homepage hero content
-      const sections = gsap.utils.toArray('section:not(#home-content)');
-
-      sections.forEach((section, index) => {
-          // Ensure section exists and has content before animating
-          if (section && section.children.length > 0) {
-              gsap.to(section, {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.8,
-                  ease: "power3.out",
-                  scrollTrigger: {
-                      trigger: section,
-                      start: "top 85%", // Trigger when 85% of the viewport reaches the top of the section
-                      end: "bottom 20%", // Optional: define an end point
-                      // markers: true, // Uncomment for debugging scroll trigger positions
-                      toggleActions: "play none none none", // Play the animation once when entering the trigger zone
-                  }
-              });
-          } else {
-               console.warn(`ScrollTrigger skipped for empty or non-existent section index ${index}`);
-          }
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('section:not(#home-content)').forEach(section => {
+      gsap.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' }
       });
-      console.log(`ScrollTriggers potentially attached to ${sections.length} sections.`);
+    });
   }
 
-  // --- Three.js Background Initialization ---
+  function initFlowViz() {
+    const canvas = document.getElementById('flow-viz');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    function size() {
+      const r = canvas.getBoundingClientRect();
+      canvas.width = r.width * dpr; canvas.height = r.height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    size(); window.addEventListener('resize', size);
+    let t = 0;
+    function draw() {
+      t += 0.015;
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.fillStyle = 'rgba(2,6,23,0.18)'; ctx.fillRect(0, 0, w, h);
+      for (let x = 0; x < w; x += 16) {
+        for (let y = 0; y < h; y += 16) {
+          const a = Math.sin(x * 0.02 + t) + Math.cos(y * 0.03 - t * 1.1);
+          const len = 8 + 4 * Math.sin(a + t);
+          ctx.strokeStyle = `hsla(${190 + 40*Math.sin(a)}, 90%, 70%, 0.45)`;
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * len, y + Math.sin(a) * len); ctx.stroke();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
   function initThreeBackground() {
-      console.log("initThreeBackground called");
-      const canvas = document.getElementById('bg-canvas');
-      if (!canvas) {
-          console.warn("Canvas element #bg-canvas not found. Skipping 3D background.");
-          return;
-      }
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x020617, 0.09);
+    const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+    camera.position.set(0, 4, 10);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(innerWidth, innerHeight, false);
+    renderer.setPixelRatio(devicePixelRatio || 1);
 
-      // Check if THREE is loaded
-      if (typeof THREE === 'undefined') {
-          console.error("THREE.js library not loaded. Cannot initialize 3D background.");
-          return;
-      }
+    scene.add(new THREE.AmbientLight(0x8ec5ff, 0.65));
+    const d = new THREE.DirectionalLight(0xffffff, 0.8); d.position.set(5, 6, 5); scene.add(d);
+    const stars = new THREE.BufferGeometry();
+    const pts = new Float32Array(1200 * 3);
+    for (let i = 0; i < pts.length; i += 3) {
+      pts[i] = (Math.random() - 0.5) * 40;
+      pts[i + 1] = (Math.random() - 0.5) * 25;
+      pts[i + 2] = (Math.random() - 0.5) * 40;
+    }
+    stars.setAttribute('position', new THREE.BufferAttribute(pts, 3));
+    const particles = new THREE.Points(stars, new THREE.PointsMaterial({ color: 0x7dd3fc, size: 0.05 }));
+    scene.add(particles);
 
-      console.log("Initializing Three.js background...");
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight, false);
+    });
 
-      // Scene setup
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x020617, 0.12);
+    const mouse = { x: 0, y: 0 };
+    addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / innerWidth) * 2 - 1;
+      mouse.y = (e.clientY / innerHeight) * 2 - 1;
+    });
 
-      // Camera
-      const camera = new THREE.PerspectiveCamera(
-          45,
-          window.innerWidth / window.innerHeight,
-          0.1,
-          100
-      );
-      camera.position.set(0, 6, 12);
+    (function animate(t) {
+      const s = t * 0.00015;
+      particles.rotation.y += 0.0007;
+      camera.position.x = Math.sin(s) * 1.8 + mouse.x * 0.6;
+      camera.position.y = Math.cos(s * 1.4) * 0.8 - mouse.y * 0.4;
       camera.lookAt(0, 0, 0);
-
-      // Renderer
-      const renderer = new THREE.WebGLRenderer({
-          canvas,
-          alpha: true,
-          antialias: true
-      });
-      renderer.setPixelRatio(window.devicePixelRatio || 1);
-      renderer.setSize(window.innerWidth, window.innerHeight, false);
-
-      // Lights
-      const ambient = new THREE.AmbientLight(0x6b8cff, 0.7);
-      scene.add(ambient);
-
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      dirLight.position.set(5, 10, 7);
-      scene.add(dirLight);
-
-      // Grid
-      const grid = new THREE.GridHelper(20, 24, 0x1f2937, 0x0f172a);
-      grid.position.y = -0.01;
-      scene.add(grid);
-
-      // Mouse tracking
-      const mouse = { x: 0, y: 0, ndcX: 0, ndcY: 0, active: false };
-      
-      window.addEventListener('mousemove', e => {
-          mouse.x = e.clientX;
-          mouse.y = e.clientY;
-          mouse.ndcX = (e.clientX / window.innerWidth) * 2 - 1;
-          mouse.ndcY = -(e.clientY / window.innerHeight) * 2 + 1;
-          mouse.active = true;
-      });
-
-      window.addEventListener('mouseleave', () => {
-          mouse.active = false;
-      });
-
-      // Resize handler
-      function onResize() {
-          const w = window.innerWidth;
-          const h = window.innerHeight;
-          renderer.setSize(w, h, false);
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-      }
-      window.addEventListener('resize', onResize);
-
-      // Animation loop
-      function animate(time) {
-          requestAnimationFrame(animate);
-          const t = time * 0.001;
-
-          // Camera movement
-          const wobble = 0.6;
-          camera.position.x = Math.sin(t * 0.25) * 4 + mouse.ndcX * wobble * 3;
-          camera.position.y = 4.5 + Math.cos(t * 0.2) * 0.8 + mouse.ndcY * wobble * 2;
-          camera.position.z = 11 + Math.sin(t * 0.15) * 0.5;
-          camera.lookAt(0, 0, 0);
-
-          renderer.render(scene, camera);
-      }
-
+      renderer.render(scene, camera);
       requestAnimationFrame(animate);
-      console.log("Three.js background initialized successfully.");
+    })(0);
   }
-
-}); // Close DOMContentLoaded event listener
+});
