@@ -1,52 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Hassan - Home</title>
-    <link rel="stylesheet" href="css/ style.css">
-    <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohamed Hassan | AI & Physics Portfolio</title>
+  <link rel="stylesheet" href="css/ style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body id="home-page">
+  <canvas id="bg-canvas"></canvas>
 
-    <!-- Shared Navigation -->
-    <nav id="main-nav">
-        <ul>
-            <li><a href="index.html" class="nav-link">Home</a></li>
-            <li><a href="about.html" class="nav-link">About</a></li>
-            <li><a href="experience.html" class="nav-link">Experience</a></li>
-            <li><a href="projects.html" class="nav-link">Projects</a></li>
-            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
-            <li><a href="future.html" class="nav-link">Future</a></li>
-        </ul>
-    </nav>
+  <nav id="main-nav">
+    <div class="brand">MH</div>
+    <ul>
+      <li><a href="#hero" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#interests" class="nav-link">Interests</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
 
-    <!-- Navier Field Canvas -->
-    <canvas id="navier"></canvas>
+  <main>
+    <section id="hero" class="hero-panel">
+      <p class="kicker">AI × Physics × Space Systems</p>
+      <h1 id="main-headline">Mohamed Hassan</h1>
+      <p class="tagline">Building intelligent systems inspired by the rigor of physics and the ambition of deep-space engineering.</p>
+      <div class="metrics">
+        <div><strong>Research Lens</strong><span>Computational Physics</span></div>
+        <div><strong>Engineering Focus</strong><span>Simulation + AI</span></div>
+        <div><strong>Mission</strong><span>Aerospace Innovation</span></div>
+      </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
-    <script src="navier-vectorfield.js"></script>
+    <section id="about">
+      <h2>Profile</h2>
+      <p>I’m a physics and astronomy student who treats every project like a research question: define the model, validate assumptions, iterate with data, and communicate clearly. My portfolio direction is inspired by the clarity of modern AI labs and the visual storytelling style common in contemporary theoretical physics groups.</p>
+    </section>
 
-    <!-- Page-Specific Content -->
-    <main>
-        <section id="home-content">
-            <h1 id="main-headline">Mohamed Hassan</h1>
-            <p class="tagline">Physics & Astronomy Student | Aspiring Aerospace Physicist</p>
-            <p><span id="typed-intro"></span></p>
-        </section>
-    </main>
+    <section id="experience">
+      <h2>Experience</h2>
+      <article class="timeline-item">
+        <h3>AI/Physics Builder</h3>
+        <p>Developing simulation-first projects that blend numerical methods, visualization, and machine learning intuition for real-world aerospace-style constraints.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Technical Collaborator</h3>
+        <p>Contributing structured analysis, reproducible notebooks, and experiment summaries designed for both technical depth and stakeholder readability.</p>
+      </article>
+    </section>
 
-    <!-- Shared Footer -->
-    <footer>
-        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
-        <p>Built with HTML, CSS, and JavaScript. Space awaits!</p>
-    </footer>
+    <section id="projects">
+      <h2>Selected Projects</h2>
+      <div class="project-grid">
+        <article class="project-card"><h3>Vector Field Observatory</h3><p>Interactive fluid/vector field concept exploration for intuition-building around dynamics.</p></article>
+        <article class="project-card"><h3>Orbital Scenario Prototyper</h3><p>Parametric orbital modeling concepts with emphasis on explainability and numerical stability.</p></article>
+        <article class="project-card"><h3>AI-Assisted Scientific Workflow</h3><p>Experiment planning and synthesis pipeline focused on fast iteration and evidence-backed decisions.</p></article>
+      </div>
+    </section>
 
-    <!-- Consolidated JS -->
-    <script src="js/script.js" defer></script>
+    <section id="interests">
+      <h2>Interests & Passion</h2>
+      <p>I’m most energized by the intersection of scientific computing, trustworthy AI, and spaceflight systems design. I enjoy translating abstract equations into visual tools that help teams think better and decide faster.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Let’s Build</h2>
+      <p>I’m open to research collaborations, internships, and project teams where AI and physics can be combined to solve meaningful engineering problems.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="current-year"></span> Mohamed Hassan</p>
+    <p>Designed as a research-style professional portfolio.</p>
+  </footer>
+
+  <script src="js/script.js" defer></script>
 </body>
 </html>
