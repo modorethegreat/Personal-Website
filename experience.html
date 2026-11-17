@@ -1,87 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Hassan - Experience</title>
-    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
-    <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <!-- Typed.js not strictly needed here -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mohamed Hassan's experience in engineering software, computational physics, scientific machine learning, and aerospace testing.">
+  <meta name="theme-color" content="#090d10">
+  <title>Experience &amp; résumé — Mohamed Hassan</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/script.js"></script>
 </head>
-<body id="experience-page"> <!-- Unique ID for experience page -->
-
-    <!-- Shared Navigation -->
-    <nav id="main-nav">
-        <ul>
-            <li><a href="index.html" class="nav-link">Home</a></li>
-            <li><a href="about.html" class="nav-link">About</a></li>
-            <li><a href="experience.html" class="nav-link">Experience</a></li>
-            <li><a href="projects.html" class="nav-link">Projects</a></li>
-            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
-            <li><a href="future.html" class="nav-link">Future</a></li>
-        </ul>
-        <!-- Removed theme toggle button -->
+<body class="resume-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="index.html#work">Work</a><a href="experience.html" aria-current="page">Experience</a><a href="index.html#notes">Field Notes</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a>
     </nav>
+  </header>
 
-    <!-- Canvas for 3D Background -->
-    <canvas id="bg-canvas"></canvas>
+  <main id="main">
+    <section class="profile-hero dark-surface" aria-labelledby="resume-title">
+      <div class="profile-inner">
+        <p class="kicker">Experience &amp; résumé</p>
+        <h1 id="resume-title">Mohamed Hassan</h1>
+        <p>I build software for computational engineering, from CAD and solver integrations to test data and scientific machine learning.</p>
+        <div class="profile-links">
+          <button class="hero-primary" type="button" data-print-resume hidden>Print or save as PDF</button>
+          <a href="https://github.com/modorethegreat">GitHub</a>
+          <a href="https://www.linkedin.com/in/mohamed-hassan-219b33201/">LinkedIn</a>
+          <a href="mailto:mm6hassa@uwaterloo.ca" data-address="mm6hassa@uwaterloo.ca">Email</a>
+        </div>
+        <p class="profile-updated">Updated <time datetime="2026-11-16">November 16, 2026</time></p>
+      </div>
+    </section>
 
-    <!-- Page-Specific Content -->
-    <main>
-        <section id="experience">
-            <h2>🛰️ Technical Experience</h2>
+    <div class="profile-inner profile-content">
+      <nav class="page-index" aria-label="Résumé sections">
+        <a href="#experience">Experience</a><a href="#education">Education</a><a href="#recognition">Recognition</a><a href="#skills">Technical skills</a>
+      </nav>
 
-            <div class="job card">
-                <h4>Data Scientist <span class="duration">Winter 2023</span></h4>
-                <div class="company">Canadian Space Agency (CSA)</div>
-                <p>During my co-op at the Canadian Space Agency, I worked in a highly interdisciplinary team responsible for vacuum chamber simulation experiments supporting aerospace research. My role focused on real-time systems integration and data intelligence.</p>
-                <p><strong>Key contributions:</strong></p>
-                <ul>
-                    <li>Developed a Python/SQL dashboard to monitor multi-sensor data from thermocouples and pressure transducers in vacuum environments.</li>
-                    <li>Automated failure detection workflows and implemented real-time alert notifications, reducing downtime by over 25%.</li>
-                    <li>Visualized key environmental conditions (temperature, pressure, flow rates) using MATLAB and produced performance analytics for chamber experiments.</li>
-                </ul>
-                <p>This role refined my ability to bridge hardware and data, laying a foundation for future systems diagnostics in propulsion chambers and spacecraft testing.</p>
-            </div>
+      <section class="resume-section" id="experience" aria-labelledby="work-history-title">
+        <h2 id="work-history-title">Experience</h2>
+        <article class="resume-entry" id="aerogalactica">
+          <p class="entry-date"><time datetime="2024-01">Jan 2024</time> – <time datetime="2026-08">Aug 2026</time></p>
+          <div>
+            <h3>Founder &amp; Technical Lead</h3>
+            <p class="entry-org"><a href="https://aerogalactica.org/">AeroGalactica</a> · Independent venture</p>
+            <ul>
+              <li>Built a browser CAD and simulation platform with a React and TypeScript 3D interface and Python and Go services. Engineers could configure cases, launch solver jobs and inspect results.</li>
+              <li>Connected parametric and implicit geometry to Gmsh meshing and OpenFOAM, SU2 and Eilmer workflows. Recorded geometry, solver inputs and outputs so runs could be reproduced.</li>
+              <li>Tested the product with university engineering groups. A missed additive manufacturing overhang in user testing led to a reusable geometry check.</li>
+              <li>Prototyped engineering agents that retrieve technical references and call geometry and simulation tools through MCP.</li>
+            </ul>
+            <a class="work-link" href="projects.html#aerog-workbench">See the subsequent workbench prototype</a>
+          </div>
+        </article>
 
-            <div class="job card">
-               <h4>Propulsion Team Member <span class="duration">Since 2022</span></h4>
-                <div class="company">University of Waterloo Rocketry Team</div>
-                <p>Since 2022, I’ve been a member of the Propulsion Team on the Waterloo Rocketry Team, where I’ve worked on both solid and liquid-fueled engine systems.</p>
-                <p><strong>Key responsibilities:</strong></p>
-                <ul>
-                    <li>Simulated rocket nozzle performance using ANSYS Fluent, optimizing geometry to improve thrust and reduce mass by 5%.</li>
-                    <li>Designed mechanical components in SolidWorks, coordinated with structural and avionics teams, and helped draft detailed design reports and test protocols.</li>
-                    <li>Analyzed static fire test data using MATLAB, contributing to the iterative improvement of nozzle efficiency and stability.</li>
-                </ul>
-                 <p>This experience not only developed my skills in CFD, FEA, and cross-disciplinary teamwork—it also grounded me in the real-world constraints of aerospace design.</p>
-            </div>
+        <article class="resume-entry" id="lib-ela">
+          <p class="entry-date"><time datetime="2025-04">Apr 2025</time> – <time datetime="2026-02">Feb 2026</time></p>
+          <div>
+            <h3>Scientific Software Developer</h3>
+            <p class="entry-org"><a href="https://github.com/lib-ela/lib-ela_doc">lib-ela</a> · Open source solid mechanics</p>
+            <ul>
+              <li>Contributed SymPy-generated C++ material kernels, finite-difference Jacobian checks, and reproducible examples for nonlinear solid mechanics.</li>
+              <li>Built a PhysicsNeMo workflow for recovering material parameters from synthetic stress–strain data, with error under 2% on the synthetic verification cases.</li>
+            </ul>
+          </div>
+        </article>
 
-            <div class="job card">
-               <h4>Research and Devolopment Scientist <span class="duration">Fall 2023</span></h4>
-               <div class="company">Gay Lea Foods</div>
-               <p>At Gay Lea Foods, I worked on the edge of data science and chemistry, applying my technical skills to predictive modeling and experimental design in food formulation.</p>
-               <p><strong>Key outcomes:</strong></p>
-                <ul>
-                    <li>Used TensorFlow and scikit-learn to build models predicting product texture and chemical stability.</li>
-                    <li>Automated assay data processing using pandas and NumPy, and ran MATLAB analysis to verify formulation performance against lab data.</li>
-                    <li>Designed validation experiments using viscometers, moisture analyzers, and pH meters to ensure 95%+ product quality accuracy.</li>
-                </ul>
-                <p>While not aerospace-related, this role deepened my command of data modeling, experimental design, and automated data pipelines, which translate directly into large-scale simulation workflows in engineering.</p>
-            </div>
-        </section>
-    </main>
+        <article class="resume-entry" id="firebird">
+          <p class="entry-date"><time datetime="2025-05">May 2025</time> – <time datetime="2025-09">Sep 2025</time></p>
+          <div>
+            <h3>Machine Learning Researcher and Developer</h3>
+            <p class="entry-org">FireBird · Scientific machine learning</p>
+            <ul>
+              <li>Worked on a physics-informed wildfire model in JAX. In a held-out experiment it improved intersection over union from 0.54 to 0.64 against a U-Net baseline.</li>
+            </ul>
+            <a class="work-link" href="https://github.com/modorethegreat/Wildfire-Projects">Browse related wildfire research code</a>
+          </div>
+        </article>
 
-    <!-- Shared Footer -->
-    <footer>
-        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
-        <p>Designed as a scientific portfolio for research, impact, and long-term vision.</p>
-    </footer>
+        <article class="resume-entry" id="rocketry">
+          <p class="entry-date"><time datetime="2022-09">Sep 2022</time> – <time datetime="2024-12">Dec 2024</time></p>
+          <div>
+            <h3>Propulsion Lead &amp; Systems Developer</h3>
+            <p class="entry-org">Waterloo Rocketry · Student engineering team</p>
+            <ul>
+              <li>Automated recurring CAD-to-CFD case setup with Python, SolidWorks and OpenFOAM.</li>
+              <li>Instrumented static-fire data acquisition and compared measurements with simulation predictions.</li>
+            </ul>
+          </div>
+        </article>
 
-    <!-- Consolidated JS -->
-    <script src="js/script.js" defer></script>
+        <article class="resume-entry" id="gay-lea">
+          <p class="entry-date"><time datetime="2023">Fall 2023</time></p>
+          <div>
+            <h3>Research &amp; Development Scientist</h3>
+            <p class="entry-org">Gay Lea Foods</p>
+            <ul>
+              <li>Automated assay data processing and explored predictive models for formulation properties. Used lab measurements to check model predictions.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="resume-entry" id="csa">
+          <p class="entry-date"><time datetime="2023-01">Jan 2023</time> – <time datetime="2023-05">May 2023</time></p>
+          <div>
+            <h3>Data Scientist</h3>
+            <p class="entry-org">Canadian Space Agency · Co-op</p>
+            <ul>
+              <li>Analyzed 16-channel thermal-vacuum telemetry in Python and built dashboards using Siemens PLC and SQL data so test engineers could monitor thermal cycling and investigate anomalies.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="resume-section" id="education" aria-labelledby="education-title">
+        <h2 id="education-title">Education</h2>
+        <article class="resume-entry">
+          <p class="entry-date"><time datetime="2026-05">May 2026</time></p>
+          <div>
+            <h3>University of Waterloo</h3>
+            <p class="entry-org">BSc, Honours Physics and Astronomy · Minor in Applied Mathematics</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="resume-section" id="recognition" aria-labelledby="recognition-title">
+        <h2 id="recognition-title">Recognition</h2>
+        <article class="resume-entry">
+          <p class="entry-date"><time datetime="2026">2026</time></p>
+          <div><h3>Velocity Summer Accelerator</h3><p class="entry-org">AeroGalactica</p></div>
+        </article>
+        <article class="resume-entry">
+          <p class="entry-date"><time datetime="2025">2025</time></p>
+          <div><h3>Velocity Cornerstone</h3><p class="entry-org">AeroGalactica</p></div>
+        </article>
+      </section>
+
+      <section class="resume-section" id="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title">Technical skills</h2>
+        <dl class="skill-list">
+          <div><dt>Software and infrastructure</dt><dd>Python, Go, TypeScript, React, FastAPI, REST, gRPC, PostgreSQL, Docker, AWS, Kubernetes and Terraform</dd></div>
+          <div><dt>CAD and simulation</dt><dd>SolidWorks, build123d and OpenCascade, PicoGK and OpenVDB, Gmsh, OpenFOAM, SU2 and Eilmer</dd></div>
+          <div><dt>Scientific ML and verification</dt><dd>JAX, PyTorch, PhysicsNeMo, SymPy, Pytest, numerical benchmarks and reproducible test cases</dd></div>
+          <div><dt>Engineering AI</dt><dd>OpenAI Agents SDK, MCP and tool integration for geometry and simulation</dd></div>
+        </dl>
+      </section>
+
+      <a class="work-link print-hide" href="projects.html">Browse projects</a>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="year">2026</span> Mohamed Hassan</p><p><a href="projects.html">Project archive</a></p><a href="#main">Back to top ↑</a></footer>
 </body>
 </html>

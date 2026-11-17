@@ -1,81 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Hassan - Projects</title>
-    <link rel="stylesheet" href="css/ style.css"> <!-- Fixed path -->
-    <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mohamed Hassan's projects in CAD, simulation, robotics, statistical physics, and scientific machine learning.">
+  <meta name="theme-color" content="#090d10">
+  <title>Projects — Mohamed Hassan</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/script.js"></script>
 </head>
-<body id="projects-page"> <!-- Unique ID for projects page -->
-
-    <!-- Shared Navigation -->
-    <nav id="main-nav">
-        <ul>
-            <li><a href="index.html" class="nav-link">Home</a></li>
-            <li><a href="about.html" class="nav-link">About</a></li>
-            <li><a href="experience.html" class="nav-link">Experience</a></li>
-            <li><a href="projects.html" class="nav-link">Projects</a></li>
-            <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
-            <li><a href="future.html" class="nav-link">Future</a></li>
-        </ul>
-        <!-- Removed theme toggle button -->
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="projects.html" aria-current="page">Work</a><a href="experience.html">Experience</a><a href="index.html#notes">Field Notes</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a>
     </nav>
+  </header>
 
-    <!-- Canvas for 3D Background -->
-    <canvas id="bg-canvas"></canvas>
+  <main id="main">
+    <section class="profile-hero dark-surface" aria-labelledby="projects-title">
+      <div class="profile-inner">
+        <h1 id="projects-title">Projects</h1>
+        <p>Engineering software, numerical simulations, and experiments that use physical models to answer concrete questions.</p>
+      </div>
+    </section>
+    <div class="profile-inner profile-content">
+      <nav class="page-index" aria-label="Project categories">
+        <a href="#engineering">Engineering software</a><a href="#simulation">Simulation and ML</a><a href="#research">Research and coursework</a>
+      </nav>
 
-    <!-- Page-Specific Content -->
-    <main>
-        <section id="projects">
-            <h2>🔭 Projects</h2>
+      <section class="resume-section" id="engineering" aria-labelledby="engineering-title">
+        <h2 id="engineering-title">Engineering software</h2>
+        <article class="project-entry" id="aerogalactica">
+          <h3>AeroGalactica</h3>
+          <p>Browser-based CAD, simulation and manufacturability tools. I worked across the 3D interface, backend services, solver integration and testing with engineers.</p>
+          <div class="entry-links"><a class="work-link" href="https://aerogalactica.org/">Visit AeroGalactica</a><a href="experience.html#aerogalactica">My role</a></div>
+        </article>
+        <article class="project-entry" id="aerog-workbench">
+          <h3>AeroG Engineering Workbench</h3>
+          <p class="entry-org">Local prototype</p>
+          <p>A shared workspace for versioned simulation studies, run comparisons and peer review. The prototype tracks which geometry and inputs produced each result, and marks evidence stale when those inputs change.</p>
+          <a class="work-link" href="index.html#evidence-note">Read the field note on stale evidence</a>
+        </article>
+        <article class="project-entry" id="lib-ela">
+          <h3>lib-ela</h3>
+          <p>Open-source solid mechanics. I contributed symbolic material kernels, numerical derivative checks and examples, and explored material parameter recovery on synthetic data.</p>
+          <div class="entry-links"><a class="work-link" href="https://github.com/lib-ela/lib-ela_doc">Project documentation</a><a href="experience.html#lib-ela">My role</a></div>
+        </article>
+        <article class="project-entry" id="gripbench">
+          <h3>GripBench</h3>
+          <p class="entry-org">Local prototype · In development</p>
+          <p>A MuJoCo lift-and-hold benchmark comparing flat and V-groove gripper jaws. The prototype pairs editable CAD with synchronized replays and plots for contact force and clearance, so the same trial can be inspected from both designs.</p>
+          <a class="work-link" href="index.html#gripbench-note">Read about the off-center trial</a>
+        </article>
+      </section>
 
-             <div class="project-item card">
-                 <h4>Physics-Informed Neural Networks for Propulsion Simulation <span class="duration">May–Sep 2024</span></h4>
-                 <div class="tech-stack">Python, PyTorch, PINNs, Fluid Dynamics</div>
-                 <p>I designed and trained a Physics-Informed Neural Network (PINN) using PyTorch, embedding the Navier-Stokes equations directly into the model’s loss function to simulate turbulent flow and predict viscosity gradients.</p>
-                 <ul>
-                     <li>Focused on fluid behavior in low-thrust propulsion environments, including MHD flows.</li>
-                     <li>Tuned hyperparameters (e.g., batch size, learning rate) to improve stability and accuracy.</li>
-                     <li>Explored the use of PINNs for replacing partial simulation stages in CFD pipelines.</li>
-                 </ul>
-             </div>
+      <section class="resume-section" id="simulation" aria-labelledby="simulation-title">
+        <h2 id="simulation-title">Simulation and machine learning</h2>
+        <article class="project-entry" id="spherical-pde-solver">
+          <h3>Spherical PDE solver</h3>
+          <p>A spectral shallow-water solver using spherical harmonics to represent surface height and velocity. The recorded example shows how the surface evolves.</p>
+          <div class="entry-links"><a class="work-link" href="index.html#solver-notes">Watch the simulation</a><a href="https://github.com/modorethegreat/spherical-PDE-solver">Source and methods</a></div>
+        </article>
+        <article class="project-entry" id="wildfire">
+          <h3>FireBird and wildfire research</h3>
+          <p>Physics-informed wildfire prediction, with related public code for data preparation, machine learning and fire spread analysis. The held-out comparison is described on the résumé.</p>
+          <div class="entry-links"><a class="work-link" href="https://github.com/modorethegreat/Wildfire-Projects">Wildfire projects</a><a href="experience.html#firebird">My role</a></div>
+        </article>
+        <article class="project-entry" id="rocketry">
+          <h3>Waterloo Rocketry</h3>
+          <p>Student propulsion work spanning repeated CAD-to-CFD studies, data acquisition, and comparison of predictions with static-fire measurements.</p>
+          <a class="work-link" href="experience.html#rocketry">My role</a>
+        </article>
+        <article class="project-entry" id="thermal-protection">
+          <h3>Thermal protection and propulsion studies</h3>
+          <p class="entry-org">Exploratory projects</p>
+          <p>Earlier experiments in materials data for thermal protection, physics-informed flow models, and anomaly detection on synthetic sensor traces.</p>
+        </article>
+      </section>
 
-             <div class="project-item card">
-                 <h4>Data-Driven Thermal Protection System (TPS) Optimization <span class="duration">Nov 2024–Present</span></h4>
-                  <div class="tech-stack">Python, PyTorch, GNNs, Materials Project API, NASA Data</div>
-                 <p>This ongoing project integrates NASA TPS material data with the Materials Project API to explore ablation-resistant materials for re-entry vehicles.</p>
-                 <ul>
-                     <li>Built a dataset linking physical properties (thermal conductivity, heat capacity) to ablation performance.</li>
-                     <li>Used graph neural networks (GNNs) in PyTorch to find material-property patterns.</li>
-                     <li>Focused on applications for lunar and Martian descent vehicles, where thermal extremes are critical.</li>
-                 </ul>
-                 <p>This project merges materials science, machine learning, and space vehicle engineering—key domains in my vision for future interplanetary missions.</p>
-             </div>
+      <section class="resume-section" id="research" aria-labelledby="research-title">
+        <h2 id="research-title">Research and coursework</h2>
+        <article class="project-entry" id="physics-compiler">
+          <h3>Universal Physics Compiler</h3>
+          <p class="entry-org">Research and proposed benchmarks</p>
+          <p>How can coupled simulators be composed while making conservation laws, interface contracts and numerical accuracy inspectable? Current notes explore discrete exterior calculus and port-Hamiltonian models.</p>
+          <a class="work-link" href="index.html#compiler-note">Read the research note</a>
+        </article>
+        <article class="project-entry" id="ising">
+          <h3>Learning the 2D Ising model</h3>
+          <p>My PHYS 449 project used restricted Boltzmann machines to study phase transitions in a two-dimensional spin system.</p>
+          <a class="work-link" href="https://github.com/modorethegreat/phys-449-rbm-ising-model">Code and report</a>
+        </article>
+        <article class="project-entry" id="visualizations">
+          <h3>Mathematics and physics visualizations</h3>
+          <p>Manim experiments for explaining topics in chaos, waves, quantum mechanics and relativity.</p>
+          <a class="work-link" href="https://github.com/modorethegreat/manim-visualizations">Browse the animations</a>
+        </article>
+        <article class="project-entry" id="public-data">
+          <h3>Canadian public data research</h3>
+          <p class="entry-org">Product discovery</p>
+          <p>A review of what Canadian public datasets can tell us about municipal permit intake and federal regulatory evidence, and where records or operational measurements are missing.</p>
+          <a class="work-link" href="index.html#public-data-note">Read the discovery note</a>
+        </article>
+      </section>
+    </div>
+  </main>
 
-             <div class="project-item card">
-                <h4>🛰Autonomous Anomaly Detection for Sensor Networks <span class="duration">Jan–Apr 2024</span></h4>
-                 <div class="tech-stack">Python, PyTorch, Time-Series Analysis, Random Forest</div>
-                 <p>I developed an autonomous system for anomaly detection in spacecraft sensor arrays, targeting real-time failure prediction.</p>
-                 <ul>
-                     <li>Built an LSTM in PyTorch, trained on synthetic time-series sensor data.</li>
-                     <li>Tuned the model to detect performance drops or outliers, simulating spacecraft health-monitoring systems.</li>
-                     <li>Demonstrated potential reductions in simulated downtime and increased mission reliability.</li>
-                 </ul>
-             </div>
-        </section>
-    </main>
-
-    <!-- Shared Footer -->
-    <footer>
-        <p>© <span id="current-year"></span> Mohamed Hassan. All rights reserved.</p>
-        <p>Designed as a scientific portfolio for research, impact, and long-term vision.</p>
-    </footer>
-
-    <!-- Consolidated JS -->
-    <script src="js/script.js" defer></script>
+  <footer class="site-footer"><p>© <span id="year">2026</span> Mohamed Hassan</p><p><a href="experience.html">Experience &amp; résumé</a></p><a href="#main">Back to top ↑</a></footer>
 </body>
 </html>

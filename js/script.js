@@ -46,18 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterButtons = document.querySelectorAll('[data-filter]');
   const noteRows = document.querySelectorAll('.note-row[data-category]');
   filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const filter = button.dataset.filter;
-      filterButtons.forEach((candidate) => {
-        const active = candidate === button;
-        candidate.classList.toggle('is-active', active);
-        candidate.setAttribute('aria-pressed', String(active));
-      });
-      noteRows.forEach((row) => {
-        row.hidden = filter !== 'all' && row.dataset.category !== filter;
-      });
-    });
+    button.addEventListener('click', () => applyNoteFilter(button.dataset.filter));
   });
+
+  function applyNoteFilter(filter) {
+    filterButtons.forEach((candidate) => {
+      const active = candidate.dataset.filter === filter;
+      candidate.classList.toggle('is-active', active);
+      candidate.setAttribute('aria-pressed', String(active));
+    });
+    noteRows.forEach((row) => {
+      row.hidden = filter !== 'all' && row.dataset.category !== filter;
+    });
+  }
+
+  function openLinkedNote() {
+    const row = document.getElementById(window.location.hash.slice(1));
+    if (!row?.matches('.note-row[data-category]')) return;
+    if (row.hidden) applyNoteFilter('all');
+    const details = row.querySelector('details');
+    if (details) details.open = true;
+  }
+
+  if (noteRows.length) {
+    openLinkedNote();
+    window.addEventListener('hashchange', openLinkedNote);
+  }
 
   const solverDetails = document.querySelector('#solver-notes');
   if (solverDetails) {
@@ -78,26 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const spacecraft = document.querySelector('[data-spacecraft]');
   if (spacecraft) activateSpacecraftControls(spacecraft);
 
-  const dialog = document.querySelector('#note-dialog');
-  const dialogTitle = document.querySelector('#dialog-title');
-  const dialogCopy = document.querySelector('#dialog-copy');
-  const closeDialog = document.querySelector('.dialog-close');
-
-  document.querySelectorAll('.note-trigger').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      if (!dialog || !dialogTitle || !dialogCopy) return;
-      dialogTitle.textContent = trigger.dataset.title || 'Field note';
-      dialogCopy.textContent = trigger.dataset.copy || '';
-      dialog.showModal();
-    });
-  });
-
-  closeDialog?.addEventListener('click', () => dialog?.close());
-  dialog?.addEventListener('click', (event) => {
-    const bounds = dialog.getBoundingClientRect();
-    const inside = event.clientX >= bounds.left && event.clientX <= bounds.right && event.clientY >= bounds.top && event.clientY <= bounds.bottom;
-    if (!inside) dialog.close();
-  });
+  const printButton = document.querySelector('[data-print-resume]');
+  if (printButton) {
+    printButton.hidden = false;
+    printButton.addEventListener('click', () => window.print());
+  }
 });
 
 
