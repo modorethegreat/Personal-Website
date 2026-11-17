@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Mohamed Hassan's projects in CAD, simulation, robotics, statistical physics, and scientific machine learning.">
-  <meta name="theme-color" content="#090d10">
+  <meta name="theme-color" content="#080d16">
   <title>Projects — Mohamed Hassan</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/space-theme.css">
+  <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
 </head>
-<body>
+<body class="space-site projects-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
@@ -21,9 +23,26 @@
 
   <main id="main">
     <section class="profile-hero dark-surface" aria-labelledby="projects-title">
-      <div class="profile-inner">
-        <h1 id="projects-title">Projects</h1>
-        <p>Engineering software, numerical simulations, and experiments that use physical models to answer concrete questions.</p>
+      <div class="profile-inner with-artifact">
+        <div class="profile-intro">
+          <h1 id="projects-title">Projects</h1>
+          <p>Engineering software, numerical simulations, and experiments that use physical models to answer concrete questions.</p>
+        </div>
+        <figure class="artifact-orbit" data-artifact="asteroid">
+          <div class="artifact-stage" data-astronomy-stage>
+            <img src="assets/images/astronomy/asteroid.webp" alt="Asteroid" width="720" height="450" loading="lazy" decoding="async">
+            <canvas aria-hidden="true" hidden></canvas>
+          </div>
+          <figcaption class="artifact-caption">
+            <div><strong>Asteroid</strong><span>Irregular rocky body</span></div>
+            <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Asteroid controls" hidden>
+              <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
+              <button type="button" data-turn="1" aria-label="Rotate right">→</button>
+              <button type="button" data-reset-artifact>Reset</button>
+            </div>
+            <span class="artifact-hint" id="asteroid-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
     <div class="profile-inner profile-content">

@@ -131,7 +131,7 @@ export function drawScene(canvas, mesh, run, frame, overhead) {
   }
 }
 
-const CHART_COLORS = ["#08738a", "#7846a6"];
+const CHART_COLORS = ["#81d3ee", "#d9b2f5"];
 export function drawChart(canvas, data, time, metric, measure) {
   const {context: ctx, width, height} = canvasContext(canvas);
   if (!data || width < 60) return;
@@ -147,18 +147,18 @@ export function drawChart(canvas, data, time, metric, measure) {
   const ticks = metric === "clearance" ? [0, 40, 80, 120] : [0, max / 2, max];
   const holdStart = duration - data.phases.at(-1)[1];
 
-  ctx.fillStyle = "#edf1ec";
+  ctx.fillStyle = "#203345";
   ctx.fillRect(x(holdStart), margin.top, x(duration) - x(holdStart), h);
   ctx.font = "10px ui-monospace, monospace";
   for (const value of ticks) {
-    ctx.fillStyle = "#536063";
+    ctx.fillStyle = "#b8c7d9";
     ctx.textAlign = "right";
     ctx.fillText(String(value), margin.left - 6, y(value) + 3);
     ctx.beginPath();
-    ctx.strokeStyle = "#daddd7";
+    ctx.strokeStyle = "#26394c";
     if (metric === "clearance" && value === data.pass_clearance_m * 1000) {
       ctx.setLineDash([3, 4]);
-      ctx.strokeStyle = "#75817d";
+      ctx.strokeStyle = "#8998ab";
     }
     ctx.moveTo(x(0), y(value));
     ctx.lineTo(x(duration), y(value));
@@ -166,7 +166,7 @@ export function drawChart(canvas, data, time, metric, measure) {
     ctx.setLineDash([]);
   }
   ctx.textAlign = "center";
-  ctx.fillStyle = "#536063";
+  ctx.fillStyle = "#b8c7d9";
   for (const tick of [0, 1, 2, 3, duration]) {
     ctx.textAlign = tick === duration ? "right" : "center";
     ctx.fillText(tick + " s", x(tick), height - 5);
@@ -187,7 +187,7 @@ export function drawChart(canvas, data, time, metric, measure) {
   });
   ctx.beginPath();
   ctx.lineWidth = 1;
-  ctx.strokeStyle = "#526564";
+  ctx.strokeStyle = "#d4dbed";
   ctx.moveTo(x(time), margin.top);
   ctx.lineTo(x(time), height - margin.bottom);
   ctx.stroke();

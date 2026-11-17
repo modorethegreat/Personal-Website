@@ -107,6 +107,7 @@ function activateSpacecraftControls(container) {
   const toggle = container.querySelector('[data-spacecraft-toggle]');
   const spin = dialog.querySelector('[data-spacecraft-spin]');
   const status = container.querySelector('[data-spacecraft-status]');
+  const label = [...toggle.childNodes];
   let viewer;
 
   toggle.hidden = false;
@@ -126,7 +127,7 @@ function activateSpacecraftControls(container) {
       status.textContent = 'The 3D view could not load.';
     } finally {
       toggle.removeAttribute('aria-busy');
-      toggle.textContent = 'Explore 3D';
+      toggle.replaceChildren(...label);
     }
   });
 

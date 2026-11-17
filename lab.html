@@ -4,14 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Replay GripBench, a side-by-side MuJoCo comparison of flat and V-groove robot gripper jaws.">
-  <meta name="theme-color" content="#090d10">
+  <meta name="theme-color" content="#080d16">
   <title>Lab · GripBench — Mohamed Hassan</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/lab.css">
+  <link rel="stylesheet" href="css/space-theme.css">
+  <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
   <script type="module" src="js/gripbench.js"></script>
 </head>
-<body class="lab-page">
+<body class="space-site lab-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
@@ -33,10 +35,27 @@
       </aside>
 
       <article class="lab-workspace" id="gripbench" aria-labelledby="gripbench-title">
-        <header class="lab-heading">
-          <p class="lab-kicker">Lab / Robotics</p>
-          <h1 id="gripbench-title">GripBench</h1>
-          <p>Compare two gripper jaws on the same simulated lift.</p>
+        <header class="lab-heading with-artifact">
+          <div class="lab-intro">
+            <p class="lab-kicker">Lab / Robotics</p>
+            <h1 id="gripbench-title">GripBench</h1>
+            <p>Compare two gripper jaws on the same simulated lift.</p>
+          </div>
+          <figure class="artifact-orbit" data-artifact="mars">
+            <div class="artifact-stage" data-astronomy-stage>
+              <img src="assets/images/astronomy/mars.webp" alt="Mars globe" width="720" height="450" loading="lazy" decoding="async">
+              <canvas aria-hidden="true" hidden></canvas>
+            </div>
+            <figcaption class="artifact-caption">
+              <div><strong>Mars globe</strong><span>Dust-covered terrain and polar ice</span></div>
+              <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Mars globe controls" hidden>
+                <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
+                <button type="button" data-turn="1" aria-label="Rotate right">→</button>
+                <button type="button" data-reset-artifact>Reset</button>
+              </div>
+              <span class="artifact-hint" id="mars-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
+            </figcaption>
+          </figure>
         </header>
 
         <div class="bench-setup">

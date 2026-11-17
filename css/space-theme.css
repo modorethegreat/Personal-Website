@@ -1,0 +1,288 @@
+@media screen {
+  .space-site {
+    --ink:#080d16;
+    --ink-soft:#101b2b;
+    --paper:#0c1421;
+    --paper-deep:#0a1321;
+    --text:#f3eee5;
+    --muted:#aebbcf;
+    --line:#303d50;
+    --line-dark:#2d384a;
+    --blue:#9ac9ff;
+    --orange:#f2b68d;
+    --sky:#080d16;
+    --warm:#f2b68d;
+    --cold:#b3d4fa;
+    background:var(--sky);
+    color:var(--text);
+    color-scheme:dark;
+  }
+
+  .space-site .site-header {
+    background:#080d16f2;
+    border-color:#293649;
+  }
+  .space-site .site-nav a { color:#bdc8d9; }
+  .space-site .site-nav a:is(:hover,:focus-visible,[aria-current="page"]) { color:#fff4e7; }
+  .space-site .site-nav a::after { background:var(--warm); }
+  .space-site .wordmark { color:#fff4e7; }
+  .space-site .site-footer {
+    background:#08101c;
+    color:#a9b6ca;
+    border-top:1px solid #2d3a4d;
+  }
+
+  .home-page .hero {
+    background:
+      radial-gradient(ellipse at 38% 91%,#1222397a,transparent 42%),
+      radial-gradient(ellipse at 36% 0%,#47261d4f,transparent 46%),
+      #080a10;
+  }
+  .home-page .orbit-stage { background:none; }
+  .home-page .orbit-stage::after { display:none; }
+  .home-page .orbit-stage::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url('../assets/images/orbit-planet.webp') center / cover;
+  }
+  .home-page .orbit-stage:has(canvas:not([hidden]))::before { display:none; }
+  .home-page .orbit-stage::before,
+  .home-page .orbit-stage canvas {
+    mask-image:linear-gradient(90deg,transparent,#000 17%),
+      linear-gradient(180deg,transparent,#000 13%,#000 84%,transparent);
+    mask-composite:intersect;
+  }
+  .home-page .hero-copy { z-index:2; }
+  .home-page .orbit-caption { z-index:2; }
+  .particle-trails {
+    position:absolute;
+    z-index:1;
+    inset:0;
+    display:block;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+  .home-page .hero-lede { color:#c2cada; }
+  .home-page .hero h1 { text-shadow:0 2px 24px #080a10; }
+  .home-page .orbit-caption { border-color:#46516a; }
+  .home-page .orbit-caption button:not(.spacecraft-launch) { background:#141d2bea; }
+  .home-page .orbit-caption button[aria-pressed="true"] {
+    background:#33251d;
+    color:#ffe1c0;
+  }
+
+  .home-page .work {
+    background:
+      radial-gradient(ellipse at 79% 0%,#18304d85,transparent 55%),
+      linear-gradient(#0b1524,#0d1726);
+    border-top:1px solid #354057;
+  }
+  .home-page .work-heading::after { background:linear-gradient(90deg,#bd927b,#465b7c 50%,#2a3d58); }
+  .home-page .work-image { border:1px solid #43536b; }
+  .home-page .work-card .work-topic { color:#aebdd3; }
+  .space-site .work-link, .space-site .page-index a, .space-site .entry-links a {
+    color:var(--warm);
+  }
+  .space-site :is(.work-link,.page-index a,.entry-links a):is(:hover,:focus-visible) { color:#ffdfc5; }
+  .space-site .work-details summary:hover,
+  .space-site .note-title:is(:hover,:focus-visible) { color:var(--warm); }
+
+  .home-page .portfolio-model {
+    background:
+      linear-gradient(104deg,#0b1424f2,#0b1424d9 70%,#0d1425d9),
+      url('../assets/images/star-chart.webp') center / cover;
+    border-block-color:var(--line);
+  }
+  .home-page .origin {
+    background:radial-gradient(ellipse at 78% 36%,#192839 0%,#0c1523 55%,#0b1420 100%);
+  }
+  .home-page .origin-story, .home-page .note-body { color:#c4cedd; }
+  .home-page .origin-quote { margin:.75rem 0 0; border-top-color:var(--line); }
+  .home-page .origin-quote p { font-size:clamp(1.25rem,1.8vw,1.8rem); }
+  .home-page .side-rail { color:#a5b3cb; }
+  .home-page .questions {
+    background:radial-gradient(ellipse at 20% 0%,#172439,transparent 56%),#0c1523;
+  }
+  .home-page .question-grid { margin-top:clamp(2.25rem,4vw,4rem); }
+  .home-page .question-card {
+    min-height:clamp(14rem,20vw,20rem);
+    background:linear-gradient(155deg,#14253c78,#1521352a 65%);
+  }
+  .home-page .question-card > span { color:#e7b591; }
+  .home-page .notes {
+    background:
+      radial-gradient(ellipse at 80% 7%,#1b344b8c,transparent 31%),
+      #0a1322;
+  }
+  .home-page .notes-header {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,.76fr);
+    align-items:center;
+    gap:2.5rem;
+  }
+  .home-page .note-filters { justify-content:flex-start; margin-top:1.65rem; }
+  .home-page .note-filters button { min-height:2.75rem; font-size:.68rem; }
+  .home-page .note-filters button.is-active { background:#e5ecf7; color:#101826; }
+  .home-page .note-list { margin-top:1.2rem; border-top-color:var(--line); }
+
+  .home-page .now-strip { background:linear-gradient(110deg,#241f2a,#101b2b 68%); border-color:var(--line); }
+  .home-page .now-strip .side-rail { border-color:var(--line); color:#b5adc4; }
+  .home-page .now-grid p { color:#d0c9d2; }
+  .home-page .now-grid p span { color:var(--warm); }
+  .home-page .manifesto {
+    min-height:clamp(30rem,55vw,40rem);
+    background:
+      linear-gradient(90deg,#08101bec 5%,#08101baf 63%,#08101b55),
+      linear-gradient(0deg,#08101b 1%,transparent 36%),
+      url('../assets/images/star-chart.webp') center 60% / cover;
+  }
+  .home-page .manifesto-inner > p:not(.kicker) { color:#bac8dc; }
+  .home-page .text-link--light { color:var(--cold); }
+
+  .space-site .profile-hero {
+    background:
+      linear-gradient(96deg,#09121fec,#0b1423a0 68%,#0a1220a0),
+      url('../assets/images/star-chart.webp') center 46% / cover;
+  }
+  .space-site .profile-content {
+    position:relative;
+  }
+  .space-site main:has(.profile-content) {
+    background:radial-gradient(ellipse at 74% 11%,#16273a80,transparent 41%),#0b1422;
+  }
+  .space-site .profile-intro h1 + p { color:#c4cedd; }
+  .space-site .profile-intro .kicker { color:#dcc0a9; }
+  .space-site :is(.entry-date,.entry-org) { color:#aebdd3; }
+  .space-site .skill-list dd, .space-site .project-entry > p:not(.entry-org) { color:#c2cede; }
+  .space-site .profile-links .hero-primary { background:#eadcce; color:#1f1b1d; }
+
+  .lab-page .lab-background {
+    background:
+      linear-gradient(#080f1bbc,#080f1bf2 68%),
+      url('../assets/images/star-chart.webp') center top / min(100%,82rem) auto;
+  }
+  .lab-page .lab-shell { border-color:#465570; }
+  .lab-page .lab-index {
+    background:#101b2b;
+    border-color:#465570;
+  }
+  .lab-page .lab-workspace {
+    background:linear-gradient(135deg,#131f32,#0e1929 52%);
+  }
+  .lab-page .lab-intro > p:last-child { color:#c1cddd; }
+  .lab-page .lab-kicker { color:#efb992; }
+  .lab-page :is(.bench-setup,.bench-view,.bench-transport,.bench-telemetry,.bench-method,.bench-values div) {
+    border-color:#41506a;
+  }
+  .lab-page .bench-values { background:#121e2f; }
+  .lab-page :is(.bench-condition,.bench-values dt,.bench-time output,#chart-caption,.bench-method p) { color:#b8c7d9; }
+  .lab-page :is(.lab-workspace select,.bench-message button) {
+    background:#1a293d;
+    border-color:#596a82;
+    color:#f2e9df;
+  }
+  .lab-page .bench-transport button { background:#dca786; color:#1f1618; }
+  .lab-page .bench-transport button:hover { background:#f1c7a8; }
+  .lab-page .bench-time input { accent-color:var(--warm); }
+  .lab-page .bench-message { background:#253148; border-color:var(--warm); }
+  .lab-page .chart-key span:first-child { color:#81d3ee; }
+  .lab-page .chart-key span:last-child { color:#d9b2f5; }
+  .lab-page .bench-downloads a { color:var(--warm); }
+
+  .with-artifact {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(14rem, .66fr);
+    align-items:center;
+    gap:clamp(1.25rem,4vw,3.25rem);
+  }
+  .profile-hero .with-artifact { padding-block:clamp(2rem,4.2vw,4rem); }
+  .lab-heading.with-artifact {
+    grid-template-columns:minmax(0,1fr) minmax(13rem, .56fr);
+    margin-bottom:.9rem;
+  }
+
+  .artifact-orbit {
+    position:relative;
+    min-width:0;
+    margin:0;
+    border:1px solid #364a64;
+    background:#0b1525;
+  }
+  .artifact-stage {
+    position:relative;
+    aspect-ratio:8 / 5;
+    overflow:hidden;
+    background:#0b1525;
+    outline-offset:-4px;
+  }
+  .artifact-stage :is(img,canvas) { position:absolute; inset:0; width:100%; height:100%; }
+  .artifact-stage canvas { pointer-events:none; }
+  .artifact-stage [hidden], .artifact-caption [hidden] { display:none; }
+  .artifact-stage[data-interactive] { touch-action:pan-y; cursor:grab; }
+  .artifact-stage[data-dragging] { cursor:grabbing; }
+  .artifact-caption {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:.5rem .75rem;
+    padding:.7rem .85rem;
+    border-top:1px solid #354960;
+  }
+  .artifact-caption strong { display:block; color:#f1e9dd; font-size:.86rem; font-weight:650; }
+  .artifact-caption span { display:block; color:#b5c6db; font-size:.71rem; }
+  .artifact-caption .artifact-hint { flex-basis:100%; margin:0; color:#aebdd2; }
+  .artifact-controls { display:flex; flex-wrap:wrap; gap:.25rem; }
+  .artifact-controls button {
+    min-width:2.75rem;
+    min-height:2.75rem;
+    padding:.25rem .5rem;
+    border:1px solid #4b5d78;
+    background:#142237;
+    color:#e8f0fa;
+    font-size:.76rem;
+    cursor:pointer;
+  }
+  .artifact-controls button:hover { background:#21354f; border-color:#a5bfdc; }
+  .origin-aside { min-width:0; }
+  .origin-aside .artifact-caption { padding-inline:.6rem; }
+
+  @media (max-width:1100px) {
+    .home-page .origin-aside {
+      grid-column:1/-1;
+      display:grid;
+      grid-template-columns:minmax(0,.8fr) minmax(0,1fr);
+      align-items:center;
+      gap:1.4rem;
+    }
+  }
+
+  @media (max-width:760px) {
+    .home-page .notes-header, .with-artifact, .lab-heading.with-artifact {
+      grid-template-columns:minmax(0,1fr);
+      gap:1.35rem;
+    }
+    .home-page .origin-aside { grid-column:auto; display:block; }
+    .home-page .question-card { min-height:13rem; }
+    .home-page .hero .particle-trails { opacity:.9; }
+    .home-page .orbit-stage::before,
+    .home-page .orbit-stage canvas {
+      mask-image:linear-gradient(180deg,transparent,#000 9%,#000 86%,transparent);
+    }
+    .profile-hero .with-artifact { padding-block:2rem; }
+  }
+}
+
+@media screen and (prefers-reduced-motion:no-preference) {
+  .space-site .hero-copy,
+  .space-site .profile-hero .profile-intro,
+  .space-site .lab-intro {
+    animation:space-enter 420ms ease-out both;
+  }
+}
+
+@keyframes space-enter {
+  from { opacity:.4; transform:translateY(.45rem); }
+}

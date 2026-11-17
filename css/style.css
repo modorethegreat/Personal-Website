@@ -42,96 +42,112 @@ button{font:inherit}
 .hero {
   position:relative;
   display:grid;
-  place-items:center;
+  grid-template-columns:minmax(0,.83fr) minmax(0,1.17fr);
+  align-items:center;
   isolation:isolate;
-  min-height:clamp(32.5rem,calc(100svh - 9.25rem),48rem);
+  min-height:clamp(38rem,calc(100svh - 8rem),53rem);
+  padding-inline:var(--pad);
   border-bottom:1px solid var(--line-dark);
-  background:#070d15;
+  background:#080a10;
 }
 .hero-copy {
   z-index:1;
-  display:flex;
-  width:100%;
-  flex-direction:column;
-  align-items:center;
-  padding:4.6rem var(--pad) 6.35rem;
-  text-align:center;
+  padding-block:4rem 5rem;
 }
 .kicker{margin:0 0 1.35rem;color:#879198;font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
 .kicker--ink{color:var(--orange)}
-.hero .kicker{color:#c2ccd4;font-size:.75rem}
+.hero .kicker{color:#cbbbaa;font-size:.69rem;letter-spacing:.18em}
 .hero h1 {
-  max-width:19ch;
+  max-width:16ch;
   margin:0;
+  color:#fbf5eb;
   font-family:var(--serif);
-  font-size:clamp(3.4rem,7.3vw,7.1rem);
+  font-size:clamp(3.45rem,5.45vw,7.35rem);
   font-weight:400;
-  line-height:.96;
-  letter-spacing:-.05em;
+  line-height:.92;
+  letter-spacing:-.053em;
   text-wrap:balance;
-  text-shadow:0 3px 26px #020509;
 }
 .hero-lede {
-  max-width:38rem;
-  margin:1.3rem 0 0;
-  color:#ccd5db;
-  font-size:clamp(.98rem,1.35vw,1.25rem);
-  line-height:1.5;
+  max-width:34ch;
+  margin:1.55rem 0 0;
+  color:#bcbdc8;
+  font-size:clamp(.98rem,1.28vw,1.19rem);
+  line-height:1.65;
 }
-.hero-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.25rem;margin-top:1.8rem}
-.hero-actions a{font-family:var(--serif);font-size:clamp(1.12rem,1.55vw,1.44rem);line-height:1.2}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.85rem}
+.hero-actions a{font-size:.85rem;font-weight:600;line-height:1.3}
 .hero-primary{display:inline-flex;align-items:center;gap:.85rem;padding:.75rem 1.1rem .65rem;background:#9d3f21;color:#fff9f1}
 .hero-primary:hover,.hero-primary:focus-visible{background:#b44723}
+.hero .hero-primary{min-height:2.75rem;padding:.75rem .9rem;background:#eae0ce;color:#171419}
+.hero .hero-primary:hover,.hero .hero-primary:focus-visible{background:#ffefcf}
 .hero-secondary{padding:.25rem 0;border-bottom:1px solid currentColor;color:#ece9e2}
-.hero-secondary:hover{color:#a9cfff}
+.hero-secondary:hover{color:#e5c3a3}
 .text-link{appearance:none;display:inline-flex;align-items:center;justify-content:space-between;gap:2rem;padding:.15rem 0 .5rem;border:0;border-bottom:1px solid currentColor;background:transparent;color:var(--text);font-size:.7rem;font-weight:600;letter-spacing:.09em;text-align:left;text-transform:uppercase;cursor:pointer;transition:gap .2s ease,color .2s ease}
 .text-link:hover,.text-link:focus-visible{gap:2.5rem;color:var(--blue)}
 .text-link--light{color:#f3f4f0}
 
-.orbit-backdrop, .orbit-sky {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
+.orbit-observatory {
+  position:relative;
+  align-self:stretch;
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
+  min-width:0;
+  margin:0;
 }
-.orbit-backdrop {
-  overflow:hidden;
-  background:
-    linear-gradient(180deg,#04070de8 0%,#0a1320c2 53%,#080f18e8 100%),
-    url('../assets/images/star-chart.webp') center 47% / cover;
+.orbit-stage {
+  position:relative;
+  min-height:22rem;
+  margin-inline:clamp(-3.5rem,-3vw,-1rem) calc(-1 * var(--pad));
+  outline-offset:-4px;
+  background:#080a10 url('../assets/images/orbit-planet.webp') center / cover;
 }
-.orbit-backdrop::after {
+.orbit-stage[data-interactive] {cursor:grab;touch-action:pan-y}
+.orbit-stage[data-dragging] {cursor:grabbing}
+.orbit-stage:focus-visible{outline:2px solid #f3c998}
+.orbit-stage::after {
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(ellipse 46% 42% at 50% 49%,#050a127d 0%,#050a1228 58%,transparent 100%);
+  pointer-events:none;
+  background:linear-gradient(90deg,#080a10 0%,transparent 17%),linear-gradient(0deg,#080a10 0%,transparent 13%);
 }
-.orbit-controls {
-  position:absolute;
-  z-index:2;
-  right:var(--pad);
-  bottom:1.2rem;
-  display:flex;
-  justify-content:flex-end;
-  flex-wrap:wrap;
-  gap:.5rem;
+.orbit-sky{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.orbit-sky[hidden]{display:none}
+.orbit-caption {
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:.8rem;
+  row-gap:.65rem;
+  padding:.85rem 0 1.15rem;
+  border-top:1px solid #33313a;
 }
-.orbit-controls [hidden]{display:none}
-.orbit-controls button,.spacecraft-dialog button {
+.orbit-caption-copy p{margin:0}
+#orbit-title{font-size:.88rem;color:#f2e8d7;font-weight:600}
+#orbit-hint{margin-top:.13rem;font-size:.73rem;color:#b5b3c0}
+.orbit-controls{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.35rem}
+.orbit-caption [hidden]{display:none}
+.orbit-caption button,.spacecraft-dialog button {
   min-width:2.75rem;
   min-height:2.75rem;
-  padding:.35rem .8rem;
-  border:1px solid #697888;
-  background:#0c1521ef;
-  color:#f1f5fa;
-  font-size:.8rem;
+  padding:.35rem .65rem;
+  border:1px solid #474650;
+  background:#101119;
+  color:#ece7e0;
+  font-size:.76rem;
   cursor:pointer;
 }
-.orbit-controls button:hover,.spacecraft-dialog button:hover{border-color:#b7d5f9;background:#172538}
-.orbit-controls [aria-busy='true']{cursor:wait}
-.spacecraft-status{position:absolute;z-index:2;right:var(--pad);bottom:3.7rem;margin:0;color:#f4f6fb;font-size:.8rem}
-.spacecraft-status:not(:empty){padding:.4rem .6rem;background:var(--ink)}
+.orbit-caption button:hover,.spacecraft-dialog button:hover{border-color:#e5c3a3;background:#201c24}
+.orbit-caption button:focus-visible,.spacecraft-dialog button:focus-visible{outline:2px solid #f3c998;outline-offset:2px}
+.orbit-controls button[aria-pressed="true"]{border-color:#d6ab82;background:#302319;color:#ffe1c0}
+.orbit-controls button:disabled{opacity:.45;cursor:default}
+.orbit-controls [data-orbit-zoom]{font-size:1.05rem}
+.orbit-caption .spacecraft-launch{background:transparent;border-color:transparent;color:#e5c3a3;text-align:right}
+.orbit-caption [aria-busy='true']{cursor:wait}
+.spacecraft-status{grid-column:1/-1;margin:0;color:#f4f6fb;font-size:.8rem}
+.spacecraft-status:empty{display:none}
 .spacecraft-dialog {
   width:min(48rem,calc(100% - 2rem));
   max-height:calc(100svh - 2rem);
@@ -243,14 +259,15 @@ button{font:inherit}
 @media (max-width:760px){
   :root{--rail:2.35rem;--pad:1.25rem}
   html{scroll-padding-top:4rem}.site-header{min-height:4rem}.wordmark{font-size:.68rem}.js .menu-toggle{display:block;justify-self:end}.js .site-nav{position:fixed;inset:4rem 0 auto 0;display:none;flex-direction:column;align-items:flex-start;gap:.6rem;padding:2rem var(--pad) 2.5rem;background:var(--ink);border-bottom:1px solid var(--line-dark)}.js .site-nav.is-open{display:flex}.js .site-nav a{font-family:var(--serif);font-size:2.2rem;font-weight:400;letter-spacing:-.03em;text-transform:none}
-  .hero{min-height:min(42rem,calc(100svh - 7.5rem))}
-  .hero-copy{padding:4.8rem var(--pad) 5.8rem}
-  .hero h1{font-size:clamp(2.85rem,11.8vw,4.8rem);max-width:16ch}
-  .hero .kicker{margin-bottom:.9rem;font-size:.66rem}
-  .hero-lede{margin-top:1rem}
-  .hero-actions{margin-top:1.35rem;column-gap:1.2rem;row-gap:.6rem}
-  .orbit-controls{right:var(--pad);left:var(--pad);bottom:.85rem;justify-content:center}
-  .spacecraft-status{right:var(--pad);bottom:3.75rem}
+  .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hero-copy{padding-block:3.15rem .25rem}
+  .hero h1{font-size:clamp(3.05rem,10.7vw,5rem)}
+  .hero .kicker{margin-bottom:.9rem;font-size:.65rem}
+  .hero-lede{margin-top:1.05rem}
+  .hero-actions{margin-top:1.15rem}
+  .orbit-stage{margin-inline:calc(-1 * var(--pad));min-height:0;height:clamp(15rem,70vw,23rem)}
+  .orbit-stage::after{background:linear-gradient(0deg,#080a10 0%,transparent 12%)}
+  .orbit-caption{padding-block:.65rem .9rem}
   .work-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:1.75rem}
   .work-heading{margin-bottom:1.35rem}
   .solver-details{grid-template-columns:minmax(0,1fr)}

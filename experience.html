@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Mohamed Hassan's experience in engineering software, computational physics, scientific machine learning, and aerospace testing.">
-  <meta name="theme-color" content="#090d10">
+  <meta name="theme-color" content="#080d16">
   <title>Experience &amp; résumé — Mohamed Hassan</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/space-theme.css">
+  <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
 </head>
-<body class="resume-page">
+<body class="space-site resume-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
@@ -21,17 +23,34 @@
 
   <main id="main">
     <section class="profile-hero dark-surface" aria-labelledby="resume-title">
-      <div class="profile-inner">
-        <p class="kicker">Experience &amp; résumé</p>
-        <h1 id="resume-title">Mohamed Hassan</h1>
-        <p>I build software for computational engineering, from CAD and solver integrations to test data and scientific machine learning.</p>
-        <div class="profile-links">
-          <button class="hero-primary" type="button" data-print-resume hidden>Print or save as PDF</button>
-          <a href="https://github.com/modorethegreat">GitHub</a>
-          <a href="https://www.linkedin.com/in/mohamed-hassan-219b33201/">LinkedIn</a>
-          <a href="mailto:mm6hassa@uwaterloo.ca" data-address="mm6hassa@uwaterloo.ca">Email</a>
+      <div class="profile-inner with-artifact">
+        <div class="profile-intro">
+          <p class="kicker">Experience &amp; résumé</p>
+          <h1 id="resume-title">Mohamed Hassan</h1>
+          <p>I build software for computational engineering, from CAD and solver integrations to test data and scientific machine learning.</p>
+          <div class="profile-links">
+            <button class="hero-primary" type="button" data-print-resume hidden>Print or save as PDF</button>
+            <a href="https://github.com/modorethegreat">GitHub</a>
+            <a href="https://www.linkedin.com/in/mohamed-hassan-219b33201/">LinkedIn</a>
+            <a href="mailto:mm6hassa@uwaterloo.ca" data-address="mm6hassa@uwaterloo.ca">Email</a>
+          </div>
+          <p class="profile-updated">Updated <time datetime="2026-11-16">November 16, 2026</time></p>
         </div>
-        <p class="profile-updated">Updated <time datetime="2026-11-16">November 16, 2026</time></p>
+        <figure class="artifact-orbit print-hide" data-artifact="telescope">
+          <div class="artifact-stage" data-astronomy-stage>
+            <img src="assets/images/astronomy/telescope.webp" alt="Orbital telescope" width="720" height="450" loading="lazy" decoding="async">
+            <canvas aria-hidden="true" hidden></canvas>
+          </div>
+          <figcaption class="artifact-caption">
+            <div><strong>Orbital telescope</strong><span>Optical tube and solar arrays</span></div>
+            <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Orbital telescope controls" hidden>
+              <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
+              <button type="button" data-turn="1" aria-label="Rotate right">→</button>
+              <button type="button" data-reset-artifact>Reset</button>
+            </div>
+            <span class="artifact-hint" id="telescope-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
