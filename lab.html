@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Replay GripBench, a side-by-side MuJoCo comparison of flat and V-groove robot gripper jaws.">
+  <meta name="theme-color" content="#090d10">
+  <title>Lab · GripBench — Mohamed Hassan</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/lab.css">
+  <script type="module" src="js/script.js"></script>
+  <script type="module" src="js/gripbench.js"></script>
+</head>
+<body class="lab-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="Mohamed Hassan, home"><span>Mohamed</span><span>Hassan</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="index.html#work">Work</a><a href="lab.html" aria-current="page">Lab</a><a href="experience.html">Experience</a><a href="index.html#notes">Field Notes</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="lab-background" id="main">
+    <div class="lab-shell">
+      <aside class="lab-index">
+        <nav aria-label="Lab index">
+          <p>Workbench</p>
+          <a href="#gripbench">GripBench</a>
+          <a href="#methods">Methods &amp; CAD</a>
+        </nav>
+        <a class="lab-archive-link" href="projects.html">Project archive <span aria-hidden="true">↗</span></a>
+      </aside>
+
+      <article class="lab-workspace" id="gripbench" aria-labelledby="gripbench-title">
+        <header class="lab-heading">
+          <p class="lab-kicker">Lab / Robotics</p>
+          <h1 id="gripbench-title">GripBench</h1>
+          <p>Compare two gripper jaws on the same simulated lift.</p>
+        </header>
+
+        <div class="bench-setup">
+          <div>
+            <p class="lab-kicker">MuJoCo replay</p>
+            <p class="bench-condition" id="condition">Choose a recorded trial.</p>
+          </div>
+          <label for="trial">Scenario
+            <select id="trial" disabled>
+              <option value="off-center">Off-center cube</option>
+              <option value="centered-cylinder">Centered cylinder</option>
+              <option value="low-friction">Low-friction cube</option>
+              <option value="centered-cube">Centered cube</option>
+            </select>
+          </label>
+        </div>
+
+        <noscript><p class="bench-message">Enable JavaScript to replay the trials. The method and CAD files are available below.</p></noscript>
+        <div class="bench-message" id="trial-message" hidden>
+          <p id="trial-status" role="status"></p>
+          <button id="retry-trial" type="button" hidden>Retry</button>
+        </div>
+
+        <div id="replay">
+          <div class="bench-views" aria-label="Synchronized jaw comparison">
+            <section class="bench-view" data-jaw="flat" aria-labelledby="flat-title">
+              <header><h2 id="flat-title">Flat jaw</h2><span data-result></span></header>
+              <canvas role="img" aria-label="Animated flat jaw model and workpiece"></canvas>
+              <dl class="bench-values">
+                <div><dt>Min. hold clearance</dt><dd data-minimum>—</dd></div>
+                <div><dt>At cursor</dt><dd data-reading>—</dd></div>
+              </dl>
+            </section>
+            <section class="bench-view" data-jaw="v-groove" aria-labelledby="groove-title">
+              <header><h2 id="groove-title">V-groove jaw</h2><span data-result></span></header>
+              <canvas role="img" aria-label="Animated V-groove jaw model and workpiece"></canvas>
+              <dl class="bench-values">
+                <div><dt>Min. hold clearance</dt><dd data-minimum>—</dd></div>
+                <div><dt>At cursor</dt><dd data-reading>—</dd></div>
+              </dl>
+            </section>
+          </div>
+
+          <fieldset class="bench-transport" id="transport" disabled aria-label="Replay controls">
+            <button id="play-trial" type="button">Play</button>
+            <div class="bench-time">
+              <label for="timeline" class="visually-hidden">Replay time</label>
+              <input id="timeline" type="range" min="0" max="3.6" step="0.02" value="0">
+              <output id="elapsed" for="timeline">0.00 s</output>
+            </div>
+            <label for="camera">Camera
+              <select id="camera"><option value="perspective">Perspective</option><option value="overhead">Overhead</option></select>
+            </label>
+          </fieldset>
+
+          <section class="bench-telemetry" aria-labelledby="telemetry-title">
+            <header>
+              <div><h2 id="telemetry-title">Telemetry</h2><p class="chart-key"><span>Flat jaw</span><span>V-groove jaw</span></p></div>
+              <label for="metric">Measurement
+                <select id="metric" disabled><option value="clearance">Clearance (mm)</option><option value="force">Normal force (N)</option></select>
+              </label>
+            </header>
+            <canvas id="telemetry" role="img" aria-label="Clearance traces for both jaws. At-cursor values and minimum hold clearances are listed above."></canvas>
+            <p id="chart-caption">Clearance is the distance from the table to the workpiece’s lowest point. The dashed line marks 80 mm. Shading marks the hold phase.</p>
+          </section>
+        </div>
+
+        <section class="bench-method" id="methods" aria-labelledby="methods-title">
+          <h2 id="methods-title">Methods &amp; CAD</h2>
+          <p>Both designs use the same 150 g workpiece, clamp settings and 100 mm lift command. A trial passes when the workpiece stays at least 80 mm above the table for the full two-second hold.</p>
+          <p>The browser replays recorded MuJoCo 4.0.1 runs sampled at approximately 50 frames per second. The pass result uses the full simulation trace. Contact is simplified, and each preset is a single simulated trial.</p>
+          <div class="bench-downloads">
+            <a data-cad="flat-step" href="assets/gripbench/flat_jaw.step" download>Flat jaw STEP</a>
+            <a data-cad="groove-step" href="assets/gripbench/v_groove_jaw.step" download>V-groove jaw STEP</a>
+            <a id="download-trial" download hidden>Download current trial (JSON)</a>
+            <a href="index.html#gripbench-note">Read the off-center trial note</a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="year">2026</span> Mohamed Hassan</p><p><a href="projects.html">Project archive</a></p><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>

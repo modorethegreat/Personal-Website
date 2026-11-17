@@ -1,0 +1,2 @@
+# Keep the CAD exporter bytes intact.
+*.step binary
