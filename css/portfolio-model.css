@@ -48,8 +48,11 @@
   cursor:grab;
   touch-action:none;
   user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
 
+.portfolio-model-stage svg.has-touch-gestures { touch-action:auto; }
 .portfolio-model-stage.is-dragging svg { cursor:grabbing; }
 .portfolio-model-stage:not(.is-dragging) [data-point] { cursor:pointer; }
 

@@ -123,6 +123,7 @@ function mountPortfolio(root, faces) {
   const roleLink = roleCard?.querySelector('[data-model-role-link]');
   const roles = roleCard ? ids.map(id => document.getElementById(id)) : [];
   if (ids.length !== vertices.length || roles.some(role => !role)) return;
+  const hasTouchGestures = 'ontouchstart' in window;
   let orientation = {...home};
   const compact = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches;
   const lattice = createLattice(vertices, faces, compact || roleCard ? 10 : 12);
@@ -371,17 +372,13 @@ function mountPortfolio(root, faces) {
     scheduleDraw();
   });
 
-  svg.addEventListener('pointerdown', event => {
-    if (gesture) {
-      if (event.pointerType === 'touch') gesture.ignoreTap = true;
-      return;
-    }
-    if (!event.isPrimary || event.button !== 0) return;
+  function startGesture(event) {
     const matrix = svg.getScreenCTM();
     if (!matrix) return;
     const inverse = matrix.inverse();
     const pointer = new DOMPoint(event.clientX, event.clientY).matrixTransform(inverse);
     const target = pointerTarget(event);
+    if (event.pointerType === 'touch' && !target) return;
     const node = mode === 'pull' && !event.shiftKey ? nodeUnderPointer(target, pointer) : undefined;
     gesture = {
       id: event.pointerId, x: event.clientX, y: event.clientY, node, target, inverse,
@@ -392,10 +389,21 @@ function mountPortfolio(root, faces) {
       hover = node;
       scheduleDraw();
     }
+  }
+
+  svg.addEventListener('pointerdown', event => {
+    if (hasTouchGestures && event.pointerType === 'touch') return;
+    if (gesture) {
+      if (event.pointerType === 'touch') gesture.ignoreTap = true;
+      return;
+    }
+    if (!event.isPrimary || event.button !== 0) return;
+    startGesture(event);
+    if (!gesture) return;
     svg.setPointerCapture(event.pointerId);
   });
 
-  svg.addEventListener('pointermove', event => {
+  function moveGesture(event) {
     if (!gesture) {
       if (event.pointerType === 'touch') return;
       const target = event.target.closest('[data-point], [data-face]');
@@ -433,6 +441,10 @@ function mountPortfolio(root, faces) {
       settling = true;
     }
     scheduleDraw();
+  }
+
+  svg.addEventListener('pointermove', event => {
+    if (!hasTouchGestures || event.pointerType !== 'touch') moveGesture(event);
   });
 
   svg.addEventListener('pointerleave', () => { hover = undefined; scheduleDraw(); });
@@ -460,9 +472,63 @@ function mountPortfolio(root, faces) {
     } else selectFace(Number(target.dataset.face));
   }
 
-  svg.addEventListener('pointerup', endGesture);
-  svg.addEventListener('pointercancel', endGesture);
-  svg.addEventListener('lostpointercapture', endGesture);
+  for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+    svg.addEventListener(type, event => {
+      if (!hasTouchGestures || event.pointerType !== 'touch') endGesture(event);
+    });
+  }
+
+  if (hasTouchGestures) {
+    // Let the page scroll until a single finger starts on the model itself.
+    // Non-passive touch moves let Safari keep the drag even on SVG paths.
+    svg.classList.add('has-touch-gestures');
+    let touchId;
+
+    function touchInput(touch, target, type) {
+      return { type, target, pointerType: 'touch', pointerId: touch.identifier,
+        clientX: touch.clientX, clientY: touch.clientY };
+    }
+
+    function cancelTouch() {
+      if (touchId === undefined) return;
+      endGesture({ pointerId: touchId, pointerType: 'touch', type: 'pointercancel' });
+      touchId = undefined;
+    }
+
+    svg.addEventListener('touchstart', event => {
+      if (event.touches.length !== 1) {
+        cancelTouch();
+        return;
+      }
+      if (gesture) return;
+      const touch = event.changedTouches[0];
+      startGesture(touchInput(touch, event.target, 'pointerdown'));
+      if (gesture) touchId = touch.identifier;
+    }, { passive: true });
+
+    svg.addEventListener('touchmove', event => {
+      if (touchId === undefined) return;
+      if (event.touches.length !== 1 || !event.cancelable) {
+        cancelTouch();
+        return;
+      }
+      const touch = event.touches[0];
+      if (touch.identifier !== touchId) return;
+      event.preventDefault();
+      moveGesture(touchInput(touch, event.target, 'pointermove'));
+    }, { passive: false });
+
+    svg.addEventListener('touchend', event => {
+      if (touchId === undefined) return;
+      const touch = Array.from(event.changedTouches).find(item => item.identifier === touchId);
+      if (!touch) return;
+      touchId = undefined;
+      if (event.cancelable) event.preventDefault();
+      endGesture(touchInput(touch, event.target, 'pointerup'));
+    }, { passive: false });
+
+    svg.addEventListener('touchcancel', cancelTouch, { passive: true });
+  }
 
   stage.addEventListener('keydown', event => {
     const turns = {ArrowLeft:[-.16,0], ArrowRight:[.16,0], ArrowUp:[0,-.16], ArrowDown:[0,.16]};
