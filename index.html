@@ -11,6 +11,7 @@
   <title>Mohamed Hassan — Computational engineering and scientific software</title>
   <link rel="stylesheet" href="css/style.css">
   <script type="module" src="js/script.js"></script>
+  <script type="module" src="js/orbit-sky.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -23,7 +24,10 @@
   </header>
 
   <main id="main">
-    <section class="hero dark-surface" id="top" aria-labelledby="hero-title">
+    <section class="hero dark-surface" id="top" aria-labelledby="hero-title" data-orbit-hero data-spacecraft>
+      <div class="orbit-backdrop" aria-hidden="true">
+        <canvas class="orbit-sky" data-orbit-canvas></canvas>
+      </div>
       <div class="hero-copy">
         <p class="kicker">Physics · Computation · Aerospace</p>
         <h1 id="hero-title">I build tools to explore physical systems.</h1>
@@ -33,19 +37,25 @@
           <a class="hero-secondary" href="#notes">Read field notes</a>
         </div>
       </div>
-      <figure class="hero-visual" data-spacecraft>
-        <img class="hero-art" src="assets/images/computational-airframe.webp" alt="Blue wireframe of a swept-wing spacecraft with flow lines" width="1672" height="941" fetchpriority="high">
-        <canvas class="spacecraft-canvas" id="spacecraft-canvas" role="img" aria-label="Interactive wireframe model of a fictional orbital spaceplane" hidden></canvas>
-        <div class="spacecraft-controls">
-          <button type="button" data-spacecraft-toggle aria-controls="spacecraft-canvas" aria-expanded="false" hidden>Explore 3D</button>
-          <div class="spacecraft-view-controls" data-spacecraft-controls hidden>
-            <button type="button" data-spacecraft-turn="-1" aria-label="Rotate spacecraft left">←</button>
-            <button type="button" data-spacecraft-turn="1" aria-label="Rotate spacecraft right">→</button>
-            <button type="button" data-spacecraft-spin>Pause rotation</button>
-          </div>
+      <div class="orbit-controls">
+        <button type="button" data-orbit-toggle hidden>Pause sky</button>
+        <button type="button" data-spacecraft-toggle aria-haspopup="dialog" aria-controls="spacecraft-view" hidden>Explore 3D</button>
+      </div>
+      <p class="spacecraft-status" data-spacecraft-status role="status"></p>
+
+      <dialog class="spacecraft-dialog" id="spacecraft-view" aria-labelledby="spacecraft-title">
+        <div class="spacecraft-heading">
+          <h2 id="spacecraft-title">Orbital spaceplane</h2>
+          <form method="dialog"><button type="submit" autofocus>Close</button></form>
         </div>
-        <p class="spacecraft-status" data-spacecraft-status role="status"></p>
-      </figure>
+        <canvas class="spacecraft-canvas" role="img" aria-label="Interactive wireframe model of a fictional orbital spaceplane"></canvas>
+        <div class="spacecraft-view-controls">
+          <p>Drag or use the arrow controls to rotate.</p>
+          <button type="button" data-spacecraft-turn="-1" aria-label="Rotate spacecraft left">←</button>
+          <button type="button" data-spacecraft-turn="1" aria-label="Rotate spacecraft right">→</button>
+          <button type="button" data-spacecraft-spin>Pause rotation</button>
+        </div>
+      </dialog>
     </section>
 
     <section class="work" id="work" aria-labelledby="work-title">

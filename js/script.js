@@ -101,51 +101,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function activateSpacecraftControls(container) {
-  const artwork = container.querySelector('.hero-art');
-  const canvas = container.querySelector('canvas');
+  const dialog = container.querySelector('#spacecraft-view');
+  if (typeof dialog.showModal !== 'function') return;
+  const canvas = dialog.querySelector('canvas');
   const toggle = container.querySelector('[data-spacecraft-toggle]');
-  const controls = container.querySelector('[data-spacecraft-controls]');
-  const spin = container.querySelector('[data-spacecraft-spin]');
+  const spin = dialog.querySelector('[data-spacecraft-spin]');
   const status = container.querySelector('[data-spacecraft-status]');
   let viewer;
 
   toggle.hidden = false;
   toggle.addEventListener('click', async () => {
+    if (dialog.open || toggle.getAttribute('aria-busy') === 'true') return;
     status.textContent = '';
-    if (viewer) {
-      viewer.destroy();
-      viewer = undefined;
-      canvas.hidden = true;
-      artwork.hidden = false;
-      controls.hidden = true;
-      toggle.textContent = 'Explore 3D';
-      toggle.setAttribute('aria-expanded', 'false');
-      return;
-    }
-
-    toggle.disabled = true;
+    toggle.setAttribute('aria-busy', 'true');
     toggle.textContent = 'Loading 3D…';
     try {
       const { mountSpacecraft } = await import('./spacecraft.js');
-      canvas.hidden = false;
+      dialog.showModal();
       viewer = mountSpacecraft(canvas, (spinning) => {
         spin.textContent = spinning ? 'Pause rotation' : 'Start rotation';
       });
-      artwork.hidden = true;
-      controls.hidden = false;
-      toggle.textContent = 'Show illustration';
-      toggle.setAttribute('aria-expanded', 'true');
-      status.textContent = '';
     } catch {
-      canvas.hidden = true;
-      toggle.textContent = 'Explore 3D';
-      status.textContent = 'The 3D view is unavailable.';
+      if (dialog.open) dialog.close();
+      status.textContent = 'The 3D view could not load.';
     } finally {
-      toggle.disabled = false;
+      toggle.removeAttribute('aria-busy');
+      toggle.textContent = 'Explore 3D';
     }
   });
+
+  dialog.addEventListener('close', () => {
+    viewer?.destroy();
+    viewer = undefined;
+    toggle.focus({ preventScroll: true });
+  });
   spin.addEventListener('click', () => viewer?.toggleSpin());
-  container.querySelectorAll('[data-spacecraft-turn]').forEach((button) => {
+  dialog.querySelectorAll('[data-spacecraft-turn]').forEach((button) => {
     button.addEventListener('click', () => viewer?.turn(Number(button.dataset.spacecraftTurn)));
   });
 }
