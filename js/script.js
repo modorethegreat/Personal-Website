@@ -59,6 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const solverDetails = document.querySelector('#solver-notes');
+  if (solverDetails) {
+    function openSolverFromHash() {
+      if (window.location.hash === '#solver-notes') solverDetails.open = true;
+    }
+    openSolverFromHash();
+    window.addEventListener('hashchange', openSolverFromHash);
+    document.querySelectorAll('[data-open-solver]').forEach((link) => {
+      link.addEventListener('click', () => { solverDetails.open = true; });
+    });
+    const recording = solverDetails.querySelector('video');
+    solverDetails.addEventListener('toggle', () => {
+      if (!solverDetails.open && !recording.paused) recording.pause();
+    });
+  }
+
+  const spacecraft = document.querySelector('[data-spacecraft]');
+  if (spacecraft) activateSpacecraftControls(spacecraft);
+
   const dialog = document.querySelector('#note-dialog');
   const dialogTitle = document.querySelector('#dialog-title');
   const dialogCopy = document.querySelector('#dialog-copy');
@@ -80,3 +99,54 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!inside) dialog.close();
   });
 });
+
+
+function activateSpacecraftControls(container) {
+  const artwork = container.querySelector('.hero-art');
+  const canvas = container.querySelector('canvas');
+  const toggle = container.querySelector('[data-spacecraft-toggle]');
+  const controls = container.querySelector('[data-spacecraft-controls]');
+  const spin = container.querySelector('[data-spacecraft-spin]');
+  const status = container.querySelector('[data-spacecraft-status]');
+  let viewer;
+
+  toggle.hidden = false;
+  toggle.addEventListener('click', async () => {
+    status.textContent = '';
+    if (viewer) {
+      viewer.destroy();
+      viewer = undefined;
+      canvas.hidden = true;
+      artwork.hidden = false;
+      controls.hidden = true;
+      toggle.textContent = 'Explore 3D';
+      toggle.setAttribute('aria-expanded', 'false');
+      return;
+    }
+
+    toggle.disabled = true;
+    toggle.textContent = 'Loading 3D…';
+    try {
+      const { mountSpacecraft } = await import('./spacecraft.js');
+      canvas.hidden = false;
+      viewer = mountSpacecraft(canvas, (spinning) => {
+        spin.textContent = spinning ? 'Pause rotation' : 'Start rotation';
+      });
+      artwork.hidden = true;
+      controls.hidden = false;
+      toggle.textContent = 'Show illustration';
+      toggle.setAttribute('aria-expanded', 'true');
+      status.textContent = '';
+    } catch {
+      canvas.hidden = true;
+      toggle.textContent = 'Explore 3D';
+      status.textContent = 'The 3D view is unavailable.';
+    } finally {
+      toggle.disabled = false;
+    }
+  });
+  spin.addEventListener('click', () => viewer?.toggleSpin());
+  container.querySelectorAll('[data-spacecraft-turn]').forEach((button) => {
+    button.addEventListener('click', () => viewer?.turn(Number(button.dataset.spacecraftTurn)));
+  });
+}

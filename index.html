@@ -20,28 +20,88 @@
     <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
       <a href="#work">Work</a><a href="#notes">Field Notes</a><a href="#about">About</a><a href="#contact">Contact</a>
     </nav>
-    <div class="header-meta" aria-label="Location and date"><span>Waterloo, Canada</span><span>August 2026</span></div>
   </header>
 
   <main id="main">
     <section class="hero dark-surface" id="top" aria-labelledby="hero-title">
-      <div class="side-rail side-rail--dark" aria-hidden="true"><span>Personal archive</span><b>00</b></div>
-      <div class="hero-copy reveal">
-        <p class="kicker">Physics · computation · space · philosophy</p>
-        <h1 id="hero-title">I want to understand the universe—and build what takes us farther.</h1>
-        <p class="hero-lede">I’m Mohamed: a physicist, computational researcher, and lifelong student of space. I work where first-principles thinking meets ambitious machines.</p>
+      <div class="hero-copy">
+        <p class="kicker">Physics · Computation · Aerospace</p>
+        <h1 id="hero-title">I build tools to explore physical systems.</h1>
+        <p class="hero-lede">Computational physics, scientific software, and aerospace engineering.</p>
         <div class="hero-actions">
-          <a class="text-link text-link--light" href="#work">Explore selected work <span aria-hidden="true">↘</span></a>
-          <a class="text-link text-link--quiet" href="#notes">Read my field notes <span aria-hidden="true">→</span></a>
+          <a class="hero-primary" href="#work">Explore selected work <span aria-hidden="true">→</span></a>
+          <a class="hero-secondary" href="#notes">Read field notes</a>
         </div>
-        <p class="hero-location">Currently studying, building, and following difficult questions in Waterloo.</p>
       </div>
-      <div class="hero-mosaic reveal" aria-label="A visual index of Mohamed's interests">
-        <figure class="mosaic-tile mosaic-tile--chart"><img src="assets/images/star-chart.webp" alt="A hand-marked celestial chart layered with orbital geometry" width="1024" height="1024"><figcaption>01 / The sky as a first question</figcaption></figure>
-        <figure class="mosaic-tile mosaic-tile--plume"><img src="assets/images/rocket-plume.webp" alt="A blue rocket exhaust plume during an engine test" width="1536" height="1024"><figcaption>02 / Propulsion</figcaption></figure>
-        <figure class="mosaic-tile mosaic-tile--notebook"><img src="assets/images/rocket-notebook.webp" alt="A childhood-style notebook filled with rocket sketches and equations" width="1536" height="1024"><figcaption>03 / Drawn before understood</figcaption></figure>
-        <figure class="mosaic-tile mosaic-tile--fire"><img src="assets/images/wildfire-flow.webp" alt="A scientific visualization of wildfire risk and atmospheric flow" width="1536" height="1024"><figcaption>04 / Models of a changing world</figcaption></figure>
-        <figure class="mosaic-tile mosaic-tile--airframe"><img src="assets/images/computational-airframe.webp" alt="A wireframe airframe surrounded by computational flow traces" width="1536" height="1024"><figcaption>05 / Machines as questions</figcaption></figure>
+      <figure class="hero-visual" data-spacecraft>
+        <img class="hero-art" src="assets/images/computational-airframe.webp" alt="Blue wireframe of a swept-wing spacecraft with flow lines" width="1672" height="941" fetchpriority="high">
+        <canvas class="spacecraft-canvas" id="spacecraft-canvas" role="img" aria-label="Interactive wireframe model of a fictional orbital spaceplane" hidden></canvas>
+        <div class="spacecraft-controls">
+          <button type="button" data-spacecraft-toggle aria-controls="spacecraft-canvas" aria-expanded="false" hidden>Explore 3D</button>
+          <div class="spacecraft-view-controls" data-spacecraft-controls hidden>
+            <button type="button" data-spacecraft-turn="-1" aria-label="Rotate spacecraft left">←</button>
+            <button type="button" data-spacecraft-turn="1" aria-label="Rotate spacecraft right">→</button>
+            <button type="button" data-spacecraft-spin>Pause rotation</button>
+          </div>
+        </div>
+        <p class="spacecraft-status" data-spacecraft-status role="status"></p>
+      </figure>
+    </section>
+
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="work-inner">
+        <div class="work-heading"><h2 id="work-title">Selected work</h2></div>
+        <div class="work-grid">
+          <article class="work-card">
+            <a class="work-image" href="#solver-notes" data-open-solver aria-label="Watch the spherical PDE solver simulation">
+              <img src="assets/images/spherical-pde-solver.webp" alt="Wireframe sphere from the shallow-water simulation" width="960" height="540">
+            </a>
+            <h3><a href="#solver-notes" data-open-solver>Spherical PDE solver</a></h3>
+            <p class="work-topic">Computational physics</p>
+            <p>Simulating shallow-water dynamics on a sphere with spherical harmonics.</p>
+            <a class="work-link" href="#solver-notes" data-open-solver>Watch the simulation <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="work-card">
+            <a class="work-image" href="https://aerogalactica.org" aria-label="Visit AeroGalactica">
+              <img src="assets/images/computational-airframe.webp" alt="Computational aerospace geometry with flow lines" width="1672" height="941">
+            </a>
+            <h3><a href="https://aerogalactica.org">AeroGalactica</a></h3>
+            <p class="work-topic">Aerospace engineering</p>
+            <p>Computational tools and experiments for aerospace design and simulation.</p>
+            <a class="work-link" href="https://aerogalactica.org">Visit project <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="work-card">
+            <a class="work-image" href="https://github.com/modorethegreat/Wildfire_risk_prediction" aria-label="View FireBird on GitHub">
+              <img src="assets/images/wildfire-flow.webp" alt="Wildfire visualization with terrain and wind patterns" width="1536" height="1024">
+            </a>
+            <h3><a href="https://github.com/modorethegreat/Wildfire_risk_prediction">FireBird</a></h3>
+            <p class="work-topic">Climate intelligence</p>
+            <p>Exploring wildfire risk with physical context and machine learning.</p>
+            <a class="work-link" href="https://github.com/modorethegreat/Wildfire_risk_prediction">View repository <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+        <p class="work-in-progress"><em>In the lab:</em> GripBench <span>· In development</span></p>
+        <details class="work-details" id="solver-notes">
+          <summary>Spherical PDE solver demo and methods</summary>
+          <div class="solver-details">
+            <video controls playsinline preload="none" poster="assets/images/spherical-pde-solver-poster.webp" width="720" height="720" aria-label="Shallow-water simulation on a sphere">
+              <source src="assets/video/spherical-pde-solver.mp4" type="video/mp4">
+              <a href="https://github.com/modorethegreat/spherical-PDE-solver#readme">Open the recording on GitHub</a>
+            </video>
+            <div class="solver-copy">
+              <h3>Shallow water on a sphere</h3>
+              <p>The solver uses spherical harmonics to represent the surface height and velocity fields. This recording shows the evolving surface from the repository’s example.</p>
+              <a class="work-link" href="https://github.com/modorethegreat/spherical-PDE-solver">Read the methods and source code <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </details>
+        <details class="work-details">
+          <summary>More work</summary>
+          <ul class="work-archive">
+            <li><button class="work-link note-trigger" type="button" data-title="Waterloo Rocketry" data-copy="A future case study on the practical discipline of building flight hardware: systems thinking, testing, teamwork, and the distance between a drawing and a machine that works.">Waterloo Rocketry</button></li>
+            <li><button class="work-link note-trigger" type="button" data-title="Low-temperature physics" data-copy="Notes from experimental physics: precision, uncertainty, patient observation, and the surprising behavior of matter near the limits of temperature.">Low-temperature physics</button></li>
+          </ul>
+        </details>
       </div>
     </section>
 
@@ -67,31 +127,6 @@
           <article class="question-card reveal"><span>02</span><h3>Where should machine learning end and physics begin?</h3><p>The most useful models do not replace first principles. They extend what we can observe, compute, and design.</p></article>
           <article class="question-card reveal"><span>03</span><h3>What will it take to become an interplanetary civilization?</h3><p>Propulsion is one part. So are energy, materials, autonomy, institutions, courage, and a much longer view of human possibility.</p></article>
           <article class="question-card reveal"><span>04</span><h3>What makes a life genuinely free?</h3><p>Alongside technical work, I write about agency, meaning, responsibility, and the discipline of becoming unbound.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="work dark-surface" id="work" aria-labelledby="work-title">
-      <div class="side-rail side-rail--dark" aria-hidden="true"><span>Selected work</span><b>03</b></div>
-      <div class="section-inner">
-        <div class="section-heading section-heading--dark reveal"><p class="kicker">Four threads, held equally</p><h2 id="work-title">Selected work</h2><p>No single project is the whole story. These are four places where my interests become concrete.</p></div>
-        <div class="work-grid">
-          <article class="work-card reveal">
-            <a class="work-image" href="https://aerogalactica.org" target="_blank" rel="noreferrer" aria-label="Visit AeroGalactica"><img src="assets/images/computational-airframe.webp" alt="Computational aerospace geometry with flow lines" width="1536" height="1024"></a>
-            <div class="work-meta"><span>01</span><span>Research platform</span></div><h3>AeroGalactica</h3><p>A home for computational aerospace exploration: simulations, tools, and open questions at the edge of physics and flight.</p><a class="text-link text-link--light" href="https://aerogalactica.org" target="_blank" rel="noreferrer">Visit project <span aria-hidden="true">↗</span></a>
-          </article>
-          <article class="work-card reveal">
-            <a class="work-image" href="https://github.com/modorethegreat/Wildfire_risk_prediction" target="_blank" rel="noreferrer" aria-label="View FireBird on GitHub"><img src="assets/images/wildfire-flow.webp" alt="Wildfire intelligence visualization with terrain and wind patterns" width="1536" height="1024"></a>
-            <div class="work-meta"><span>02</span><span>Climate intelligence</span></div><h3>FireBird</h3><p>Exploring how physical context and machine learning can work together to reason about wildfire risk and response.</p><a class="text-link text-link--light" href="https://github.com/modorethegreat/Wildfire_risk_prediction" target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
-          </article>
-          <article class="work-card reveal">
-            <button class="work-image work-image--button note-trigger" type="button" data-title="Waterloo Rocketry" data-copy="A future case study on the practical discipline of building flight hardware: systems thinking, testing, teamwork, and the distance between a drawing and a machine that works."><img src="assets/images/rocket-plume.webp" alt="Blue rocket exhaust during an engine test" width="1536" height="1024"></button>
-            <div class="work-meta"><span>03</span><span>Flight hardware</span></div><h3>Waterloo Rocketry</h3><p>Learning what ambitious engineering demands when analysis, hardware, testing, and a determined team meet.</p><button class="text-link text-link--light note-trigger" type="button" data-title="Waterloo Rocketry" data-copy="A future case study on the practical discipline of building flight hardware: systems thinking, testing, teamwork, and the distance between a drawing and a machine that works.">Case study in progress <span aria-hidden="true">→</span></button>
-          </article>
-          <article class="work-card reveal">
-            <button class="work-image work-image--button note-trigger" type="button" data-title="Low-temperature physics" data-copy="Notes from experimental physics: precision, uncertainty, patient observation, and the surprising behavior of matter near the limits of temperature."><img src="assets/images/cryogenic-hardware.webp" alt="Precision cryogenic laboratory hardware in cool blue light" width="1536" height="1024"></button>
-            <div class="work-meta"><span>04</span><span>Experimental physics</span></div><h3>Low-temperature physics</h3><p>Working close to the material world, where precision, uncertainty, and patient observation shape every conclusion.</p><button class="text-link text-link--light note-trigger" type="button" data-title="Low-temperature physics" data-copy="Notes from experimental physics: precision, uncertainty, patient observation, and the surprising behavior of matter near the limits of temperature.">Notes coming soon <span aria-hidden="true">→</span></button>
-          </article>
         </div>
       </div>
     </section>
@@ -125,6 +160,6 @@
 
   <footer class="site-footer"><p>© <span id="year">2026</span> Mohamed Hassan</p><p>Built as a living archive—not a finished monument.</p><a href="#top">Back to top ↑</a></footer>
 
-  <dialog class="note-dialog" id="note-dialog"><button class="dialog-close" type="button" aria-label="Close dialog">Close</button><p class="kicker kicker--ink">From the notebook</p><h2 id="dialog-title"></h2><p id="dialog-copy"></p><p class="dialog-foot">This piece is still taking shape. The Field Notes section is designed to grow with it.</p></dialog>
+  <dialog class="note-dialog" id="note-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="Close dialog">Close</button><p class="kicker kicker--ink">From the notebook</p><h2 id="dialog-title"></h2><p id="dialog-copy"></p><p class="dialog-foot">This piece is still taking shape. The Field Notes section is designed to grow with it.</p></dialog>
 </body>
 </html>
