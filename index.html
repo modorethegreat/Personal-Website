@@ -35,8 +35,8 @@
         <h1 id="hero-title">I build tools to explore physical systems.</h1>
         <p class="hero-lede">I’m Mohamed Hassan. I build CAD and simulation tools, develop scientific ML models, and work with aerospace test data.</p>
         <div class="hero-actions">
-          <a class="hero-primary" href="#work">Explore selected work <span aria-hidden="true">→</span></a>
-          <a class="hero-secondary" href="#portfolio-3d">Explore in 3D</a>
+          <a class="hero-primary" href="#portfolio-3d">Explore the 3D portfolio <span aria-hidden="true">→</span></a>
+          <a class="hero-secondary" href="#work">Explore selected work</a>
           <a class="hero-secondary" href="#notes">Read field notes</a>
         </div>
       </div>
@@ -136,37 +136,26 @@
       </header>
       <div class="portfolio-model-layout">
         <div class="portfolio-model-view" data-model-view hidden>
-          <div class="portfolio-model-stage" role="group" aria-label="Interactive octahedron" aria-describedby="model-hint" tabindex="0">
-            <svg viewBox="0 0 520 432" aria-hidden="true" data-model-svg>
-              <g data-model-faces></g>
-              <g data-model-points></g>
-              <circle data-model-probe r="9" class="portfolio-model-probe" visibility="hidden"/>
-            </svg>
-          </div>
           <div class="portfolio-model-toolbar">
             <div class="portfolio-model-modes" role="group" aria-label="Drag mode">
               <button type="button" data-model-mode="pull" aria-pressed="true">Pull mesh</button>
               <button type="button" data-model-mode="rotate" aria-pressed="false">Rotate</button>
             </div>
-            <div class="portfolio-model-legend"><span>Compression</span><span>Tension</span></div>
             <button type="button" data-model-reset>Reset view</button>
-            <p id="model-hint">Drag a rod junction to pull. Drag the background or use arrow keys to rotate. Tap a point or face to explore.</p>
+          </div>
+          <div class="portfolio-model-stage" role="group" aria-label="Interactive octahedron" aria-describedby="model-hint" tabindex="0">
+            <svg viewBox="35 -8 450 448" aria-hidden="true" data-model-svg>
+              <g data-model-faces></g>
+              <g data-model-points></g>
+              <circle data-model-probe r="9" class="portfolio-model-probe" visibility="hidden"/>
+            </svg>
+          </div>
+          <div class="portfolio-model-caption">
+            <p id="model-hint"><span data-model-drag-hint>Drag the mesh to pull it.</span> Tap a point or face. Use arrow keys to rotate.</p>
+            <div class="portfolio-model-legend"><span>Compression</span><span>Tension</span></div>
           </div>
         </div>
         <div class="portfolio-model-reading">
-          <div class="portfolio-model-controls" data-model-controls hidden>
-            <div class="portfolio-model-topics" role="group" aria-label="Choose a vertex">
-              <button type="button" data-model-vertex="physics" aria-pressed="false">Simulation</button>
-              <button type="button" data-model-vertex="robotics" aria-pressed="false">Robotics</button>
-              <button type="button" data-model-vertex="space" aria-pressed="false">Space systems</button>
-              <button type="button" data-model-vertex="rocketry" aria-pressed="false">Rocketry</button>
-              <button type="button" data-model-vertex="software" aria-pressed="false">Engineering software</button>
-              <button type="button" data-model-vertex="ml" aria-pressed="false">Scientific ML</button>
-            </div>
-            <label class="portfolio-model-face-picker">Faces
-              <select data-model-face-select><option value="">Choose a combination</option></select>
-            </label>
-          </div>
           <div class="portfolio-model-cards">
             <p class="portfolio-model-status" data-model-status role="status"></p>
             <article class="portfolio-model-card" data-model-topic="physics">
@@ -211,6 +200,18 @@
               <p data-model-face-description></p>
               <ul data-model-face-links></ul>
             </article>
+          </div>
+          <div class="portfolio-model-controls" data-model-controls hidden>
+            <div class="portfolio-model-topics" role="group" aria-label="Choose a vertex">
+              <button type="button" data-model-vertex="physics" aria-pressed="false">Simulation</button>
+              <button type="button" data-model-vertex="robotics" aria-pressed="false">Robotics</button>
+              <button type="button" data-model-vertex="space" aria-pressed="false">Space systems</button>
+              <button type="button" data-model-vertex="rocketry" aria-pressed="false">Rocketry</button>
+              <button type="button" data-model-vertex="software" aria-pressed="false">Engineering software</button>
+              <button type="button" data-model-vertex="ml" aria-pressed="false">Scientific ML</button>
+            </div>
+            <label class="portfolio-model-face-picker" for="portfolio-model-face">Faces</label>
+            <select id="portfolio-model-face" data-model-face-select><option value="">Choose a combination</option></select>
           </div>
         </div>
       </div>

@@ -8,8 +8,10 @@
   <title>Experience &amp; résumé — Mohamed Hassan</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/space-theme.css">
+  <link rel="stylesheet" href="css/portfolio-model.css">
   <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
+  <script type="module" src="js/portfolio-model.js"></script>
 </head>
 <body class="space-site resume-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -61,6 +63,63 @@
 
       <section class="resume-section" id="experience" aria-labelledby="work-history-title">
         <h2 id="work-history-title">Experience</h2>
+        <section class="portfolio-model portfolio-model--experience dark-surface print-hide" id="experience-3d" aria-labelledby="experience-model-title" hidden>
+          <header class="portfolio-model-heading">
+            <h3 id="experience-model-title">Explore my experience in 3D</h3>
+            <p>Tap a vertex to jump to a role, or a face to see how three roles connect.</p>
+          </header>
+          <div class="portfolio-model-layout">
+            <div class="portfolio-model-view" data-model-view hidden>
+              <div class="portfolio-model-toolbar">
+                <div class="portfolio-model-modes" role="group" aria-label="Drag mode">
+                  <button type="button" data-model-mode="pull" aria-pressed="true">Pull mesh</button>
+                  <button type="button" data-model-mode="rotate" aria-pressed="false">Rotate</button>
+                </div>
+                <button type="button" data-model-reset>Reset view</button>
+              </div>
+              <div class="portfolio-model-stage" role="group" aria-label="Interactive experience octahedron" aria-describedby="experience-model-hint" tabindex="0">
+                <svg viewBox="35 -8 450 448" aria-hidden="true" data-model-svg>
+                  <g data-model-faces></g>
+                  <g data-model-points></g>
+                  <circle data-model-probe r="9" class="portfolio-model-probe" visibility="hidden"/>
+                </svg>
+              </div>
+              <div class="portfolio-model-caption">
+                <p id="experience-model-hint"><span data-model-drag-hint>Drag the mesh to pull it.</span> Use arrow keys to rotate.</p>
+                <div class="portfolio-model-legend"><span>Compression</span><span>Tension</span></div>
+              </div>
+            </div>
+            <div class="portfolio-model-reading">
+              <div class="portfolio-model-cards">
+                <p class="portfolio-model-status" data-model-status role="status"></p>
+                <article class="portfolio-model-card" data-model-role-card hidden>
+                  <p data-model-role-name></p>
+                  <h4 data-model-role-title></h4>
+                  <p data-model-role-dates></p>
+                  <a class="work-link" data-model-role-link>Jump to this role <span aria-hidden="true">↓</span></a>
+                </article>
+                <article class="portfolio-model-card" data-model-face-card hidden>
+                  <p>Connected roles</p>
+                  <h4 data-model-face-title></h4>
+                  <p data-model-face-description></p>
+                  <ul data-model-face-links></ul>
+                </article>
+              </div>
+              <div class="portfolio-model-controls" data-model-controls hidden>
+                <div class="portfolio-model-topics" role="group" aria-label="Choose a role">
+                  <button type="button" data-model-vertex="rocketry" aria-pressed="false">Waterloo Rocketry</button>
+                  <button type="button" data-model-vertex="aerogalactica" aria-pressed="false">AeroGalactica</button>
+                  <button type="button" data-model-vertex="csa" aria-pressed="false">Canadian Space Agency</button>
+                  <button type="button" data-model-vertex="lib-ela" aria-pressed="false">lib-ela</button>
+                  <button type="button" data-model-vertex="gay-lea" aria-pressed="false">Gay Lea Foods</button>
+                  <button type="button" data-model-vertex="firebird" aria-pressed="false">FireBird</button>
+                </div>
+                <label class="portfolio-model-face-picker" for="experience-model-face">Connections</label>
+                <select id="experience-model-face" data-model-face-select><option value="">Choose a connection</option></select>
+              </div>
+            </div>
+          </div>
+        </section>
         <article class="resume-entry" id="aerogalactica">
           <p class="entry-date"><time datetime="2024-01">Jan 2024</time> – <time datetime="2026-08">Aug 2026</time></p>
           <div>

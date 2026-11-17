@@ -1,15 +1,15 @@
 import { createLattice, poseLattice, rodStrain, stepLattice } from './portfolio-lattice.js';
 
 const vertices = [
-  { id: 'physics',  position: [0, 1, 0], color: '#91cff2' },
-  { id: 'robotics', position: [0,-1, 0], color: '#bcaaf4' },
-  { id: 'space',    position: [-1,0, 0], color: '#80d8d5' },
-  { id: 'rocketry', position: [1, 0, 0], color: '#ffae82' },
-  { id: 'software', position: [0, 0, 1], color: '#9bb9ff' },
-  { id: 'ml',       position: [0, 0,-1], color: '#e8a7d5' },
+  { position: [0, 1, 0], color: '#91cff2' },
+  { position: [0,-1, 0], color: '#bcaaf4' },
+  { position: [-1,0, 0], color: '#80d8d5' },
+  { position: [1, 0, 0], color: '#ffae82' },
+  { position: [0, 0, 1], color: '#9bb9ff' },
+  { position: [0, 0,-1], color: '#e8a7d5' },
 ];
 
-const faces = [
+const homeFaces = [
   {
     corners: [0, 2, 4], color: '#95cdff', title: 'From solver to test',
     description: 'I’m interested in workflows that put solver assumptions and test data close enough together to investigate where predictions diverge from measurements.',
@@ -47,6 +47,18 @@ const faces = [
   // Each corner supplies the sign of one axis of the outward face normal.
   outward: [0, 1, 2].map(axis => face.corners.reduce((sum, vertex) => sum + vertices[vertex].position[axis], 0)),
 }));
+
+// Same geometry, with the role order from the Experience page's controls.
+const experienceFaces = [
+  ['Testing and measurement', 'Static-fire measurements, thermal-vacuum telemetry, and formulation assays all connect an engineering question to something you can measure.'],
+  ['Tracking change over time', 'Static-fire data, thermal cycling, and wildfire spread each show how a system evolves. The timing of a change can help explain what happened.'],
+  ['Checking predictions', 'I compared propulsion predictions with static-fire measurements, checked solid-mechanics Jacobians against finite differences, and tested formulation predictions against lab data.'],
+  ['Putting physics into models', 'Propulsion CFD, nonlinear material models, and physics-informed wildfire prediction each depend on deciding which physical relationships the model should represent.'],
+  ['Tools for reviewing results', 'I built interfaces for inspecting solver results and monitoring thermal-vacuum tests, and automated assay processing to make lab results easier to review.'],
+  ['Making results inspectable', 'Recorded solver inputs, telemetry dashboards, and a held-out wildfire comparison each give someone a concrete place to start when investigating a result.'],
+  ['Repeatable workflows', 'I recorded inputs and outputs for solver jobs, contributed reproducible solid-mechanics examples, and automated recurring assay data processing.'],
+  ['Scientific software', 'Browser-based solver workflows, generated C++ material kernels, and a wildfire model in JAX put computational methods to work at three different scales.'],
+].map(([title, description], index) => ({ ...homeFaces[index], title, description }));
 
 const home = { yaw: -.54, pitch: .34 };
 
@@ -87,12 +99,13 @@ function refinedMesh(triangles, projected, focus) {
   return lines;
 }
 
-function mountPortfolio(root) {
+function mountPortfolio(root, faces) {
   const view = root.querySelector('[data-model-view]');
   const controls = root.querySelector('[data-model-controls]');
   const stage = root.querySelector('.portfolio-model-stage');
   const svg = root.querySelector('[data-model-svg]');
   const probe = root.querySelector('[data-model-probe]');
+  const dragHint = root.querySelector('[data-model-drag-hint]');
   const faceLayer = root.querySelector('[data-model-faces]');
   const pointLayer = root.querySelector('[data-model-points]');
   const picker = root.querySelector('[data-model-face-select]');
@@ -101,12 +114,18 @@ function mountPortfolio(root) {
   const faceDescription = faceCard.querySelector('[data-model-face-description]');
   const faceLinks = faceCard.querySelector('[data-model-face-links]');
   const status = root.querySelector('[data-model-status]');
-  const topicButtons = [...root.querySelectorAll('[data-model-vertex]')];
+  const topicButtons = [...controls.querySelectorAll('[data-model-vertex]')];
   const modeButtons = [...root.querySelectorAll('[data-model-mode]')];
-  const cards = vertices.map(({id}) => root.querySelector(`[data-model-topic="${id}"]`));
-  const labels = vertices.map(({id}) => topicButtons.find(button => button.dataset.modelVertex === id).textContent);
+  const ids = topicButtons.map(button => button.dataset.modelVertex);
+  const labels = topicButtons.map(button => button.textContent);
+  const cards = [...root.querySelectorAll('[data-model-topic]')];
+  const roleCard = root.querySelector('[data-model-role-card]');
+  const roleLink = roleCard?.querySelector('[data-model-role-link]');
+  const roles = roleCard ? ids.map(id => document.getElementById(id)) : [];
+  if (ids.length !== vertices.length || roles.some(role => !role)) return;
   let orientation = {...home};
-  const lattice = createLattice(vertices, faces);
+  const compact = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  const lattice = createLattice(vertices, faces, compact || roleCard ? 10 : 12);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let posedOrientation;
   let projected;
@@ -253,8 +272,17 @@ function mountPortfolio(root) {
     if (orient) aimAt(vertices[vertex].position);
     picker.value = '';
     faceCard.hidden = true;
-    cards.forEach((card, index) => { card.hidden = index !== vertex; });
-    topicButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.modelVertex === vertices[vertex].id)));
+    cards.forEach(card => { card.hidden = card.dataset.modelTopic !== ids[vertex]; });
+    if (roleCard) {
+      const role = roles[vertex];
+      roleCard.querySelector('[data-model-role-name]').textContent = labels[vertex];
+      roleCard.querySelector('[data-model-role-title]').textContent = role.querySelector('h3').textContent;
+      roleCard.querySelector('[data-model-role-dates]').textContent = role.querySelector('.entry-date').textContent;
+      roleLink.href = `#${role.id}`;
+      roleLink.setAttribute('aria-label', `Jump to the ${labels[vertex]} role`);
+      roleCard.hidden = false;
+    }
+    topicButtons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === vertex)));
     status.textContent = `Showing ${labels[vertex]}.`;
     scheduleDraw();
   }
@@ -266,27 +294,32 @@ function mountPortfolio(root) {
     picker.value = String(index);
     topicButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
     cards.forEach(card => { card.hidden = true; });
+    if (roleCard) roleCard.hidden = true;
     faceTitle.textContent = face.title;
     faceDescription.textContent = face.description;
     faceLinks.replaceChildren(...face.corners.map(vertex => {
       const item = document.createElement('li');
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.textContent = labels[vertex];
-      button.dataset.modelVertex = vertices[vertex].id;
-      item.append(button);
+      const control = document.createElement(roleCard ? 'a' : 'button');
+      control.textContent = labels[vertex];
+      if (roleCard) control.href = `#${ids[vertex]}`;
+      else {
+        control.type = 'button';
+        control.dataset.modelVertex = ids[vertex];
+      }
+      item.append(control);
       return item;
     }));
     faceCard.hidden = false;
-    status.textContent = `Showing combined topics. ${faceTitle.textContent}.`;
+    status.textContent = `Showing ${faceTitle.textContent}.`;
     scheduleDraw();
   }
 
   root.addEventListener('click', event => {
     const button = event.target.closest('[data-model-vertex]');
     if (!button) return;
-    selectTopic(vertices.findIndex(({id}) => id === button.dataset.modelVertex), true);
-    if (faceCard.contains(button)) topicButtons.find(topic => topic.dataset.modelVertex === button.dataset.modelVertex).focus();
+    const vertex = ids.indexOf(button.dataset.modelVertex);
+    selectTopic(vertex, true);
+    if (faceCard.contains(button)) topicButtons[vertex].focus();
   });
 
   picker.addEventListener('change', () => {
@@ -301,8 +334,20 @@ function mountPortfolio(root) {
     selectTopic(0);
   });
 
-  function screenPoint(event) {
-    return new DOMPoint(event.clientX, event.clientY).matrixTransform(svg.getScreenCTM().inverse());
+  function pointerTarget(event) {
+    const target = event.target.closest('[data-point], [data-face]');
+    if (event.pointerType !== 'touch') return target;
+    let closestTip = target;
+    let nearest = 22;
+    for (const point of pointLayer.children) {
+      const dot = point.lastElementChild.getBoundingClientRect();
+      const distance = Math.hypot(event.clientX - (dot.left + dot.width / 2), event.clientY - (dot.top + dot.height / 2));
+      if (distance < nearest) {
+        closestTip = point;
+        nearest = distance;
+      }
+    }
+    return closestTip;
   }
 
   function nodeUnderPointer(target, pointer) {
@@ -321,45 +366,70 @@ function mountPortfolio(root) {
   for (const button of modeButtons) button.addEventListener('click', () => {
     mode = button.dataset.modelMode;
     modeButtons.forEach(control => control.setAttribute('aria-pressed', String(control === button)));
+    dragHint.textContent = mode === 'pull' ? 'Drag the mesh to pull it.' : 'Drag the mesh to turn it.';
     hover = undefined;
     scheduleDraw();
   });
 
   svg.addEventListener('pointerdown', event => {
-    if (gesture || !event.isPrimary || event.button !== 0) return;
-    const target = event.target.closest('[data-point], [data-face]');
-    const pointer = screenPoint(event);
+    if (gesture) {
+      if (event.pointerType === 'touch') gesture.ignoreTap = true;
+      return;
+    }
+    if (!event.isPrimary || event.button !== 0) return;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return;
+    const inverse = matrix.inverse();
+    const pointer = new DOMPoint(event.clientX, event.clientY).matrixTransform(inverse);
+    const target = pointerTarget(event);
     const node = mode === 'pull' && !event.shiftKey ? nodeUnderPointer(target, pointer) : undefined;
     gesture = {
-      id: event.pointerId, x: pointer.x, y: pointer.y, node, target,
+      id: event.pointerId, x: event.clientX, y: event.clientY, node, target, inverse,
+      slop: event.pointerType === 'touch' ? 9 : 5,
       start: {...orientation}, moved: false,
     };
+    if (event.pointerType === 'touch' && node !== undefined) {
+      hover = node;
+      scheduleDraw();
+    }
     svg.setPointerCapture(event.pointerId);
   });
 
   svg.addEventListener('pointermove', event => {
-    const pointer = screenPoint(event);
     if (!gesture) {
+      if (event.pointerType === 'touch') return;
       const target = event.target.closest('[data-point], [data-face]');
-      const next = mode === 'pull' ? nodeUnderPointer(target, pointer) : undefined;
+      const matrix = target && svg.getScreenCTM();
+      const next = mode === 'pull' && matrix
+        ? nodeUnderPointer(target, new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse()))
+        : undefined;
       if (next !== hover) { hover = next; scheduleDraw(); }
       return;
     }
     if (gesture.id !== event.pointerId) return;
-    const dx = pointer.x - gesture.x;
-    const dy = pointer.y - gesture.y;
-    if (!gesture.moved && Math.hypot(dx, dy) < 6) return;
+    const screenX = event.clientX - gesture.x;
+    const screenY = event.clientY - gesture.y;
+    if (!gesture.moved && Math.hypot(screenX, screenY) < gesture.slop) return;
     gesture.moved = true;
     stage.classList.add('is-dragging');
     if (gesture.node === undefined) {
       stopLoad();
       hover = undefined;
-      orientation = { yaw: gesture.start.yaw + dx * .011, pitch: gesture.start.pitch + dy * .011 };
+      orientation = { yaw: gesture.start.yaw + screenX * .013, pitch: gesture.start.pitch + screenY * .013 };
     } else {
-      const worldUnits = (4.5 - lattice.nodes[gesture.node].z) / 790;
+      const {a, b, c, d} = gesture.inverse;
+      const dx = a * screenX + c * screenY;
+      const dy = b * screenX + d * screenY;
+      const node = lattice.nodes[gesture.node];
+      const worldUnits = (4.5 - node.z) / 790;
       const scale = Math.min(worldUnits, .71 / Math.max(1, Math.hypot(dx, dy)));
+      const [restX, restY] = project({x: node.restX, y: node.restY, z: node.z});
+      const bounds = svg.viewBox.baseVal;
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const x = clamp(restX + dx * scale / worldUnits, bounds.x + 12, bounds.x + bounds.width - 12);
+      const y = clamp(restY + dy * scale / worldUnits, bounds.y + 12, bounds.y + bounds.height - 12);
       release = undefined;
-      load = { index: gesture.node, dx: dx * scale, dy: -dy * scale };
+      load = { index: gesture.node, dx: (x - restX) * worldUnits, dy: (restY - y) * worldUnits };
       settling = true;
     }
     scheduleDraw();
@@ -369,19 +439,25 @@ function mountPortfolio(root) {
 
   function endGesture(event) {
     if (gesture?.id !== event.pointerId) return;
-    const {target, moved} = gesture;
+    const {target, moved, ignoreTap, slop, x, y} = gesture;
     gesture = undefined;
     stage.classList.remove('is-dragging');
     if (load) {
-      if (reducedMotion.matches) stopLoad();
+      if (reducedMotion.matches || event.type !== 'pointerup') stopLoad();
       else release = { ...load, at: performance.now() };
       hover = undefined;
       load = undefined;
       scheduleDraw();
     }
-    if (event.type !== 'pointerup' || moved || !target) return;
-    if (target.hasAttribute('data-point')) selectTopic(Number(target.dataset.point));
-    else selectFace(Number(target.dataset.face));
+    if (event.pointerType === 'touch' && hover !== undefined) {
+      hover = undefined;
+      scheduleDraw();
+    }
+    if (event.type !== 'pointerup' || moved || ignoreTap || !target || Math.hypot(event.clientX - x, event.clientY - y) >= slop) return;
+    if (target.hasAttribute('data-point')) {
+      selectTopic(Number(target.dataset.point));
+      roleLink?.click();
+    } else selectFace(Number(target.dataset.face));
   }
 
   svg.addEventListener('pointerup', endGesture);
@@ -403,7 +479,11 @@ function mountPortfolio(root) {
   controls.hidden = false;
   root.querySelector('.portfolio-model-layout').classList.add('is-interactive');
   selectTopic(0);
+  root.hidden = false;
 }
 
 const portfolio = document.querySelector('#portfolio-3d');
-if (portfolio) mountPortfolio(portfolio);
+if (portfolio) mountPortfolio(portfolio, homeFaces);
+
+const experience = document.querySelector('#experience-3d');
+if (experience) mountPortfolio(experience, experienceFaces);
