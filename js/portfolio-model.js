@@ -83,6 +83,34 @@ function pointString(point) {
   return point.map(value => value.toFixed(2)).join(',');
 }
 
+function visibleTriangles(surface, projected) {
+  return surface.triangles.filter(([a, b, c]) => {
+    const [x, y] = projected[a];
+    const [bx, by] = projected[b];
+    const [cx, cy] = projected[c];
+    return ((bx - x) * (cy - y) - (by - y) * (cx - x)) * surface.winding > .001;
+  });
+}
+
+function strandPaths(surface, paths, lattice, showStrain) {
+  const lines = { normal: '', tension: '', compression: '' };
+  for (const { ids, rods } of surface.strands) {
+    if (!showStrain) {
+      lines.normal += 'M' + ids.map(id => paths[id]).join('L');
+      continue;
+    }
+    let previousKind;
+    for (let i = 0; i < rods.length; i++) {
+      const strain = rodStrain(lattice, rods[i]);
+      const kind = strain > .045 ? 'tension' : strain < -.045 ? 'compression' : 'normal';
+      if (kind !== previousKind) lines[kind] += 'M' + paths[ids[i]];
+      lines[kind] += 'L' + paths[ids[i + 1]];
+      previousKind = kind;
+    }
+  }
+  return lines;
+}
+
 function refinedMesh(triangles, projected, focus) {
   const midpoint = (first, second) => first.map((value, axis) => (value + second[axis]) / 2);
   let lines = '';
@@ -92,7 +120,7 @@ function refinedMesh(triangles, projected, focus) {
     const c = projected[third];
     const x = (a[0] + b[0] + c[0]) / 3;
     const y = (a[1] + b[1] + c[1]) / 3;
-    if ((x - focus[0]) ** 2 + (y - focus[1]) ** 2 > 64 ** 2) continue;
+    if ((x - focus[0]) ** 2 + (y - focus[1]) ** 2 > 46 ** 2) continue;
     lines += 'M' + pointString(midpoint(a, b)) + 'L' + pointString(midpoint(b, c)) +
       'L' + pointString(midpoint(c, a)) + 'Z';
   }
@@ -126,7 +154,7 @@ function mountPortfolio(root, faces) {
   const hasTouchGestures = 'ontouchstart' in window;
   let orientation = {...home};
   const compact = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches;
-  const lattice = createLattice(vertices, faces, compact || roleCard ? 10 : 12);
+  const lattice = createLattice(vertices, faces, compact || roleCard ? 18 : 24);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let posedOrientation;
   let projected;
@@ -146,15 +174,16 @@ function mountPortfolio(root, faces) {
   const faceNodes = faces.map(({title: label, color}, index) => {
     const group = svgNode('g', { 'data-face': index, style: `--facet:${color}` });
     const fill = svgNode('path', { class: 'portfolio-face-fill' });
+    const outline = svgNode('path', { class: 'portfolio-face-outline' });
     const grid = svgNode('path', { class: 'portfolio-face-grid' });
     const detail = svgNode('path', { class: 'portfolio-face-grid portfolio-grid-detail' });
     const tension = svgNode('path', { class: 'portfolio-face-grid portfolio-grid-tension' });
     const compression = svgNode('path', { class: 'portfolio-face-grid portfolio-grid-compression' });
     const title = svgNode('title');
     title.textContent = label;
-    group.append(title, fill, grid, detail, tension, compression);
+    group.append(title, fill, outline, grid, detail, tension, compression);
     picker.add(new Option(title.textContent, String(index)));
-    return { group, fill, grid, detail, tension, compression };
+    return { group, fill, outline, grid, detail, tension, compression };
   });
 
   const pointNodes = vertices.map(({color}, index) => {
@@ -214,46 +243,50 @@ function mountPortfolio(root, faces) {
       probe.setAttribute('cy', refinement[1]);
     }
     const frontVertices = new Set();
-    const layers = faces.map(({corners, outward}, index) => {
+    const layers = faces.map(({corners}, index) => {
       const points = corners.map(vertex => lattice.nodes[lattice.tips[vertex]]);
-      const normal = rotate(outward, orientation);
-      const isFront = normal[2] * 4.5 > 1;
       const surface = lattice.surfaces[index];
-      const {group, fill, grid, detail, tension, compression} = faceNodes[index];
-      fill.setAttribute('d', 'M' + surface.perimeter.map(node => paths[node]).join('L') + 'Z');
+      const facing = visibleTriangles(surface, projected);
+      const isFront = facing.length > 0;
+      const {group, fill, outline, grid, detail, tension, compression} = faceNodes[index];
+      const boundary = 'M' + surface.perimeter.map(node => paths[node]).join('L') + 'Z';
+      outline.setAttribute('d', boundary);
+      // Curvature can turn only part of a face toward the viewer.
+      const hitArea = facing.length === surface.triangles.length
+        ? boundary
+        : facing.map(([a, b, c]) => `M${paths[a]}L${paths[b]}L${paths[c]}Z`).join('');
+      fill.setAttribute('d', hitArea);
       group.classList.toggle('is-front', isFront);
       group.classList.toggle('is-selected', index === choice.face);
-      const lines = { normal: '', tension: '', compression: '' };
-      for (const rod of surface.rods) {
-        const strain = settling && isFront ? rodStrain(lattice, rod) : 0;
-        const kind = strain > .045 ? 'tension' : strain < -.045 ? 'compression' : 'normal';
-        lines[kind] += 'M' + paths[rod.a] + 'L' + paths[rod.b];
-      }
+      const lines = strandPaths(surface, paths, lattice, settling && isFront);
       grid.setAttribute('d', lines.normal);
       tension.setAttribute('d', lines.tension);
       compression.setAttribute('d', lines.compression);
-      detail.setAttribute('d', isFront && refinement ? refinedMesh(surface.triangles, projected, refinement) : '');
-      if (isFront) corners.forEach(vertex => frontVertices.add(vertex));
+      detail.setAttribute('d', isFront && refinement ? refinedMesh(facing, projected, refinement) : '');
+      for (const vertex of corners) {
+        if (facing.some(cell => cell.includes(lattice.tips[vertex]))) frontVertices.add(vertex);
+      }
       const depth = points.reduce((sum, point) => sum + point.z, 0) / 3;
       return {index, depth, isFront};
     }).sort((a, b) => Number(a.isFront) - Number(b.isFront) || a.depth - b.depth);
 
     const nextFaceOrder = layers.map(({index}) => index).join(',');
-    if (nextFaceOrder !== faceOrder) {
-      faceLayer.replaceChildren(...layers.map(({index}) => faceNodes[index].group));
+    if (nextFaceOrder !== faceOrder && !settling) {
+      faceLayer.append(...layers.map(({index}) => faceNodes[index].group));
       faceOrder = nextFaceOrder;
     }
 
-    const visiblePoints = [...frontVertices].sort((a, b) => lattice.nodes[lattice.tips[a]].z - lattice.nodes[lattice.tips[b]].z);
-    for (const vertex of visiblePoints) {
-      const point = pointNodes[vertex];
+    for (const [vertex, point] of pointNodes.entries()) {
       point.setAttribute('transform', `translate(${paths[lattice.tips[vertex]]})`);
+      point.setAttribute('visibility', frontVertices.has(vertex) ? 'visible' : 'hidden');
       const selected = vertex === choice.vertex || (faces[choice.face]?.corners.includes(vertex) ?? false);
       point.classList.toggle('is-selected', selected);
     }
-    const nextPointOrder = visiblePoints.join(',');
+    const orderedPoints = vertices.map((_, vertex) => vertex)
+      .sort((a, b) => lattice.nodes[lattice.tips[a]].z - lattice.nodes[lattice.tips[b]].z);
+    const nextPointOrder = orderedPoints.join(',');
     if (nextPointOrder !== pointOrder) {
-      pointLayer.replaceChildren(...visiblePoints.map(vertex => pointNodes[vertex]));
+      pointLayer.append(...orderedPoints.map(vertex => pointNodes[vertex]));
       pointOrder = nextPointOrder;
     }
   }
@@ -341,6 +374,7 @@ function mountPortfolio(root, faces) {
     let closestTip = target;
     let nearest = 22;
     for (const point of pointLayer.children) {
+      if (point.getAttribute('visibility') === 'hidden') continue;
       const dot = point.lastElementChild.getBoundingClientRect();
       const distance = Math.hypot(event.clientX - (dot.left + dot.width / 2), event.clientY - (dot.top + dot.height / 2));
       if (distance < nearest) {

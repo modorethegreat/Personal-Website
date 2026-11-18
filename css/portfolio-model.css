@@ -56,17 +56,18 @@
 .portfolio-model-stage.is-dragging svg { cursor:grabbing; }
 .portfolio-model-stage:not(.is-dragging) [data-point] { cursor:pointer; }
 
-.portfolio-face-fill { fill:var(--facet); fill-opacity:.045; stroke:var(--facet); stroke-opacity:.74; }
-.portfolio-face-grid { fill:none; stroke:var(--facet); stroke-opacity:.67; stroke-width:.8; stroke-linecap:round; pointer-events:none; }
-.portfolio-face-fill,.portfolio-face-grid { vector-effect:non-scaling-stroke; }
-.portfolio-face-grid.portfolio-grid-detail { stroke-opacity:.52; stroke-width:.65; }
+.portfolio-face-fill { fill:var(--facet); fill-opacity:.07; }
+.portfolio-face-outline { fill:none; stroke:var(--facet); stroke-opacity:.88; stroke-width:1.05; pointer-events:none; }
+.portfolio-face-grid { fill:none; stroke:var(--facet); stroke-opacity:.62; stroke-width:.62; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+.portfolio-face-outline,.portfolio-face-grid { vector-effect:non-scaling-stroke; }
+.portfolio-face-grid.portfolio-grid-detail { stroke-opacity:.33; stroke-width:.5; }
 .portfolio-face-grid.portfolio-grid-tension { stroke:#ff805f; stroke-opacity:1; stroke-width:1.55; filter:drop-shadow(0 0 3px #ff805f80); }
 .portfolio-face-grid.portfolio-grid-compression { stroke:#5be3ff; stroke-opacity:1; stroke-width:1.55; filter:drop-shadow(0 0 3px #5be3ff80); }
 
 [data-face]:not(.is-front) { opacity:.12; pointer-events:none; }
 [data-face]:not(.is-front) .portfolio-face-fill { fill-opacity:0; }
-[data-face].is-front:hover .portfolio-face-fill { fill-opacity:.11; stroke-opacity:1; }
-[data-face].is-front.is-selected .portfolio-face-fill { fill-opacity:.22; stroke-opacity:1; }
+[data-face].is-front:hover .portfolio-face-fill { fill-opacity:.11; }
+[data-face].is-front.is-selected .portfolio-face-fill { fill-opacity:.22; }
 [data-face].is-selected .portfolio-face-grid { stroke-opacity:.85; }
 
 [data-point] { color:var(--point); }
