@@ -18,7 +18,7 @@ const metrics = {
   clearance: {
     measure: (frame) => frame.object_clearance_m * 1000,
     unit: 'mm',
-    caption: 'Clearance is the distance from the table to the workpiece’s lowest point. The dashed line marks 80 mm. Shading marks the hold phase.',
+    caption: 'Clearance is the distance from the table to the workpiece’s lowest point. The dashed line marks the pass threshold. Shading marks the hold phase.',
     name: 'Clearance',
   },
   force: {
@@ -44,14 +44,19 @@ const metric = byId('metric');
 const chart = byId('telemetry');
 const download = byId('download-trial');
 const condition = byId('condition');
+const threshold = byId('jaw-threshold');
 const chartCaption = byId('chart-caption');
 const panels = Object.fromEntries(
-  [...replay.querySelectorAll('[data-jaw]')].map((panel) => [panel.dataset.jaw, {
-    canvas: panel.querySelector('canvas'),
-    result: panel.querySelector('[data-result]'),
-    minimum: panel.querySelector('[data-minimum]'),
-    reading: panel.querySelector('[data-reading]'),
-  }]),
+  [...replay.querySelectorAll('[data-jaw]')].map((panel) => {
+    const jaw = panel.dataset.jaw;
+    const summary = replay.querySelector(`[data-jaw-result="${jaw}"]`);
+    return [jaw, {
+      canvas: panel.querySelector('canvas'),
+      result: summary.querySelector('[data-result]'),
+      minimum: summary.querySelector('[data-minimum]'),
+      reading: replay.querySelector(`[data-jaw-reading="${jaw}"]`),
+    }];
+  }),
 );
 
 for (const link of document.querySelectorAll('[data-cad]')) {
@@ -122,6 +127,7 @@ function loadMeshes() {
 
 function validRecording(recording) {
   return Number.isFinite(recording?.duration_s) && recording.duration_s > 0
+    && Number.isFinite(recording.pass_clearance_m)
     && recording.runs?.length === 2
     && recording.runs[0].result?.jaw === 'flat'
     && recording.runs[1].result?.jaw === 'v-groove'
@@ -137,6 +143,7 @@ function showRecording(recording, key) {
   }
   const { object_shape, friction, offset_mm } = recording.runs[0].result;
   condition.textContent = `${object_shape === 'cube' ? 'Cube' : 'Cylinder'} · Friction ${friction.toFixed(2)} · ${offset_mm} mm offset`;
+  threshold.textContent = `${Number((recording.pass_clearance_m * 1000).toFixed(1))} mm to pass throughout the hold`;
   timeline.max = String(recording.duration_s);
   time = recording.duration_s;
   download.href = trialFiles[key].href;
@@ -156,7 +163,6 @@ async function loadTrial(key) {
   loading = request;
   stop();
   data = undefined;
-  condition.textContent = 'Loading the selected scenario.';
   replay.hidden = true;
   download.hidden = true;
   transport.disabled = true;
@@ -187,7 +193,6 @@ async function loadTrial(key) {
     metric.disabled = true;
     download.hidden = true;
     message.hidden = false;
-    condition.textContent = 'Recorded simulations';
     status.textContent = 'The replay could not load. Try again or choose a different scenario.';
     retry.hidden = false;
   }
@@ -215,7 +220,7 @@ camera.addEventListener('change', render);
 metric.addEventListener('change', () => {
   const selected = metrics[metric.value];
   chartCaption.textContent = selected.caption;
-  chart.setAttribute('aria-label', `${selected.name} traces for both jaws. At-cursor readings are listed above.`);
+  chart.setAttribute('aria-label', `${selected.name} traces for both jaws. Playhead readings are listed above.`);
   render();
 });
 

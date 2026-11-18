@@ -108,24 +108,15 @@ void main() {
   vec3 ray = -forwards;
   vec3 color = sky(screen * 4.7);
 
-  vec3 moonCenter = vec3(-2.37, .92, -.82);
-  vec3 moonOrigin = origin - moonCenter;
-  float moonDistance = sphere(moonOrigin, ray, .116);
-  if (moonDistance < noHit) {
-    vec3 moon = normalize(moonOrigin + ray * moonDistance);
-    float light = max(0.0, dot(moon, sun));
-    color = vec3(.49, .52, .61) * (.15 + .85 * light);
-  }
-
   float bodyDistance = sphere(origin, ray, 1.0);
   float limbDistance = length(cross(origin, ray));
   float atmosphere = exp(-max(0.0, limbDistance - 1.0) * 67.0);
   color += vec3(.24, .20, .33) * atmosphere * .66;
-  if (bodyDistance < min(moonDistance, noHit)) {
+  if (bodyDistance < noHit) {
     color = planet(origin + ray * bodyDistance, ray);
   }
   float planeDistance = abs(ray.y) > .001 ? -origin.y / ray.y : noHit;
-  if (planeDistance > 0.0 && planeDistance < min(bodyDistance, moonDistance)) {
+  if (planeDistance > 0.0 && planeDistance < bodyDistance) {
     vec3 onRing = origin + ray * planeDistance;
     float radius = length(onRing.xz);
     if (radius > 1.26 && radius < 2.41) {

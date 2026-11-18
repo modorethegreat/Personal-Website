@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/lab.css">
   <link rel="stylesheet" href="css/space-theme.css">
-  <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
   <script type="module" src="js/gripbench.js"></script>
 </head>
@@ -35,93 +34,89 @@
       </aside>
 
       <article class="lab-workspace" id="gripbench" aria-labelledby="gripbench-title">
-        <header class="lab-heading with-artifact">
-          <div class="lab-intro">
-            <p class="lab-kicker">Lab / Robotics</p>
-            <h1 id="gripbench-title">GripBench</h1>
-            <p>Compare two gripper jaws on the same simulated lift.</p>
-          </div>
-          <figure class="artifact-orbit" data-artifact="mars">
-            <div class="artifact-stage" data-astronomy-stage>
-              <img src="assets/images/astronomy/mars.webp" alt="Mars globe" width="720" height="450" loading="lazy" decoding="async">
-              <canvas aria-hidden="true" hidden></canvas>
-            </div>
-            <figcaption class="artifact-caption">
-              <div><strong>Mars globe</strong><span>Dust-covered terrain and polar ice</span></div>
-              <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Mars globe controls" hidden>
-                <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
-                <button type="button" data-turn="1" aria-label="Rotate right">→</button>
-                <button type="button" data-reset-artifact>Reset</button>
-              </div>
-              <span class="artifact-hint" id="mars-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
-            </figcaption>
-          </figure>
+        <header class="lab-heading">
+          <h1 id="gripbench-title">GripBench</h1>
+          <p>Compare two gripper jaws on the same simulated lift.</p>
         </header>
 
-        <div class="bench-setup">
-          <div>
-            <p class="lab-kicker">MuJoCo replay</p>
-            <p class="bench-condition" id="condition">Choose a recorded trial.</p>
-          </div>
-          <label for="trial">Scenario
-            <select id="trial" disabled>
-              <option value="off-center">Off-center cube</option>
-              <option value="centered-cylinder">Centered cylinder</option>
-              <option value="low-friction">Low-friction cube</option>
-              <option value="centered-cube">Centered cube</option>
-            </select>
-          </label>
-        </div>
-
-        <noscript><p class="bench-message">Enable JavaScript to replay the trials. The method and CAD files are available below.</p></noscript>
-        <div class="bench-message" id="trial-message" hidden>
-          <p id="trial-status" role="status"></p>
-          <button id="retry-trial" type="button" hidden>Retry</button>
-        </div>
-
-        <div id="replay">
-          <div class="bench-views" aria-label="Synchronized jaw comparison">
-            <section class="bench-view" data-jaw="flat" aria-labelledby="flat-title">
-              <header><h2 id="flat-title">Flat jaw</h2><span data-result></span></header>
-              <canvas role="img" aria-label="Animated flat jaw model and workpiece"></canvas>
-              <dl class="bench-values">
-                <div><dt>Min. hold clearance</dt><dd data-minimum>—</dd></div>
-                <div><dt>At cursor</dt><dd data-reading>—</dd></div>
-              </dl>
-            </section>
-            <section class="bench-view" data-jaw="v-groove" aria-labelledby="groove-title">
-              <header><h2 id="groove-title">V-groove jaw</h2><span data-result></span></header>
-              <canvas role="img" aria-label="Animated V-groove jaw model and workpiece"></canvas>
-              <dl class="bench-values">
-                <div><dt>Min. hold clearance</dt><dd data-minimum>—</dd></div>
-                <div><dt>At cursor</dt><dd data-reading>—</dd></div>
-              </dl>
-            </section>
-          </div>
-
-          <fieldset class="bench-transport" id="transport" disabled aria-label="Replay controls">
-            <button id="play-trial" type="button">Play</button>
-            <div class="bench-time">
-              <label for="timeline" class="visually-hidden">Replay time</label>
-              <input id="timeline" type="range" min="0" max="3.6" step="0.02" value="0">
-              <output id="elapsed" for="timeline">0.00 s</output>
-            </div>
-            <label for="camera">Camera
-              <select id="camera"><option value="perspective">Perspective</option><option value="overhead">Overhead</option></select>
+        <section class="jaw-study" id="jaw-study" aria-labelledby="jaw-study-title">
+          <div class="bench-setup">
+            <h2 id="jaw-study-title">Flat vs. V-groove jaws</h2>
+            <label for="trial">Scenario
+              <select id="trial" disabled>
+                <option value="off-center">Off-center cube</option>
+                <option value="centered-cylinder">Centered cylinder</option>
+                <option value="low-friction">Low-friction cube</option>
+                <option value="centered-cube">Centered cube</option>
+              </select>
             </label>
-          </fieldset>
+          </div>
 
-          <section class="bench-telemetry" aria-labelledby="telemetry-title">
-            <header>
-              <div><h2 id="telemetry-title">Telemetry</h2><p class="chart-key"><span>Flat jaw</span><span>V-groove jaw</span></p></div>
-              <label for="metric">Measurement
+          <noscript><p class="bench-message">Enable JavaScript to replay the trials. The method and CAD files are available below.</p></noscript>
+          <div class="bench-message" id="trial-message" hidden>
+            <p id="trial-status" role="status"></p>
+            <button id="retry-trial" type="button" hidden>Retry</button>
+          </div>
+
+          <div id="replay">
+            <section class="jaw-results" aria-labelledby="jaw-results-title">
+              <div class="jaw-result-context">
+                <h3 id="jaw-results-title">Minimum hold clearance</h3>
+                <p class="bench-condition" id="condition"></p>
+                <p class="jaw-threshold" id="jaw-threshold"></p>
+              </div>
+              <dl class="jaw-result-pair">
+                <div data-jaw-result="flat">
+                  <dt>Flat jaw</dt>
+                  <dd><strong data-minimum>—</strong><span class="jaw-verdict" data-result></span></dd>
+                </div>
+                <div data-jaw-result="v-groove">
+                  <dt>V-groove jaw</dt>
+                  <dd><strong data-minimum>—</strong><span class="jaw-verdict" data-result></span></dd>
+                </div>
+              </dl>
+            </section>
+
+            <fieldset class="bench-transport jaw-transport" id="transport" disabled aria-label="Replay controls">
+              <button id="play-trial" type="button">Play</button>
+              <div class="bench-time">
+                <label for="timeline" class="visually-hidden">Replay time</label>
+                <input id="timeline" type="range" min="0" max="3.6" step="0.02" value="0">
+                <output id="elapsed" for="timeline">0.00 s</output>
+              </div>
+              <label for="camera">Camera
+                <select id="camera"><option value="perspective">Perspective</option><option value="overhead">Overhead</option></select>
+              </label>
+            </fieldset>
+            <div class="jaw-playhead">
+              <label for="metric">At playhead
                 <select id="metric" disabled><option value="clearance">Clearance (mm)</option><option value="force">Normal force (N)</option></select>
               </label>
-            </header>
-            <canvas id="telemetry" role="img" aria-label="Clearance traces for both jaws. At-cursor values and minimum hold clearances are listed above."></canvas>
-            <p id="chart-caption">Clearance is the distance from the table to the workpiece’s lowest point. The dashed line marks 80 mm. Shading marks the hold phase.</p>
-          </section>
-        </div>
+              <dl>
+                <div><dt>Flat jaw</dt><dd data-jaw-reading="flat">—</dd></div>
+                <div><dt>V-groove jaw</dt><dd data-jaw-reading="v-groove">—</dd></div>
+              </dl>
+            </div>
+
+            <div class="bench-views" aria-label="Synchronized jaw comparison">
+              <section class="bench-view" data-jaw="flat" aria-labelledby="flat-title">
+                <header><h3 id="flat-title">Flat jaw</h3></header>
+                <canvas role="img" aria-label="Animated flat jaw model and workpiece"></canvas>
+              </section>
+              <section class="bench-view" data-jaw="v-groove" aria-labelledby="groove-title">
+                <header><h3 id="groove-title">V-groove jaw</h3></header>
+                <canvas role="img" aria-label="Animated V-groove jaw model and workpiece"></canvas>
+              </section>
+            </div>
+
+            <section class="bench-telemetry" aria-labelledby="telemetry-title">
+              <h3 id="telemetry-title">Telemetry</h3>
+              <p class="chart-key"><span>Flat jaw</span><span>V-groove jaw</span></p>
+              <canvas id="telemetry" role="img" aria-label="Clearance traces for both jaws. The playhead readings and minimum hold clearances are listed above."></canvas>
+              <p id="chart-caption">Clearance is the distance from the table to the workpiece’s lowest point. The dashed line marks the pass threshold. Shading marks the hold phase.</p>
+            </section>
+          </div>
+        </section>
 
         <section class="bench-method" id="methods" aria-labelledby="methods-title">
           <h2 id="methods-title">Methods &amp; CAD</h2>

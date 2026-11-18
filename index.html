@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/portfolio-model.css">
   <link rel="stylesheet" href="css/space-theme.css">
-  <script type="module" src="js/astronomy.js"></script>
   <script type="module" src="js/script.js"></script>
   <script type="module" src="js/orbit-sky.js"></script>
   <script type="module" src="js/portfolio-model.js"></script>
@@ -31,12 +30,11 @@
     <section class="hero dark-surface" id="top" aria-labelledby="hero-title" data-orbit-hero data-spacecraft>
       <canvas class="particle-trails" data-particle-trails aria-hidden="true"></canvas>
       <div class="hero-copy">
-        <p class="kicker">Physics · Computation · Aerospace</p>
         <h1 id="hero-title">I build tools to explore physical systems.</h1>
         <p class="hero-lede">I’m Mohamed Hassan. I build CAD and simulation tools, develop scientific ML models, and work with aerospace test data.</p>
         <div class="hero-actions">
-          <a class="hero-primary" href="#portfolio-3d">Explore the 3D portfolio <span aria-hidden="true">→</span></a>
-          <a class="hero-secondary" href="#work">Explore selected work</a>
+          <a class="hero-primary" href="#work">View selected work <span aria-hidden="true">→</span></a>
+          <a class="hero-secondary" href="#portfolio-3d">Explore the 3D portfolio</a>
           <a class="hero-secondary" href="#notes">Read field notes</a>
         </div>
       </div>
@@ -51,11 +49,16 @@
           </div>
           <button class="spacecraft-launch" type="button" data-spacecraft-toggle aria-haspopup="dialog" aria-controls="spacecraft-view" hidden>Spacecraft viewer <span aria-hidden="true">↗</span></button>
           <div class="orbit-controls" data-orbit-controls role="group" aria-label="Planet view controls" hidden>
-            <button type="button" data-orbit-view="orbit" aria-pressed="true">Orbit view</button>
-            <button type="button" data-orbit-view="rings" aria-pressed="false">Above rings</button>
-            <button type="button" data-orbit-zoom="-1" aria-label="Zoom out">−</button>
-            <button type="button" data-orbit-zoom="1" aria-label="Zoom in">+</button>
             <button type="button" data-orbit-toggle>Pause drift</button>
+            <details class="orbit-tools">
+              <summary>View controls</summary>
+              <div class="orbit-tool-panel" role="group" aria-label="Planet angle and zoom">
+                <button type="button" data-orbit-view="orbit" aria-pressed="true">Orbit view</button>
+                <button type="button" data-orbit-view="rings" aria-pressed="false">Above rings</button>
+                <button type="button" data-orbit-zoom="-1" aria-label="Zoom out">−</button>
+                <button type="button" data-orbit-zoom="1" aria-label="Zoom in">+</button>
+              </div>
+            </details>
           </div>
           <p class="spacecraft-status" data-spacecraft-status role="status"></p>
         </figcaption>
@@ -79,16 +82,25 @@
     <section class="work" id="work" aria-labelledby="work-title">
       <div class="work-inner">
         <div class="work-heading"><h2 id="work-title">Selected work</h2></div>
-        <div class="work-grid">
-          <article class="work-card">
-            <a class="work-image" href="#solver-notes" data-open-solver aria-label="Watch the spherical PDE solver simulation">
-              <img src="assets/images/spherical-pde-solver.webp" alt="Wireframe sphere from the shallow-water simulation" width="960" height="540">
-            </a>
-            <h3><a href="#solver-notes" data-open-solver>Spherical PDE solver</a></h3>
+        <article class="solver-feature" aria-labelledby="solver-title">
+          <div class="solver-feature-copy">
+            <h3 id="solver-title">Spherical PDE solver</h3>
             <p class="work-topic">Computational physics</p>
-            <p>Simulating shallow-water dynamics on a sphere with spherical harmonics.</p>
-            <a class="work-link" href="#solver-notes" data-open-solver>Watch the simulation <span aria-hidden="true">→</span></a>
-          </article>
+            <p>I used spherical harmonics to simulate shallow-water dynamics on a sphere. The recording shows how the surface evolves in one of the solver’s examples.</p>
+            <div class="solver-feature-actions">
+              <a class="solver-play-link" href="#solver-notes" data-open-solver>
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                Watch the simulation
+              </a>
+              <a class="work-link" href="https://github.com/modorethegreat/spherical-PDE-solver">Methods &amp; source code</a>
+            </div>
+          </div>
+          <video id="solver-notes" class="solver-video" controls playsinline preload="none" poster="assets/images/spherical-pde-solver.webp" width="960" height="540" aria-label="Shallow-water simulation on a sphere" tabindex="0">
+            <source src="assets/video/spherical-pde-solver.mp4" type="video/mp4">
+            <a href="https://github.com/modorethegreat/spherical-PDE-solver#readme">Open the recording on GitHub</a>
+          </video>
+        </article>
+        <div class="work-grid">
           <article class="work-card">
             <a class="work-image" href="https://aerogalactica.org" aria-label="Visit AeroGalactica">
               <img src="assets/images/computational-airframe.webp" alt="Computational aerospace geometry with flow lines" width="1672" height="941">
@@ -112,20 +124,6 @@
           <p class="work-in-progress"><em>In the lab:</em> <a href="lab.html#gripbench">Try GripBench</a></p>
           <a class="work-link" href="projects.html">Browse the project archive <span aria-hidden="true">→</span></a>
         </div>
-        <details class="work-details" id="solver-notes">
-          <summary>Spherical PDE solver demo and methods</summary>
-          <div class="solver-details">
-            <video controls playsinline preload="none" poster="assets/images/spherical-pde-solver-poster.webp" width="720" height="720" aria-label="Shallow-water simulation on a sphere">
-              <source src="assets/video/spherical-pde-solver.mp4" type="video/mp4">
-              <a href="https://github.com/modorethegreat/spherical-PDE-solver#readme">Open the recording on GitHub</a>
-            </video>
-            <div class="solver-copy">
-              <h3>Shallow water on a sphere</h3>
-              <p>The solver uses spherical harmonics to represent the surface height and velocity fields. This recording shows the evolving surface from the repository’s example.</p>
-              <a class="work-link" href="https://github.com/modorethegreat/spherical-PDE-solver">Read the methods and source code <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </details>
       </div>
     </section>
 
@@ -227,24 +225,7 @@
           <p>I’m interested in how we make computational tools that engineers can interrogate and trust, especially when an AI model is part of the workflow.</p>
           <a class="work-link" href="experience.html">Read my experience &amp; résumé <span aria-hidden="true">→</span></a>
         </div>
-        <div class="origin-aside">
-          <figure class="artifact-orbit" data-artifact="moon">
-            <div class="artifact-stage" data-astronomy-stage>
-              <img src="assets/images/astronomy/moon.webp" alt="Lunar surface" width="720" height="450" loading="lazy" decoding="async">
-              <canvas aria-hidden="true" hidden></canvas>
-            </div>
-            <figcaption class="artifact-caption">
-              <div><strong>Lunar surface</strong><span>Craters and volcanic plains</span></div>
-              <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Lunar surface controls" hidden>
-                <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
-                <button type="button" data-turn="1" aria-label="Rotate right">→</button>
-                <button type="button" data-reset-artifact>Reset</button>
-              </div>
-              <span class="artifact-hint" id="moon-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
-            </figcaption>
-          </figure>
-          <blockquote class="origin-quote reveal"><p>“The point is not to make mystery smaller. It is to become capable of meeting it.”</p><cite>— a working principle</cite></blockquote>
-        </div>
+        <blockquote class="origin-quote reveal"><p>“The point is not to make mystery smaller. It is to become capable of meeting it.”</p><cite>— a working principle</cite></blockquote>
       </div>
     </section>
 
@@ -264,24 +245,7 @@
     <section class="editorial-section notes" id="notes" aria-labelledby="notes-title">
       <div class="side-rail" aria-hidden="true"><span>Field notes</span><b>03</b></div>
       <div class="section-inner">
-        <div class="notes-header reveal">
-          <div class="section-heading"><h2 id="notes-title">Field Notes</h2><p>Short notes on design decisions, experiments, and questions I’m still working through.</p></div>
-          <figure class="artifact-orbit" data-artifact="comet">
-            <div class="artifact-stage" data-astronomy-stage>
-              <img src="assets/images/astronomy/comet.webp" alt="Comet nucleus" width="720" height="450" loading="lazy" decoding="async">
-              <canvas aria-hidden="true" hidden></canvas>
-            </div>
-            <figcaption class="artifact-caption">
-              <div><strong>Comet nucleus</strong><span>Dust and gas trail the illuminated nucleus</span></div>
-              <div class="artifact-controls" data-astronomy-controls role="group" aria-label="Comet nucleus controls" hidden>
-                <button type="button" data-turn="-1" aria-label="Rotate left">←</button>
-                <button type="button" data-turn="1" aria-label="Rotate right">→</button>
-                <button type="button" data-reset-artifact>Reset</button>
-              </div>
-              <span class="artifact-hint" id="comet-hint" data-astronomy-hint hidden>Drag or use arrow keys to rotate.</span>
-            </figcaption>
-          </figure>
-        </div>
+        <div class="section-heading reveal"><h2 id="notes-title">Field Notes</h2><p>Short notes on design decisions, experiments, and questions I’m still working through.</p></div>
         <div class="note-filters" aria-label="Filter field notes">
           <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
           <button type="button" data-filter="physics" aria-pressed="false">Physics</button>

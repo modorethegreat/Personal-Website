@@ -81,12 +81,11 @@
   }
   .home-page .work-heading::after { background:linear-gradient(90deg,#bd927b,#465b7c 50%,#2a3d58); }
   .home-page .work-image { border:1px solid #43536b; }
-  .home-page .work-card .work-topic { color:#aebdd3; }
+  .home-page .work .work-topic { color:#aebdd3; }
   .space-site .work-link, .space-site .page-index a, .space-site .entry-links a {
     color:var(--warm);
   }
   .space-site :is(.work-link,.page-index a,.entry-links a):is(:hover,:focus-visible) { color:#ffdfc5; }
-  .space-site .work-details summary:hover,
   .space-site .note-title:is(:hover,:focus-visible) { color:var(--warm); }
 
   .home-page .portfolio-model {
@@ -115,12 +114,6 @@
     background:
       radial-gradient(ellipse at 80% 7%,#1b344b8c,transparent 31%),
       #0a1322;
-  }
-  .home-page .notes-header {
-    display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,.76fr);
-    align-items:center;
-    gap:2.5rem;
   }
   .home-page .note-filters { justify-content:flex-start; margin-top:1.65rem; }
   .home-page .note-filters button { min-height:2.75rem; font-size:.68rem; }
@@ -171,7 +164,7 @@
   .lab-page .lab-workspace {
     background:linear-gradient(135deg,#131f32,#0e1929 52%);
   }
-  .lab-page .lab-intro > p:last-child { color:#c1cddd; }
+  .lab-page .lab-heading > p { color:#c1cddd; }
   .lab-page .lab-kicker { color:#efb992; }
   .lab-page :is(.bench-setup,.bench-view,.bench-transport,.bench-telemetry,.bench-method,.bench-values div) {
     border-color:#41506a;
@@ -198,11 +191,6 @@
     gap:clamp(1.25rem,4vw,3.25rem);
   }
   .profile-hero .with-artifact { padding-block:clamp(2rem,4.2vw,4rem); }
-  .lab-heading.with-artifact {
-    grid-template-columns:minmax(0,1fr) minmax(13rem, .56fr);
-    margin-bottom:.9rem;
-  }
-
   .artifact-orbit {
     position:relative;
     min-width:0;
@@ -246,25 +234,11 @@
     cursor:pointer;
   }
   .artifact-controls button:hover { background:#21354f; border-color:#a5bfdc; }
-  .origin-aside { min-width:0; }
-  .origin-aside .artifact-caption { padding-inline:.6rem; }
-
-  @media (max-width:1100px) {
-    .home-page .origin-aside {
-      grid-column:1/-1;
-      display:grid;
-      grid-template-columns:minmax(0,.8fr) minmax(0,1fr);
-      align-items:center;
-      gap:1.4rem;
-    }
-  }
-
   @media (max-width:760px) {
-    .home-page .notes-header, .with-artifact, .lab-heading.with-artifact {
+    .with-artifact {
       grid-template-columns:minmax(0,1fr);
       gap:1.35rem;
     }
-    .home-page .origin-aside { grid-column:auto; display:block; }
     .home-page .question-card { min-height:13rem; }
     .home-page .hero .particle-trails { opacity:.9; }
     .home-page .orbit-stage::before,
@@ -278,7 +252,7 @@
 @media screen and (prefers-reduced-motion:no-preference) {
   .space-site .hero-copy,
   .space-site .profile-hero .profile-intro,
-  .space-site .lab-intro {
+  .space-site .lab-heading {
     animation:space-enter 420ms ease-out both;
   }
 }

@@ -73,19 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('hashchange', openLinkedNote);
   }
 
-  const solverDetails = document.querySelector('#solver-notes');
-  if (solverDetails) {
-    function openSolverFromHash() {
-      if (window.location.hash === '#solver-notes') solverDetails.open = true;
-    }
-    openSolverFromHash();
-    window.addEventListener('hashchange', openSolverFromHash);
+  const recording = document.querySelector('video#solver-notes');
+  if (recording) {
     document.querySelectorAll('[data-open-solver]').forEach((link) => {
-      link.addEventListener('click', () => { solverDetails.open = true; });
-    });
-    const recording = solverDetails.querySelector('video');
-    solverDetails.addEventListener('toggle', () => {
-      if (!solverDetails.open && !recording.paused) recording.pause();
+      link.addEventListener('click', () => {
+        recording.focus({ preventScroll: true });
+        recording.play().catch(() => {});
+      });
     });
   }
 
